@@ -7,13 +7,12 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(
-        AndroidSupportInjectionModule::class,
-        ActivityBindingModule::class,
-        ApplicationModule::class,
-        ApplicationRepositoryModule::class,
-        ApplicationViewModelModule::class)
-)
+@Component(modules = [
+    AndroidSupportInjectionModule::class,
+    ActivityBindingModule::class,
+    ApplicationModule::class,
+    ApplicationRepositoryModule::class
+])
 internal interface ApplicationComponent: AndroidInjector<EmpathyApp> {
 
     @Component.Builder

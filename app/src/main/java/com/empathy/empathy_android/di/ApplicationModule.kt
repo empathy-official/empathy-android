@@ -20,7 +20,6 @@ internal abstract class ApplicationModule {
         fun provideContext(): Context = EmpathyApp.instance
     }
 
-    @Singleton
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: BaseViewModelFactory): ViewModelProvider.Factory
 
