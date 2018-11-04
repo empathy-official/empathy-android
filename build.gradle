@@ -10,7 +10,6 @@ buildscript {
         rxandroid_version      = '2.0.1'
         rxadapter_version      = '2.3.0'
         rxrelay_version        = '2.0.0'
-        rxlifecycle_version    = '2.2.2'
         dagger_version         = '2.16'
         timber_version         = '4.5.1'
         okhttp_version         = '3.10.0'

@@ -1,6 +1,6 @@
 package com.empathy.empathy_android
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 internal abstract class BaseViewModel: ViewModel() {
 

@@ -1,6 +1,6 @@
 package com.empathy.empathy_android.di
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import android.content.Context
 import com.empathy.empathy_android.BaseViewModelFactory
 import com.empathy.empathy_android.EmpathyApp
