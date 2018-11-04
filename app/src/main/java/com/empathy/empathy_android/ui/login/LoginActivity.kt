@@ -5,11 +5,13 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 
 
-internal class LoginActivity: BaseActivity<MapViewModel.ViewModel>() {
+internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>() {
+
+    override fun getLayoutRes(): Int = R.layout.activity_login
+    override fun getViewModel(): Class<LoginViewModel.ViewModel> = LoginViewModel.ViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
 
     }
