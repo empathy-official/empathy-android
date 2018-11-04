@@ -18,7 +18,7 @@ internal interface LoginModule {
     @Binds
     @ActivityScope
     @IntoMap
-    @ViewModelKey(MapViewModel.ViewModel::class)
-    fun bindLoginViewModel(loginViewModel: MapViewModel.ViewModel): ViewModel
+    @ViewModelKey(LoginViewModel.ViewModel::class)
+    fun bindLoginViewModel(loginViewModel: LoginViewModel.ViewModel): ViewModel
 
 }
