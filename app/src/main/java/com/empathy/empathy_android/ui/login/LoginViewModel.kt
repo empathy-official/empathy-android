@@ -1,9 +1,9 @@
-package com.empathy.empathy_android.ui
+package com.empathy.empathy_android.ui.login
 
 import com.empathy.empathy_android.BaseViewModel
 import javax.inject.Inject
 
-internal interface MainViewModel {
+internal interface LoginViewModel {
 
     class ViewModel @Inject constructor(
 
