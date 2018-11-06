@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.ui.feed.FeedActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.GraphRequest
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
@@ -24,18 +24,18 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        login_button.setReadPermissions(Arrays.asList("public_profile", "email"))
-        login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+        initializePermission()
+        initializeListener()
+    }
+
+    private fun initializePermission() {
+        facebook_login.setReadPermissions(Arrays.asList("public_profile", "email"))
+    }
+
+    private fun initializeListener() {
+        facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                val graphRequest = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, response ->
-                    Log.d("result", `object`.toString())
-                }
-
-                val parameters = Bundle()
-                parameters.putString("fields", "id,name,email,gender,birthday")
-
-                graphRequest.parameters = parameters
-                graphRequest.executeAsync()
+                startActivity(Intent(this@LoginActivity, FeedActivity::class.java))
             }
 
             override fun onCancel() {
@@ -46,6 +46,10 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>() {
                 Log.e("LoginErr", error.toString())
             }
         })
+
+        facebook_login_view.setOnClickListener {
+            facebook_login.performClick()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
