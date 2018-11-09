@@ -48,6 +48,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rxadapter_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "com.jakewharton.rxrelay2:rxrelay:$rxrelay_version"
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

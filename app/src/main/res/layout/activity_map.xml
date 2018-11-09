@@ -1,13 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <LinearLayout
-    android:id="@+id/tmap_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:minHeight="?attr/actionBarSize"
+      android:background="@color/_2a2c34"
+      app:titleTextAppearance="@style/CustomToolbar"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+      android:text="탐색범위"
+      android:textColor="@color/_2a2c34"
+      android:textSize="11sp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="21dp"
+      android:layout_marginLeft="37dp"/>
+
+    <LinearLayout
+      android:id="@+id/search_range"
+      android:layout_width="120dp"
+      android:layout_height="42dp"
+      android:orientation="vertical"
+      android:gravity="center_vertical"
+      android:background="#DCDCDC"
+      android:layout_marginTop="3dp"
+      android:layout_marginLeft="35dp">
+      <TextView
+        android:text="1000m"
+        android:layout_marginLeft="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+      android:text="현재위치"
+      android:textColor="@color/_2a2c34"
+      android:textSize="11sp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="14dp"
+      android:layout_marginLeft="37dp"/>
+
+    <TextView
+      android:text="서울특별시 왕십리로"
+      android:textSize="14sp"
+      android:layout_width="match_parent"
+      android:layout_height="42dp"
+      android:layout_marginTop="3dp"
+      android:layout_marginLeft="35dp"
+      android:layout_marginRight="35dp"
+      android:paddingLeft="18dp"
+      android:gravity="center_vertical"
+      android:background="#DCDCDC"/>
+
+    <LinearLayout
+      android:id="@+id/t_map_container"
+      android:layout_width="match_parent"
+      android:layout_height="311dp"
+      android:orientation="vertical"
+      android:layout_marginTop="14dp"/>
+
+    <TextView
+      android:id="@+id/save"
+      android:text="저장"
+      android:textSize="16sp"
+      android:textColor="@color/_ff5656"
+      android:layout_marginTop="38dp"
+      android:layout_marginBottom="36dp"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_gravity="center_horizontal"/>
   </LinearLayout>
-</LinearLayout>
+</ScrollView>
