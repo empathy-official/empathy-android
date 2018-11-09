@@ -11,14 +11,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <TextView
-        android:id="@+id/t_map"
-        android:text="티맵"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+      android:minHeight="?attr/actionBarSize"
+      android:background="@color/_2a2c34"
+      app:titleTextAppearance="@style/CustomToolbar">
     </androidx.appcompat.widget.Toolbar>
   </com.google.android.material.appbar.AppBarLayout>
 

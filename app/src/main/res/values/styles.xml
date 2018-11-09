@@ -15,4 +15,9 @@
     <item name="colorPrimaryDark">@color/_2a2c34</item>
   </style>
 
+  <style name="CustomToolbar" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/_ffffff</item>
+  </style>
+
 </resources>

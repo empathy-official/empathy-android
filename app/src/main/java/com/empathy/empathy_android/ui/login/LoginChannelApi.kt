@@ -1,5 +1,5 @@
 package com.empathy.empathy_android.ui.login
 
 
-internal class LoginChannel {
+internal interface LoginChannelApi {
 }

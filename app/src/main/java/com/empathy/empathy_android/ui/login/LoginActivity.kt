@@ -6,6 +6,7 @@ import android.util.Log
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.ui.feed.FeedActivity
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -48,6 +49,12 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>() {
         })
 
         facebook_login_view.setOnClickListener {
+            if(AccessToken.getCurrentAccessToken() != null) {
+                startActivity(Intent(this@LoginActivity, FeedActivity::class.java))
+
+                return@setOnClickListener
+            }
+
             facebook_login.performClick()
         }
     }
