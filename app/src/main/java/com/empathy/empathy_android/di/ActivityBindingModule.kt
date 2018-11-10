@@ -6,6 +6,8 @@ import com.empathy.empathy_android.ui.feed.FeedModule
 import com.empathy.empathy_android.ui.login.LoginActivity
 import com.empathy.empathy_android.ui.login.LoginModule
 import com.empathy.empathy_android.ui.login.MapModule
+import com.empathy.empathy_android.ui.mypage.MyPageActivity
+import com.empathy.empathy_android.ui.mypage.MyPageModule
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -24,5 +26,9 @@ internal abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [MapModule::class])
     abstract fun mapActivity(): MapActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [MyPageModule::class])
+    abstract fun myPageActivity(): MyPageActivity
 
 }

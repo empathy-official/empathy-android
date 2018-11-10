@@ -46,6 +46,8 @@
 
     <activity android:name=".ui.tmap.MapActivity" />
 
+    <activity android:name=".ui.mypage.MyPageActivity" />
+
   </application>
 
 </manifest>
