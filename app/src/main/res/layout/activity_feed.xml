@@ -5,19 +5,48 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
+  android:background="@color/_2a2c34"
   tools:context=".ui.feed.FeedActivity">
 
   <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:minHeight="?attr/actionBarSize"
       android:background="@color/_2a2c34"
-      app:titleTextAppearance="@style/CustomToolbar">
-    </androidx.appcompat.widget.Toolbar>
+      app:titleTextAppearance="@style/CustomToolbar"
+      app:layout_scrollFlags="scroll|enterAlways" />
   </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="260dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+      android:id="@+id/log_title"
+      android:text="타인의 로그"
+      android:textSize="15sp"
+      android:textColor="@color/_ffffff"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_marginLeft="37dp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/log_recycler"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="37dp"
+      android:layout_marginTop="11dp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/log_title"/>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
