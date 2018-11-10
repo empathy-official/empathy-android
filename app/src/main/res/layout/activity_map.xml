@@ -30,21 +30,21 @@
       android:layout_marginTop="21dp"
       android:layout_marginLeft="37dp"/>
 
-    <LinearLayout
+    <FrameLayout
       android:id="@+id/search_range"
       android:layout_width="120dp"
       android:layout_height="42dp"
-      android:orientation="vertical"
-      android:gravity="center_vertical"
       android:background="#DCDCDC"
       android:layout_marginTop="3dp"
       android:layout_marginLeft="35dp">
       <TextView
+        android:id="@+id/range_title"
         android:text="1000m"
         android:layout_marginLeft="18dp"
+        android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    </LinearLayout>
+    </FrameLayout>
 
     <TextView
       android:text="현재위치"

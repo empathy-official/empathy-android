@@ -14,7 +14,7 @@ internal class RangeAdapter : BaseAdapter() {
         fun onRangeItemClicked(range: String)
     }
 
-    private val ranges = listOf("100m", "300m", "500m", "1000m")
+    private val ranges = listOf("100", "300", "500", "1000")
 
     private var listener: RangeItemClickListener? = null
 
@@ -35,7 +35,7 @@ internal class RangeAdapter : BaseAdapter() {
         val range = ranges[position]
 
         with(viewHolder) {
-            rangeTitle.text = range
+            rangeTitle.text = String.format("%sm", range)
 
             rangeContainer.setOnClickListener {
                 listener?.onRangeItemClicked(range)
