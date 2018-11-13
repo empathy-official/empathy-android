@@ -2,8 +2,6 @@ package com.empathy.empathy_android.ui.feed
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
@@ -29,7 +27,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
     }
 
     private fun initializeView() {
-        toolbar.title = "서울특별시 왕십로"
+        toolbar.title = "나의 여정 살펴보기"
 
         setSupportActionBar(toolbar)
 
@@ -58,19 +56,10 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
         info_container.setOnClickListener {
             startActivity(Intent(this, InfoActivity::class.java))
         }
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_feed, menu)
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
-            R.id.t_map -> startActivity(Intent(this, MapActivity::class.java))
+        t_map.setOnClickListener {
+            startActivity(Intent(this, MapActivity::class.java))
         }
-
-        return super.onOptionsItemSelected(item)
     }
+
 }
