@@ -28,6 +28,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
 
     private fun initializeView() {
         toolbar.title = "나의 여정 살펴보기"
+        toolbar.navigationIcon = resources.getDrawable(R.drawable.icon_arrow, null)
 
         setSupportActionBar(toolbar)
 
