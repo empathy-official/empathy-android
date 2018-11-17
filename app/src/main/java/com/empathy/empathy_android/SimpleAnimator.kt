@@ -1,4 +1,4 @@
-package com.empathy.empathy_android.ui.tmap
+package com.empathy.empathy_android
 
 import android.animation.Animator
 

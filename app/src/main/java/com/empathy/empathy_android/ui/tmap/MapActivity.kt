@@ -7,12 +7,13 @@ import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.ReverseInterpolator
+import com.empathy.empathy_android.SimpleAnimatorListener
 import com.empathy.empathy_android.extensions.toPx
 import com.empathy.empathy_android.ui.login.MapViewModel
 import com.skt.Tmap.TMapCircle
