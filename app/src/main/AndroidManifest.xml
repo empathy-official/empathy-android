@@ -46,7 +46,7 @@
 
     <activity android:name=".ui.tmap.MapActivity" />
 
-    <activity android:name=".ui.mypage.MyLogActivity" />
+    <activity android:name=".ui.mypage.MyFeedActivity" />
 
     <activity android:name=".ui.info.InfoActivity" />
   </application>

@@ -4,9 +4,9 @@ import android.graphics.BitmapFactory
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.empathy.empathy_android.repository.model.OthersLog
-import kotlinx.android.synthetic.main.item_others_log.view.*
+import kotlinx.android.synthetic.main.item_others_feed.view.*
 
-internal class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class FeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     init {
 

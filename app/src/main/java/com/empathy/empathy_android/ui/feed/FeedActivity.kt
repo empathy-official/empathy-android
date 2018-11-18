@@ -7,13 +7,13 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.repository.model.OthersLog
 import com.empathy.empathy_android.ui.info.InfoActivity
-import com.empathy.empathy_android.ui.mypage.MyLogActivity
+import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import kotlinx.android.synthetic.main.activity_feed.*
 
 internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
 
-    private val logAdapter = LogRecyclerAdapter()
+    private val logAdapter = FeedRecyclerAdapter()
 
     override fun getLayoutRes(): Int = R.layout.activity_feed
     override fun getViewModel(): Class<FeedViewModel.ViewModel> = FeedViewModel.ViewModel::class.java
@@ -46,7 +46,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
 
     private fun initializeListener() {
         my_log_container.setOnClickListener {
-            startActivity(Intent(this, MyLogActivity::class.java))
+            startActivity(Intent(this, MyFeedActivity::class.java))
         }
 
         info_container.setOnClickListener {

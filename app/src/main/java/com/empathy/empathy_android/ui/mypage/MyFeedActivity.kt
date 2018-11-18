@@ -1,21 +1,23 @@
 package com.empathy.empathy_android.ui.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.repository.model.MyLog
-import kotlinx.android.synthetic.main.activity_my_log.*
+import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
+import kotlinx.android.synthetic.main.activity_my_feed.*
 
 
-internal class MyLogActivity: BaseActivity<MyLogViewModel.ViewModel>() {
+internal class MyFeedActivity: BaseActivity<MyFeedViewModel.ViewModel>() {
 
     private val adapter by lazy {
-        MyLogAdapter()
+        MyFeedAdapter()
     }
 
-    override fun getLayoutRes(): Int = R.layout.activity_my_log
-    override fun getViewModel(): Class<MyLogViewModel.ViewModel> = MyLogViewModel.ViewModel::class.java
+    override fun getLayoutRes(): Int = R.layout.activity_my_feed
+    override fun getViewModel(): Class<MyFeedViewModel.ViewModel> = MyFeedViewModel.ViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +28,8 @@ internal class MyLogActivity: BaseActivity<MyLogViewModel.ViewModel>() {
 
     private fun initializeRecycler() {
         with(my_log_recycler) {
-            layoutManager = LinearLayoutManager(this@MyLogActivity)
-            adapter = this@MyLogActivity.adapter
+            layoutManager = LinearLayoutManager(this@MyFeedActivity)
+            adapter = this@MyFeedActivity.adapter
         }
 
         //dummy
@@ -52,6 +54,14 @@ internal class MyLogActivity: BaseActivity<MyLogViewModel.ViewModel>() {
         add_log.setOnClickListener {
 
         }
+
+        adapter.setOnItemClickListener(object : MyFeedViewHolder.OnItemClickListener {
+            override fun onItemClicked(position: Int) {
+                startActivity(Intent(this@MyFeedActivity, FeedDetailActivity::class.java).apply {
+                    putExtra("position", position)
+                })
+            }
+        })
     }
 
 }
