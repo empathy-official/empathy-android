@@ -52,6 +52,8 @@
 
     <activity android:name=".ui.mypage.MyFeedActivity" />
 
+    <activity android:name=".ui.partner.PartnerActivity" />
+
     <activity android:name=".ui.info.InfoActivity" />
   </application>
 
