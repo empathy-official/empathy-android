@@ -44,6 +44,8 @@
       </intent-filter>
     </activity>
 
+    <activity android:name=".ui.feeddetail.FeedDetailActivity" />
+
     <activity android:name=".ui.tmap.MapActivity" />
 
     <activity android:name=".ui.mypage.MyFeedActivity" />
