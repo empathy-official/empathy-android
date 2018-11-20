@@ -12,7 +12,7 @@
         android:layout_height="336dp">
 
         <ImageView
-            android:src="@drawable/icon"
+            android:id="@+id/feed_input_image"
             android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

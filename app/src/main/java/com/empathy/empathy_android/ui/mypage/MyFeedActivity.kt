@@ -1,5 +1,6 @@
 package com.empathy.empathy_android.ui.mypage
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,10 +8,17 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.repository.model.MyLog
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
+import com.empathy.empathy_android.ui.feedinput.FeedInputActivity
 import kotlinx.android.synthetic.main.activity_my_feed.*
 
 
 internal class MyFeedActivity: BaseActivity<MyFeedViewModel.ViewModel>() {
+
+    companion object {
+        private const val REQUEST_CODE_ALBUM = 1000
+
+        const val EXTRA_KEY_FEED_IMAGE_URI = "extra_key_feed_image_uri"
+    }
 
     private val adapter by lazy {
         MyFeedAdapter()
@@ -24,6 +32,16 @@ internal class MyFeedActivity: BaseActivity<MyFeedViewModel.ViewModel>() {
 
         initializeRecycler()
         initializeListener()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_ALBUM) {
+            data?.data?.let {
+                startActivity(Intent(this, FeedInputActivity::class.java).apply {
+                    putExtra(EXTRA_KEY_FEED_IMAGE_URI, it.toString())
+                })
+            }
+        }
     }
 
     private fun initializeRecycler() {
@@ -52,7 +70,10 @@ internal class MyFeedActivity: BaseActivity<MyFeedViewModel.ViewModel>() {
         }
 
         add_log.setOnClickListener {
-
+            startActivityForResult(Intent(
+                    Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            ), REQUEST_CODE_ALBUM)
         }
 
         adapter.setOnItemClickListener(object : MyFeedViewHolder.OnItemClickListener {
