@@ -3,11 +3,13 @@ package com.empathy.empathy_android.ui.info
 import com.empathy.empathy_android.BaseViewModel
 import javax.inject.Inject
 
-internal interface InfoViewModel {
+internal class PartnerInfoViewModel @Inject constructor(
 
-    class ViewModel @Inject constructor(
 
-    ): BaseViewModel() {
+): BaseViewModel() {
+
+    init {
 
     }
+
 }

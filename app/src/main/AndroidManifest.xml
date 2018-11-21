@@ -54,7 +54,8 @@
 
     <activity android:name=".ui.partner.PartnerActivity" />
 
-    <activity android:name=".ui.info.InfoActivity" />
+    <activity android:name=".ui.info.PartnerInfoActivity" />
+
   </application>
 
 </manifest>

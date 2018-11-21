@@ -8,8 +8,8 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 
-@Module(includes = arrayOf(InfoModule.ProvideModule::class))
-internal interface InfoModule {
+@Module(includes = arrayOf(PartnerInfoModule.ProvideModule::class))
+internal interface PartnerInfoModule {
 
     @Module
     class ProvideModule {
@@ -19,6 +19,6 @@ internal interface InfoModule {
     @Binds
     @ActivityScope
     @IntoMap
-    @ViewModelKey(InfoViewModel.ViewModel::class)
-    fun bindInfoViewModel(infoViewModel: InfoViewModel.ViewModel): ViewModel
+    @ViewModelKey(PartnerInfoViewModel::class)
+    fun bindInfoViewModel(infoViewModel: PartnerInfoViewModel): ViewModel
 }

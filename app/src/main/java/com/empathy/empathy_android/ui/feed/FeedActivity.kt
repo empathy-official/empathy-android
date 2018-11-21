@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.repository.model.OthersLog
-import com.empathy.empathy_android.ui.info.InfoActivity
+import com.empathy.empathy_android.ui.info.PartnerInfoActivity
 import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import kotlinx.android.synthetic.main.activity_feed.*
@@ -50,7 +50,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
         }
 
         info_container.setOnClickListener {
-            startActivity(Intent(this, InfoActivity::class.java))
+            startActivity(Intent(this, PartnerInfoActivity::class.java))
         }
 
         t_map.setOnClickListener {
