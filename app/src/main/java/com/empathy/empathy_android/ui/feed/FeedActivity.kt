@@ -3,6 +3,7 @@ package com.empathy.empathy_android.ui.feed
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.GestureDetector
 import android.view.Menu
 import android.view.MenuItem
 import com.empathy.empathy_android.BaseActivity
