@@ -37,6 +37,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.legacy.app.FragmentCompat
 import com.empathy.empathy_android.R
+import kotlinx.android.synthetic.main.fragment_camera_basic.*
 import java.io.IOException
 import java.util.ArrayList
 import java.util.Arrays
@@ -245,6 +246,9 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
         textureView = view.findViewById(R.id.texture)
         layoutFrame = view.findViewById(R.id.layout_frame)
 
+        setOnClickForTopHolder()
+        setOnClickForBottomHolder()
+
     }
 
     /**
@@ -275,6 +279,39 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
             openCamera(textureView!!.width, textureView!!.height)
         } else {
             textureView!!.surfaceTextureListener = surfaceTextureListener
+        }
+    }
+
+    private fun setOnClickForTopHolder(){
+        imgBtnFlash.setOnClickListener {
+
+        }
+        imgBtnRatioSet.setOnClickListener {
+
+        }
+        imgBtnRatioSet.setOnClickListener {
+
+        }
+        imgBtnTerminate.setOnClickListener {
+
+        }
+    }
+
+    private fun setOnClickForBottomHolder(){
+        ivRecentPhoto.setOnClickListener {
+
+        }
+        imgBtnMoodFilter.setOnClickListener {
+
+        }
+        btnCapture.setOnClickListener {
+
+        }
+        imgBtnObjectFilter.setOnClickListener {
+
+        }
+        imgBtnPose.setOnClickListener {
+
         }
     }
 
