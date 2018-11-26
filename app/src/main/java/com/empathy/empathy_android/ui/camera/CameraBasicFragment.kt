@@ -380,14 +380,16 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
                     maxPreviewHeight = MAX_PREVIEW_HEIGHT
                 }
 
-                previewSize = chooseOptimalSize(
-                        map.getOutputSizes(SurfaceTexture::class.java),
-                        rotatedPreviewWidth,
-                        rotatedPreviewHeight,
-                        maxPreviewWidth,
-                        maxPreviewHeight,
-                        largest
-                )
+//                previewSize = chooseOptimalSize(
+//                        map.getOutputSizes(SurfaceTexture::class.java),
+//                        rotatedPreviewWidth,
+//                        rotatedPreviewHeight,
+//                        maxPreviewWidth,
+//                        maxPreviewHeight,
+//                        largest
+//                )
+
+                previewSize = Size(MAX_PREVIEW_WIDTH, MAX_PREVIEW_HEIGHT)
 
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 val orientation = resources.configuration.orientation
