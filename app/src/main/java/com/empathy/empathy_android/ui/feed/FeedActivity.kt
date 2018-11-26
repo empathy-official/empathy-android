@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.repository.model.OthersLog
 import com.empathy.empathy_android.ui.camera.CameraActivity
 import com.empathy.empathy_android.ui.info.InfoActivity
@@ -27,9 +28,10 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+
         initializeView()
         initializeListener()
-
     }
 
     private fun initializeView() {

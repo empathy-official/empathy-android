@@ -3,6 +3,8 @@ package com.empathy.empathy_android
 import android.app.Activity
 import android.app.Application
 import com.empathy.empathy_android.di.DaggerApplicationComponent
+import com.empathy.empathy_android.repository.EmpathyRepositoryApi
+import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -17,8 +19,8 @@ internal class EmpathyApp: Application(), HasActivityInjector {
             private set
     }
 
-    @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    @Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+    @Inject lateinit var repository: EmpathyRepositoryApi
 
     override fun onCreate() {
         super.onCreate()
@@ -27,6 +29,7 @@ internal class EmpathyApp: Application(), HasActivityInjector {
 
         initializeDagger()
         initializeLeakcanary()
+        initializeStetho()
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
@@ -44,6 +47,10 @@ internal class EmpathyApp: Application(), HasActivityInjector {
         }
 
         LeakCanary.install(this)
+    }
+
+    private fun initializeStetho() {
+        Stetho.initializeWithDefaults(this)
     }
 
 }

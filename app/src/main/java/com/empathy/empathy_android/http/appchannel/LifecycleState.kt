@@ -1,4 +1,4 @@
-package com.empathy.empathy_android.appdata
+package com.empathy.empathy_android.http.appchannel
 
 import android.content.Intent
 import android.os.Bundle
