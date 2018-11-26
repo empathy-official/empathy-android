@@ -325,7 +325,6 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
             for (cameraId in manager.cameraIdList) {
                 val characteristics = manager.getCameraCharacteristics(cameraId)
 
-                // We don't use a front facing camera in this sample.
                 val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue

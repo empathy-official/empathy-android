@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/_2a2c34">
+
+  <RelativeLayout
+    android:id="@+id/toolbar_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:id="@+id/toolbar"
+      android:text="나의 여정 목록"
+      android:textSize="16sp"
+      android:textColor="@color/_ffffff"
+      android:textStyle="bold"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="28dp"
+      android:layout_marginLeft="23dp"
+      android:layout_centerVertical="true"/>
+
+    <TextView
+      android:id="@+id/toolbar_subtitle"
+      android:text="나의 추억을 확인하세요"
+      android:textSize="14sp"
+      android:textColor="@color/_939393"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="15dp"
+      android:layout_marginLeft="23dp"
+      android:layout_below="@+id/toolbar"/>
+
+    <ImageView
+      android:id="@+id/change_view_way"
+      android:src="@drawable/ic_list"
+      android:layout_width="25dp"
+      android:layout_height="25dp"
+      android:layout_alignParentRight="true"
+      android:layout_alignBottom="@+id/toolbar_subtitle"
+      android:layout_marginRight="21dp"/>
+  </RelativeLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/my_log_recycler"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="56dp"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar_container"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"/>
+
+  <ImageView
+    android:id="@+id/add_log"
+    android:src="@drawable/btn_plus"
+    android:layout_width="68dp"
+    android:layout_height="68dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="14dp"
+    app:layout_constraintTop_toBottomOf="@+id/toolbar_container"
+    app:layout_constraintRight_toRightOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+  <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+  <!--android:layout_width="match_parent"-->
+  <!--android:layout_height="match_parent">-->
+
+  <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<RelativeLayout-->
+      <!--android:id="@+id/toolbar"-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="80dp"-->
+      <!--android:background="@color/_2a2c34">-->
+
+      <!--<ImageView-->
+        <!--android:id="@+id/back"-->
+        <!--android:src="@drawable/ic_arrow_black"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginLeft="17dp"/>-->
+
+      <!--<TextView-->
+        <!--android:text="나의 여정 살펴보기"-->
+        <!--android:textSize="16sp"-->
+        <!--android:textColor="@color/_ffffff"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_toRightOf="@+id/back"/>-->
+    <!--</RelativeLayout>-->
+
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+      <!--android:id="@+id/lately_post_container"-->
+      <!--android:layout_width="281dp"-->
+      <!--android:layout_height="281dp"-->
+      <!--android:background="@drawable/icon"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
+      <!--app:layout_constraintLeft_toLeftOf="parent">-->
+
+      <!--<TextView-->
+        <!--android:id="@+id/lately_post"-->
+        <!--android:text="최신글"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textColor="@color/_ffffff"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="21dp"-->
+        <!--android:layout_marginTop="21dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"/>-->
+
+      <!--<TextView-->
+        <!--android:id="@+id/lately_post_title"-->
+        <!--android:text="전통시장 탐방기"-->
+        <!--android:textSize="22sp"-->
+        <!--android:textColor="@color/_ffffff"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="21dp"-->
+        <!--android:layout_marginTop="35dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/lately_post"/>-->
+
+      <!--<TextView-->
+        <!--android:id="@+id/lately_post_address"-->
+        <!--android:text="서울특별시 왕십리로 222"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textColor="@color/_ffffff"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="6dp"-->
+        <!--android:layout_marginLeft="21dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/lately_post_title"/>-->
+
+      <!--<ImageView-->
+        <!--android:src="@drawable/icon_more"-->
+        <!--android:layout_width="26dp"-->
+        <!--android:layout_height="26dp"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/lately_post_title"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/lately_post_title"-->
+        <!--app:layout_constraintRight_toRightOf="parent"/>-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--<TextView-->
+      <!--android:text="2018 12 09"-->
+      <!--android:textSize="22sp"-->
+      <!--android:textColor="@color/_2a2c34"-->
+      <!--android:layout_width="50dp"-->
+      <!--android:layout_height="wrap_content"-->
+      <!--android:layout_marginTop="18dp"-->
+      <!--android:layout_marginLeft="13dp"-->
+      <!--android:gravity="right"-->
+      <!--android:maxLines="3"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
+      <!--app:layout_constraintLeft_toRightOf="@+id/lately_post_container"/>-->
+
+    <!--<ImageView-->
+      <!--android:id="@+id/add_post"-->
+      <!--android:src="@drawable/btn_plus"-->
+      <!--android:layout_width="41dp"-->
+      <!--android:layout_height="41dp"-->
+      <!--android:layout_marginLeft="16dp"-->
+      <!--app:layout_constraintLeft_toRightOf="@+id/lately_post_container"-->
+      <!--app:layout_constraintBottom_toBottomOf="@+id/lately_post_container"/>-->
+
+    <!--<ImageView-->
+      <!--android:id="@+id/image_more"-->
+      <!--android:layout_width="0dp"-->
+      <!--android:layout_height="81dp"-->
+      <!--android:layout_marginTop="36dp"-->
+      <!--android:layout_marginRight="10dp"-->
+      <!--app:layout_constraintHorizontal_chainStyle="spread"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/lately_post_container"-->
+      <!--app:layout_constraintLeft_toLeftOf="parent"-->
+      <!--app:layout_constraintRight_toLeftOf="@+id/first_image"/>-->
+
+    <!--<ImageView-->
+      <!--android:id="@+id/first_image"-->
+      <!--android:layout_width="0dp"-->
+      <!--android:layout_height="81dp"-->
+      <!--android:layout_marginTop="36dp"-->
+      <!--android:layout_marginRight="10dp"-->
+      <!--app:layout_constraintHorizontal_chainStyle="spread"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/lately_post_container"-->
+      <!--app:layout_constraintLeft_toRightOf="@id/image_more"-->
+      <!--app:layout_constraintRight_toLeftOf="@+id/second_image"/>-->
+
+    <!--<ImageView-->
+      <!--android:id="@+id/second_image"-->
+      <!--android:layout_width="0dp"-->
+      <!--android:layout_height="81dp"-->
+      <!--android:layout_marginTop="36dp"-->
+      <!--android:layout_marginRight="10dp"-->
+      <!--app:layout_constraintHorizontal_chainStyle="spread"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/lately_post_container"-->
+      <!--app:layout_constraintLeft_toRightOf="@id/first_image"-->
+      <!--app:layout_constraintRight_toLeftOf="@+id/fourth_image"/>-->
+
+    <!--<ImageView-->
+      <!--android:id="@+id/fourth_image"-->
+      <!--android:layout_width="0dp"-->
+      <!--android:layout_height="81dp"-->
+      <!--android:layout_marginTop="36dp"-->
+      <!--app:layout_constraintHorizontal_chainStyle="spread"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/lately_post_container"-->
+      <!--app:layout_constraintLeft_toRightOf="@id/second_image"-->
+      <!--app:layout_constraintRight_toRightOf="parent"/>-->
+
+    <!--<ImageView-->
+      <!--android:layout_width="0dp"-->
+      <!--android:layout_height="174dp"-->
+      <!--android:layout_marginTop="10dp"-->
+      <!--app:layout_constraintTop_toBottomOf="@+id/image_more"-->
+      <!--app:layout_constraintLeft_toLeftOf="parent"-->
+      <!--app:layout_constraintRight_toRightOf="@+id/first_image"/>-->
+
+
+  <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--</ScrollView>-->

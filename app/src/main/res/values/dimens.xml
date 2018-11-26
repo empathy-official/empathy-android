@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="camera_padding_all_btn_holder">16dp</dimen>
+    <dimen name="camera_margin_left_top_btns">18dp</dimen>
+    <dimen name="camera_margin_left_bottom_btns">25dp</dimen>
+    <dimen name="camera_btn_ic_size">38dp</dimen>
+    <dimen name="camera_capture_btn_ic_size">70dp</dimen>
+</resources>
