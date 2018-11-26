@@ -1,6 +1,6 @@
 package com.empathy.empathy_android.ui.feedinput
 
-import com.empathy.empathy_android.appdata.LifecycleState
+import com.empathy.empathy_android.http.appchannel.LifecycleState
 import io.reactivex.Observable
 
 internal interface FeedInputChanneApi {
