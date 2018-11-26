@@ -2,8 +2,8 @@ package com.empathy.empathy_android.ui.feed
 
 import androidx.lifecycle.ViewModel
 import com.empathy.empathy_android.di.key.ViewModelKey
-import com.empathy.empathy_android.di.scope.ActivityScope
 import com.empathy.empathy_android.di.qualifier.Main
+import com.empathy.empathy_android.di.scope.ActivityScope
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,8 +23,12 @@ internal interface FeedModule {
 
     @Binds
     @ActivityScope
+    fun bindsFeedChannel(channel: FeedChannel): FeedChannelApi
+
+    @Binds
+    @ActivityScope
     @IntoMap
     @ViewModelKey(FeedViewModel.ViewModel::class)
-    fun bindMainViewModel(mainViewModel: FeedViewModel.ViewModel): ViewModel
+    fun bindsMainViewModel(mainViewModel: FeedViewModel.ViewModel): ViewModel
 
 }
