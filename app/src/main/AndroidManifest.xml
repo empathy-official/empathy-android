@@ -40,11 +40,11 @@
         </activity>
 
         <activity android:name=".ui.feed.FeedActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <activity android:name=".ui.feeddetail.FeedDetailActivity" />
@@ -59,13 +59,7 @@
 
         <activity android:name=".ui.info.InfoActivity" />
         <activity
-            android:name=".ui.camera.CameraActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+            android:name=".ui.camera.CameraActivity"/>
     </application>
 
 </manifest>

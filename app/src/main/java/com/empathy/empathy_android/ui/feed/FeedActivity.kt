@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.GestureDetector
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.repository.model.OthersLog
+import com.empathy.empathy_android.ui.camera.CameraActivity
 import com.empathy.empathy_android.ui.info.InfoActivity
 import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
+import com.empathy.empathy_android.utils.OnSwipeTouchListener
 import kotlinx.android.synthetic.main.activity_feed.*
 
 internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
@@ -34,6 +37,8 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
             layoutManager = LinearLayoutManager(this@FeedActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = logAdapter
         }
+
+        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
 
         //dummy
         val othersLogs = mutableListOf<OthersLog>()
