@@ -32,7 +32,7 @@
 
         <ImageButton
             android:id="@+id/imgBtnFlash"
-            android:src="@drawable/ic_flash"
+            android:src="@drawable/ic_flash_off"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="@dimen/camera_btn_ic_size"
             android:layout_height="@dimen/camera_btn_ic_size"
@@ -98,6 +98,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/camera_margin_bottom_capture_btn"
             android:layout_width="@dimen/camera_capture_btn_ic_size"
             android:layout_height="@dimen/camera_capture_btn_ic_size"
             android:background="@android:color/transparent"/>

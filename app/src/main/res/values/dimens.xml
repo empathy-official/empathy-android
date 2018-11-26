@@ -5,4 +5,5 @@
     <dimen name="camera_margin_left_bottom_btns">25dp</dimen>
     <dimen name="camera_btn_ic_size">38dp</dimen>
     <dimen name="camera_capture_btn_ic_size">70dp</dimen>
+    <dimen name="camera_margin_bottom_capture_btn">26dp</dimen>
 </resources>

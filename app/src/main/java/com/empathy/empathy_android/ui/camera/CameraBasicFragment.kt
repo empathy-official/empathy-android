@@ -22,6 +22,7 @@ import android.hardware.camera2.CaptureRequest
 import android.hardware.camera2.CaptureResult
 import android.hardware.camera2.TotalCaptureResult
 import android.media.ImageReader
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -51,6 +52,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
     private val lock = Any()
     private var runClassifier = false
     private var checkedPermissions = false
+    private var isFlashOn = false
     private var textureView: AutoFitTextureView? = null
     private var layoutFrame: AutoFitFrameLayout? = null
 
@@ -284,7 +286,17 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
 
     private fun setOnClickForTopHolder(){
         imgBtnFlash.setOnClickListener {
-
+            if(isFlashOn) {
+                imgBtnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_off))
+                previewRequestBuilder?.set(CaptureRequest.FLASH_MODE,CaptureRequest.FLASH_MODE_OFF)
+                captureSession?.setRepeatingRequest(previewRequestBuilder!!.build(), null, null)
+                isFlashOn = false
+            }else {
+                imgBtnFlash.setImageDrawable(resources.getDrawable(R.drawable.ic_flash_on))
+                previewRequestBuilder?.set(CaptureRequest.FLASH_MODE,CaptureRequest.FLASH_MODE_TORCH)
+                captureSession?.setRepeatingRequest(previewRequestBuilder!!.build(), null, null)
+                isFlashOn = true
+            }
         }
         imgBtnRatioSet.setOnClickListener {
 
@@ -314,6 +326,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
 
         }
     }
+
 
     /**
      *  주어진 [Camera2BasicFragment.cameraId]의 카메라를 엽니다.
