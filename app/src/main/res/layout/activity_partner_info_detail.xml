@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/_f0f0f0"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+      android:id="@+id/info_detail_image"
+      android:layout_width="match_parent"
+      android:layout_height="360dp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintRight_toRightOf="parent"/>
+
+    <LinearLayout
+      android:id="@+id/content_container"
+      android:layout_width="match_parent"
+      android:layout_height="158dp"
+      android:background="@color/_2a2c34"
+      android:orientation="vertical"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/info_detail_image">
+
+      <ImageView
+        android:background="@color/_ff5858"
+        android:layout_width="64dp"
+        android:layout_height="8dp"
+        android:layout_gravity="right"/>
+
+      <TextView
+        android:text="Ra'mie"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/_ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
+
+      <TextView
+        android:text="미아, 리첸 듀오로 구성된 라미에는 바이올린과 건반을 이용해 연주합니다. 연인, 가족 모두와 즐 길 수 있는 편안한 공연을 기대해도 좋아요"
+        android:textSize="14sp"
+        android:textColor="@color/_ffffff"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:maxLines="4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/convenience_info"
+      android:text="편의 정보"
+      android:textSize="15sp"
+      android:textColor="@color/_2a2c34"
+      android:layout_width="wrap_content"
+      android:layout_height="0dp"
+      android:layout_marginLeft="23dp"
+      android:layout_marginTop="16dp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/content_container"/>
+
+    <RelativeLayout
+      android:id="@+id/work_time_container"
+      android:layout_width="match_parent"
+      android:layout_height="43dp"
+      android:background="@color/_ffffff"
+      android:layout_marginTop="16dp"
+      app:layout_constraintTop_toBottomOf="@+id/convenience_info"
+      app:layout_constraintLeft_toLeftOf="parent">
+
+      <TextView
+        android:id="@+id/work_time"
+        android:text="영업기간"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+      <TextView
+        android:text="11.10~11.31"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="182dp"
+        android:layout_toRightOf="@+id/work_time"
+        android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/performance_time_container"
+      android:layout_width="match_parent"
+      android:layout_height="43dp"
+      android:background="@color/_ffffff"
+      android:layout_marginTop="6dp"
+      app:layout_constraintTop_toBottomOf="@+id/work_time_container"
+      app:layout_constraintLeft_toLeftOf="parent">
+
+      <TextView
+        android:id="@+id/performance_time"
+        android:text="공연시간"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+      <TextView
+        android:text="13:00~14:30"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="182dp"
+        android:layout_toRightOf="@+id/performance_time"
+        android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+      android:id="@+id/price_container"
+      android:layout_width="match_parent"
+      android:layout_height="86dp"
+      android:background="@color/_ffffff"
+      android:layout_marginTop="6dp"
+      app:layout_constraintTop_toBottomOf="@+id/performance_time_container"
+      app:layout_constraintLeft_toLeftOf="parent">
+
+      <TextView
+        android:id="@+id/price_time"
+        android:text="가격정보"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+      <TextView
+        android:id="@+id/weekday"
+        android:text="평일-13.000원"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="182dp"
+        android:layout_toRightOf="@+id/price_time"/>
+
+      <TextView
+        android:id="@+id/weekend"
+        android:text="주말-15.000원"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="182dp"
+        android:layout_marginTop="19dp"
+        android:layout_toRightOf="@+id/price_time"
+        android:layout_below="@+id/weekday"
+        android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:orientation="vertical"
+      android:background="@color/_ffffff"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/price_container">
+
+      <TextView
+        android:text="서울시 성북구 석관동 화랑로 30길-17"
+        android:textColor="@color/_2a2c34"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="20dp"/>
+
+      <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"/>
+    </LinearLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

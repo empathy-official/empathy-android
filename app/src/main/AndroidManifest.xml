@@ -45,9 +45,7 @@
         </activity>
 
         <activity android:name=".ui.feeddetail.FeedDetailActivity" />
-        <activity android:name=".ui.feed.FeedActivity">
-
-        </activity>
+        <activity android:name=".ui.feed.FeedActivity" />
 
 
         <activity android:name=".ui.feedinput.FeedInputActivity" />
@@ -56,12 +54,11 @@
 
         <activity android:name=".ui.mypage.MyFeedActivity" />
 
-        <activity android:name=".ui.partner.PartnerActivity" />
+        <activity android:name=".ui.camera.CameraActivity" />
 
-      <activity android:name=".ui.camera.CameraActivity" />
+        <activity android:name=".ui.partnerinfo.PartnerInfoActivity" />
 
-      <activity android:name=".ui.info.PartnerInfoActivity" />
-
+        <activity android:name=".ui.partnerinfo_detail.PartnerInfoDetailActivity" />
   </application>
 
 </manifest>

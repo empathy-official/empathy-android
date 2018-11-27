@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimaryDarkOpacity">#662a2c34</color>
     <color name="colorAccent">#D81B60</color>
     <color name="_2a2c34">#2a2c34</color>
     <color name="_ffffff">#ffffff</color>
@@ -12,5 +13,8 @@
     <color name="_686868">#686868</color>
     <color name="_000000">#000000</color>
     <color name="_f1f1f1">#f1f1f1</color>
-    <color name="colorPrimaryDarkOpacity">#662a2c34</color>
+    <color name="_d8d8d8">#d8d8d8</color>
+    <color name="_ff5858">#ff5858</color>
+    <color name="_f0f0f0">#f0f0f0</color>
+
 </resources>

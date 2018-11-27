@@ -1,4 +1,4 @@
-package com.empathy.empathy_android.ui.info
+package com.empathy.empathy_android.ui.partnerinfo
 
 import androidx.lifecycle.ViewModel
 import com.empathy.empathy_android.di.key.ViewModelKey
@@ -20,5 +20,5 @@ internal interface PartnerInfoModule {
     @ActivityScope
     @IntoMap
     @ViewModelKey(PartnerInfoViewModel::class)
-    fun bindInfoViewModel(infoViewModel: PartnerInfoViewModel): ViewModel
+    fun bindsInfoViewModel(infoViewModel: PartnerInfoViewModel): ViewModel
 }

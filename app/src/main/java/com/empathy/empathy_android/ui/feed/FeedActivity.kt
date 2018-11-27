@@ -7,7 +7,7 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.repository.model.OthersLog
-import com.empathy.empathy_android.ui.info.PartnerInfoActivity
+import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import com.empathy.empathy_android.utils.OnSwipeTouchListener
