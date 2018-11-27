@@ -5,10 +5,12 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.repository.model.OthersLog
 import com.empathy.empathy_android.ui.info.PartnerInfoActivity
 import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
+import com.empathy.empathy_android.utils.OnSwipeTouchListener
 import kotlinx.android.synthetic.main.activity_feed.*
 
 internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
@@ -21,9 +23,10 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+
         initializeView()
         initializeListener()
-
     }
 
     private fun initializeView() {
@@ -31,6 +34,8 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
             layoutManager = LinearLayoutManager(this@FeedActivity, LinearLayoutManager.HORIZONTAL, false)
             adapter = logAdapter
         }
+
+        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
 
         //dummy
         val othersLogs = mutableListOf<OthersLog>()

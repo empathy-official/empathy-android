@@ -182,10 +182,10 @@ internal class MapActivity: BaseActivity<MapViewModel.ViewModel>(), TMapGpsManag
     }
 
     private fun initializeView() {
-        setRxPermission()
+        showLocationPermission()
     }
 
-    private fun setRxPermission() {
+    private fun showLocationPermission() {
         RxPermissions(this).run {
             request(Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION)

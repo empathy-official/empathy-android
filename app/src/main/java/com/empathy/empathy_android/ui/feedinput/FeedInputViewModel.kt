@@ -3,8 +3,8 @@ package com.empathy.empathy_android.ui.feedinput
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.empathy.empathy_android.BaseViewModel
-import com.empathy.empathy_android.appdata.AppChannelApi
-import com.empathy.empathy_android.appdata.LifecycleState
+import com.empathy.empathy_android.http.appchannel.AppChannelApi
+import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject

@@ -1,7 +1,8 @@
 <resources>
-  <string name="app_name">Empathy_Android</string>
+    <string name="app_name">공감</string>
 
-  <string name="facebook_app_id">1981153295278368</string>
-  <string name="fb_login_protocol_scheme">fb1126271617538732</string>
+    <string name="facebook_app_id">1981153295278368</string>
+    <string name="fb_login_protocol_scheme">fb1126271617538732</string>
+    <string name="camera_error">Android Camera2 기능을 지원하지 않는 기기입나다.</string>
 
 </resources>
