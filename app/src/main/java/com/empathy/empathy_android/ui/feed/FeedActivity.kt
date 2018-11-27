@@ -49,7 +49,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
     private fun initializeListener() {
         constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
 
-        my_log_container.setOnClickListener {
+        my_feed_container.setOnClickListener {
             startActivity(Intent(this, MyFeedActivity::class.java))
         }
 
