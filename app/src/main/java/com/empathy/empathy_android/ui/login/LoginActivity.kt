@@ -6,26 +6,18 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import com.empathy.empathy_android.BaseActivity
-import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
-import com.empathy.empathy_android.repository.model.LocationEnum
 import com.empathy.empathy_android.ui.feed.FeedActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapGpsManager
 import com.skt.Tmap.TMapView
 import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
 import java.util.*
 
 
@@ -35,7 +27,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
 
     private val callbackManager = CallbackManager.Factory.create()
 
-    private var locationEnum: LocationEnum? = null
+    private val compositeDisposable = CompositeDisposable()
 
     private val tmapView by lazy {
         TMapView(this)
@@ -63,66 +55,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
 
         tmapView.setLocationPoint(latitude!!, longtitude!!)
 
-        Observable
-                .fromCallable {
-                    TMapData().convertGpsToAddress(latitude, longtitude)
-                }
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    when {
-                        it.contains("서울") -> {
-                            locationEnum = LocationEnum.valueOf("서울")
-                        }
-                        it.contains("인천") -> {
-                            locationEnum = LocationEnum.valueOf("인천")
-                        }
-                        it.contains("대전") -> {
-                            locationEnum = LocationEnum.valueOf("인천")
-                        }
-                        it.contains("대구") -> {
-
-                        }
-                        it.contains("광주") -> {
-
-                        }
-                        it.contains("부산") -> {
-
-                        }
-                        it.contains("울산") -> {
-
-                        }
-                        it.contains("경기도") -> {
-                            locationEnum = LocationEnum.valueOf("GyeonggiDo")
-
-                            Log.d("12311", " , " + locationEnum?.location + " " + locationEnum?.code )
-                        }
-                        it.contains("강원도") -> {
-
-                        }
-                        it.contains("충청북도") -> {
-
-                        }
-                        it.contains("충청남도") -> {
-
-                        }
-                        it.contains("경상북도") -> {
-
-                        }
-                        it.contains("경상남도") -> {
-
-                        }
-                        it.contains("전라북도") -> {
-
-                        }
-                        it.contains("전라남도") -> {
-
-                        }
-                        it.contains("제주도") -> {
-
-                        }
-                    }
-                }
+        viewModel.channel.accept(LoginViewAction.OnLocationChange(latitude, longtitude))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -134,11 +67,12 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     override fun onDestroy() {
         super.onDestroy()
 
+        compositeDisposable.clear()
         tmapGpsManager.CloseGps()
     }
 
     private fun showLocationPermission() {
-        RxPermissions(this).run {
+        compositeDisposable.add(RxPermissions(this).run {
             request(Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     .subscribe { granted ->
@@ -156,7 +90,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
                             return@subscribe
                         }
                     }
-        }
+        })
     }
 
     private fun setGps() {
@@ -210,10 +144,10 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
 
     private fun navigateToFeed() {
         startActivity(Intent(this@LoginActivity, FeedActivity::class.java).apply {
-            locationEnum?.let {
-                putExtra(Constants.EXTRA_KEY_LOCATION_FILTER, it)
-            } ?: toast("위치 정보를 받아오는 중 입니다. 잠시 후 시도해주세요.")
+//            putExtra(Constants.EXTRA_KEY_LOCATION_FILTER)
         })
+
+        finish()
     }
 
 }

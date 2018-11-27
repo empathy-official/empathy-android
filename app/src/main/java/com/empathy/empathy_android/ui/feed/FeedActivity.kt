@@ -35,8 +35,6 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
             adapter = logAdapter
         }
 
-        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
-
         //dummy
         val othersLogs = mutableListOf<OthersLog>()
         othersLogs.add(OthersLog("병탁", "시끄러운 경복궁에서", ""))
@@ -50,6 +48,8 @@ internal class FeedActivity : BaseActivity<FeedViewModel.ViewModel>() {
     }
 
     private fun initializeListener() {
+        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
+
         my_log_container.setOnClickListener {
             startActivity(Intent(this, MyFeedActivity::class.java))
         }

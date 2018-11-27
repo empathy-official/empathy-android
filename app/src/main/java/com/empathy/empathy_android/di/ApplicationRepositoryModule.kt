@@ -1,7 +1,8 @@
 package com.empathy.empathy_android.di
 
 import com.empathy.empathy_android.Constants
-import com.empathy.empathy_android.http.EmpathyService
+import com.empathy.empathy_android.EmpathyApp
+import com.empathy.empathy_android.http.EmpathyApi
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
@@ -45,7 +46,7 @@ internal interface ApplicationRepositoryModule {
 
         @Singleton
         @Provides
-        fun provideEmpathyService(retrofit: Retrofit): EmpathyService = retrofit.create(EmpathyService::class.java)
+        fun provideEmpathyService(retrofit: Retrofit): EmpathyApi = retrofit.create(EmpathyApi::class.java)
     }
 
 }
