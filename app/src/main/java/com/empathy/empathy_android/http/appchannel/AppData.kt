@@ -15,7 +15,7 @@ internal sealed class AppData {
 
     sealed class RespondTo: AppData() {
         sealed class Remote: RespondTo() {
-            data class FeedsByLocationFilterFetched(val feeds: List<Feed>): Remote()
+            data class FeedsByLocationFilterFetched(val feeds: MutableList<Feed>): Remote()
         }
     }
 }

@@ -17,5 +17,6 @@ enum class LocationEnum(val code: Int, val location: String) {
     GyeongsangnamDo(13,"GyeongsangnamDo"),
     Jeollabukdo(14,"Jeollabukdo"),
     JeollanamDo(15,"JeollanamDo"),
-    Jejudo(16,"Jejudo")
+    Jejudo(16,"Jejudo"),
+    None(0, "")
 }

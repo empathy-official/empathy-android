@@ -18,6 +18,7 @@ import com.skt.Tmap.TMapView
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.longToast
 import java.util.*
 
 
@@ -53,9 +54,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         val latitude   = location?.latitude
         val longtitude = location?.longitude
 
-        tmapView.setLocationPoint(latitude!!, longtitude!!)
-
-        viewModel.channel.accept(LoginViewAction.OnLocationChange(latitude, longtitude))
+        viewModel.channel.accept(LoginViewAction.OnLocationChange(latitude!!, longtitude!!))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,7 +96,6 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         tmapView.apply {
             setSKTMapApiKey("b5be9a2e-d454-4177-8912-1d2c1cbee391")
             setTrackingMode(true)
-            setSightVisible(true)
         }
 
         tmapGpsManager.provider    = TMapGpsManager.NETWORK_PROVIDER
@@ -143,9 +141,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     }
 
     private fun navigateToFeed() {
-        startActivity(Intent(this@LoginActivity, FeedActivity::class.java).apply {
-//            putExtra(Constants.EXTRA_KEY_LOCATION_FILTER)
-        })
+        startActivity(Intent(this@LoginActivity, FeedActivity::class.java))
 
         finish()
     }

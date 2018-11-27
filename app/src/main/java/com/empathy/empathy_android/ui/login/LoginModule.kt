@@ -2,7 +2,6 @@ package com.empathy.empathy_android.ui.login
 
 import androidx.lifecycle.ViewModel
 import com.empathy.empathy_android.di.key.ViewModelKey
-import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.di.qualifier.Login
 import com.empathy.empathy_android.di.scope.ActivityScope
 import dagger.Binds
@@ -21,11 +20,6 @@ internal interface LoginModule {
         @Login
         fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
     }
-
-    @Binds
-    @ActivityScope
-    @LocFilter
-    fun bindsLocationFilter(locationFilter: LocationFilter): LocationFilterApi
 
     @Binds
     @ActivityScope

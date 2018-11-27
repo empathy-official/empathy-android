@@ -5,8 +5,8 @@ import com.empathy.empathy_android.di.key.ViewModelKey
 import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.di.qualifier.Main
 import com.empathy.empathy_android.di.scope.ActivityScope
-import com.empathy.empathy_android.ui.login.LocationFilter
-import com.empathy.empathy_android.ui.login.LocationFilterApi
+import com.skt.Tmap.TMapGpsManager
+import com.skt.Tmap.TMapView
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -22,12 +22,17 @@ internal interface FeedModule {
         @ActivityScope
         @Main
         fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-    }
 
-    @Binds
-    @ActivityScope
-    @LocFilter
-    fun bindsLocationFilter(locationFilter: LocationFilter): LocationFilterApi
+        @Provides
+        @ActivityScope
+        @LocFilter
+        fun provideTmapView(feedActivity: FeedActivity): TMapView = TMapView(feedActivity)
+
+        @Provides
+        @ActivityScope
+        @LocFilter
+        fun provideTmapGpsManager(feedActivity: FeedActivity): TMapGpsManager = TMapGpsManager(feedActivity)
+    }
 
     @Binds
     @ActivityScope
@@ -36,7 +41,7 @@ internal interface FeedModule {
     @Binds
     @ActivityScope
     @IntoMap
-    @ViewModelKey(FeedViewModel.ViewModel::class)
-    fun bindsMainViewModel(mainViewModel: FeedViewModel.ViewModel): ViewModel
+    @ViewModelKey(FeedViewModel::class)
+    fun bindsMainViewModel(mainViewModel: FeedViewModel): ViewModel
 
 }
