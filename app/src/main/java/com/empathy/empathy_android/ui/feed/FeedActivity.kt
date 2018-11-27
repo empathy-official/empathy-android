@@ -57,7 +57,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
             startActivity(Intent(this, PartnerInfoActivity::class.java))
         }
 
-        t_map.setOnClickListener {
+        filter_location.setOnClickListener {
             startActivity(Intent(this, MapActivity::class.java))
         }
     }
