@@ -37,6 +37,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.legacy.app.FragmentCompat
+import com.bumptech.glide.Glide
 import com.empathy.empathy_android.R
 import kotlinx.android.synthetic.main.fragment_camera_basic.*
 import java.io.IOException
@@ -311,7 +312,6 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
 
     private fun setOnClickForBottomHolder(){
         ivRecentPhoto.setOnClickListener {
-
         }
         imgBtnMoodFilter.setOnClickListener {
 
