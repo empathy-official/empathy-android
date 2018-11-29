@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 
-@Module(includes = arrayOf(MyFeedModule.ProvideModule::class))
+@Module(includes = [MyFeedModule.ProvideModule::class])
 internal interface MyFeedModule {
 
     @Module
@@ -19,6 +19,6 @@ internal interface MyFeedModule {
     @Binds
     @ActivityScope
     @IntoMap
-    @ViewModelKey(MyFeedViewModel.ViewModel::class)
-    fun bindMyPageViewModel(myPageViewModel: MyFeedViewModel.ViewModel): ViewModel
+    @ViewModelKey(MyFeedViewModel::class)
+    fun bindMyPageViewModel(viewModel: MyFeedViewModel): ViewModel
 }

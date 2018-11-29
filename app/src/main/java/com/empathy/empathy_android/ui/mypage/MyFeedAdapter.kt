@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.empathy.empathy_android.R
-import com.empathy.empathy_android.repository.model.MyLog
+import com.empathy.empathy_android.repository.model.MyFeed
 
 internal class MyFeedAdapter: RecyclerView.Adapter<MyFeedViewHolder>() {
 
-    private val myLogs = mutableListOf<MyLog>()
+    private val myFeeds = mutableListOf<MyFeed>()
 
     private var listener: MyFeedViewHolder.OnItemClickListener? = null
 
@@ -22,17 +22,17 @@ internal class MyFeedAdapter: RecyclerView.Adapter<MyFeedViewHolder>() {
                 })
             }
 
-    override fun getItemCount(): Int = myLogs.size
+    override fun getItemCount(): Int = myFeeds.size
 
-    override fun onBindViewHolder(holder: MyFeedViewHolder, position: Int) = holder.bind(myLogs[position])
+    override fun onBindViewHolder(holder: MyFeedViewHolder, position: Int) = holder.bind(myFeeds[position])
 
     fun setOnItemClickListener(listener: MyFeedViewHolder.OnItemClickListener) {
         this.listener = listener
     }
 
-    fun setMyLogs(myLogs: MutableList<MyLog>) {
-        this.myLogs.clear()
-        this.myLogs.addAll(myLogs)
+    fun setMyFeeds(myLogs: MutableList<MyFeed>) {
+        this.myFeeds.clear()
+        this.myFeeds.addAll(myLogs)
         this.notifyDataSetChanged()
     }
 

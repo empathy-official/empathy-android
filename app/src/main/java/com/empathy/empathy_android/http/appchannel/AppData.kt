@@ -3,6 +3,7 @@ package com.empathy.empathy_android.http.appchannel
 import com.empathy.empathy_android.repository.model.Feed
 import com.empathy.empathy_android.repository.model.FeedDetail
 import com.empathy.empathy_android.repository.model.LocationEnum
+import com.empathy.empathy_android.repository.model.MyFeed
 
 
 internal sealed class AppData {
@@ -13,6 +14,7 @@ internal sealed class AppData {
 
             data class FetchDetailFeed(val feedId: Int) : Remote()
 
+            data class FetchMyFeeds(val userId: Int) : Remote()
         }
     }
 
@@ -21,6 +23,8 @@ internal sealed class AppData {
             data class FeedsByLocationFilterFetched(val feeds: MutableList<Feed>): Remote()
 
             data class FeedDetailFetched(val detailFeed: FeedDetail): Remote()
+
+            data class MyFeedsFetched(val myFeeds: MutableList<MyFeed>): Remote()
 
         }
     }
