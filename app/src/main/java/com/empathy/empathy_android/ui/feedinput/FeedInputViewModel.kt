@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.empathy.empathy_android.BaseViewModel
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.LifecycleState
-import com.empathy.empathy_android.ui.mypage.MyFeedActivity
+import com.empathy.empathy_android.ui.mypage.MyFeedsActivity
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
@@ -29,7 +29,7 @@ internal interface FeedInputViewModel {
         }
 
         private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
-            val uri = onCreate.intent.getStringExtra(MyFeedActivity.EXTRA_KEY_FEED_IMAGE_URI)
+            val uri = onCreate.intent.getStringExtra(MyFeedsActivity.EXTRA_KEY_FEED_IMAGE_URI)
 
             val imageUri = Uri.parse(uri)
 

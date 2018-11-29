@@ -30,9 +30,13 @@ internal class MyFeedViewModel @Inject constructor(
     }
 
     private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
-        val userId = onCreate.intent.getIntExtra(MyFeedActivity.EXTRA_KEY_USER_ID, -1)
+        val userId = onCreate.intent.getIntExtra(MyFeedsActivity.EXTRA_KEY_USER_ID, -1)
 
-        appChannel.accept(AppData.RequestTo.Remote.FetchMyFeeds(userId))
+        if(userId == -1) {
+            showEmptyFeeds.postValue(MyFeedLooknFeel.ShowEmptyFeeds)
+        } else {
+            appChannel.accept(AppData.RequestTo.Remote.FetchMyFeeds(userId))
+        }
     }
 
     private fun handleOnRemote(remote: AppData.RespondTo.Remote) {

@@ -42,21 +42,25 @@
         </activity>
 
         <activity android:name=".ui.feeddetail.FeedDetailActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
-        <activity android:name=".ui.feed.FeedActivity" />
+        <activity android:name=".ui.feed.FeedActivity">
+
+        </activity>
 
 
         <activity android:name=".ui.feedinput.FeedInputActivity" />
 
         <activity android:name=".ui.tmap.MapActivity" />
 
-        <activity android:name=".ui.mypage.MyFeedActivity" />
+        <activity android:name=".ui.mypage.MyFeedsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".ui.camera.CameraActivity" />
 

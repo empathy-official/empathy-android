@@ -9,7 +9,7 @@ import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
-import com.empathy.empathy_android.ui.mypage.MyFeedActivity
+import com.empathy.empathy_android.ui.mypage.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import com.empathy.empathy_android.utils.OnSwipeTouchListener
@@ -52,7 +52,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
         constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
 
         my_feed_container.setOnClickListener {
-            startActivity(Intent(this, MyFeedActivity::class.java))
+            startActivity(Intent(this, MyFeedsActivity::class.java))
         }
 
         info_container.setOnClickListener {

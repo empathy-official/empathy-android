@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.observe
+import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.feedinput.FeedInputActivity
+import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_my_feed.*
 
 
-internal class MyFeedActivity: BaseActivity<MyFeedViewModel>() {
+internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
 
     companion object {
         private const val REQUEST_CODE_ALBUM = 1000
@@ -32,6 +34,8 @@ internal class MyFeedActivity: BaseActivity<MyFeedViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
 
         initializeRecycler()
         initializeListener()
@@ -64,8 +68,8 @@ internal class MyFeedActivity: BaseActivity<MyFeedViewModel>() {
 
     private fun initializeRecycler() {
         with(my_log_recycler) {
-            layoutManager = LinearLayoutManager(this@MyFeedActivity)
-            adapter = this@MyFeedActivity.adapter
+            layoutManager = LinearLayoutManager(this@MyFeedsActivity)
+            adapter = this@MyFeedsActivity.adapter
         }
     }
 
@@ -74,7 +78,7 @@ internal class MyFeedActivity: BaseActivity<MyFeedViewModel>() {
 
         }
 
-        add_log.setOnClickListener {
+        add_feed.setOnClickListener {
             startActivityForResult(Intent(
                     Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -83,7 +87,7 @@ internal class MyFeedActivity: BaseActivity<MyFeedViewModel>() {
 
         adapter.setOnItemClickListener(object : MyFeedViewHolder.OnItemClickListener {
             override fun onItemClicked(position: Int) {
-                startActivity(Intent(this@MyFeedActivity, FeedDetailActivity::class.java).apply {
+                startActivity(Intent(this@MyFeedsActivity, FeedDetailActivity::class.java).apply {
                     putExtra("position", position)
                 })
             }
