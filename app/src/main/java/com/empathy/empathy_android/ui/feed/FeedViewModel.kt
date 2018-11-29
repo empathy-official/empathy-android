@@ -76,14 +76,14 @@ internal class FeedViewModel @Inject constructor(
                                 it.contains("전라북도") -> "Jeollabukdo"
                                 it.contains("전라남도") -> "JeollanamDo"
                                 it.contains("제주도")  -> "Jejudo"
-                                else                        -> ""
+                                else                 -> ""
                             }
 
                             locationFilter.setLocationAddress(filteredAddress)
+
+                            Log.d("LOCATION_FILTER11", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
                         }
         )
-
-        Log.d("LOCATION_FILTER11", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
 
         if (hasLocation == false) {
             appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(locationFilter.getLocationEnum()!!))
@@ -97,11 +97,11 @@ internal class FeedViewModel @Inject constructor(
         val locationAddr = locationFilter.getLocationEnum()?.location
         val locationCode = locationFilter.getLocationEnum()?.code
 
-        Log.d("LOCATION_FILTER", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
-
         if(locationAddr == null || locationAddr == "") {
             setGps()
         } else {
+            Log.d("LOCATION_FILTER", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
+
             appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(locationFilter.getLocationEnum()!!))
 
             hasLocation = true
