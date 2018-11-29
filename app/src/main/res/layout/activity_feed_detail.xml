@@ -18,17 +18,16 @@
 
             <ImageView
                 android:id="@+id/feed_detail_img"
-                android:src="@drawable/icon"
                 android:scaleType="fitXY"
                 android:layout_width="match_parent"
                 android:layout_height="360dp" />
 
             <com.empathy.empathy_android.view.RoundImageView
+                android:id="@+id/profile_image"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_gravity="bottom|right"
                 android:layout_marginRight="24dp"
-                android:src="@drawable/icon"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/feed_detail_img"/>
         </FrameLayout>
@@ -58,7 +57,7 @@
             app:layout_constraintTop_toBottomOf="@+id/date"/>
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/feed_title"
             android:text="강남의 정관장 카페 그리고 홍삼음료"
             android:textColor="@color/_2a2c34"
             android:textSize="15sp"
@@ -77,7 +76,7 @@
             android:layout_height="2dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="39dp"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/feed_title"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <TextView
@@ -108,6 +107,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
+            android:id="@+id/edit_or_share"
             android:src="@drawable/ic_edit"
             android:layout_width="24dp"
             android:layout_height="24dp"

@@ -38,6 +38,10 @@
         <!--</activity>-->
 
         <activity android:name=".ui.login.LoginActivity">
+
+        </activity>
+
+        <activity android:name=".ui.feeddetail.FeedDetailActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +49,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.feeddetail.FeedDetailActivity" />
         <activity android:name=".ui.feed.FeedActivity" />
 
 

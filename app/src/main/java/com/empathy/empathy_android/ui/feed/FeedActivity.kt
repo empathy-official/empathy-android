@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
+import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.mypage.MyFeedActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
@@ -60,6 +62,15 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
         filter_location.setOnClickListener {
             startActivity(Intent(this, MapActivity::class.java))
         }
+
+        logAdapter.setOnItemClickListener(object : FeedRecyclerAdapter.ItemClickListener {
+            override fun onItemClicked(feedId: Int?) {
+                startActivity(Intent(this@FeedActivity, FeedDetailActivity::class.java).apply {
+                    putExtra(Constants.EXTRA_KEY_FEED_DETAIL_TYPE, FeedDetailActivity.TYPE_OTHER_FEED)
+                    putExtra(Constants.EXTRA_KEY_FEED_ID, feedId)
+                })
+            }
+        })
     }
 
 }

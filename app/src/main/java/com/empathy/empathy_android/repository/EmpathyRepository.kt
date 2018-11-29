@@ -30,6 +30,12 @@ internal class EmpathyRepository @Inject constructor(
                                                 AppData.RespondTo.Remote.FeedsByLocationFilterFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
+                                is AppData.RequestTo.Remote.FetchDetailFeed -> {
+                                    empathyApi.fetchFeedDetail(it.feedId)
+                                            .map {
+                                                AppData.RespondTo.Remote.FeedDetailFetched(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
                             }
                         }.subscribe(appChannel::accept)
         )

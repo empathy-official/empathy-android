@@ -3,6 +3,8 @@ package com.empathy.empathy_android.di
 import com.empathy.empathy_android.di.scope.ActivityScope
 import com.empathy.empathy_android.ui.feed.FeedActivity
 import com.empathy.empathy_android.ui.feed.FeedModule
+import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
+import com.empathy.empathy_android.ui.feeddetail.FeedDetailModule
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoModule
 import com.empathy.empathy_android.ui.login.LoginActivity
@@ -36,4 +38,8 @@ internal abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [PartnerInfoModule::class])
     abstract fun infoActivity(): PartnerInfoActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [FeedDetailModule::class])
+    abstract fun feedDetailActivity(): FeedDetailActivity
 }

@@ -18,7 +18,7 @@ internal interface FeedDetailModule {
     @Binds
     @ActivityScope
     @IntoMap
-    @ViewModelKey(FeedDetailViewModel.ViewModel::class)
-    fun bindFeedDetailViewModel(feedDetailViewModel: FeedDetailViewModel.ViewModel): ViewModel
+    @ViewModelKey(FeedDetailViewModel::class)
+    fun bindFeedDetailViewModel(feedDetailViewModel: FeedDetailViewModel): ViewModel
 
 }
