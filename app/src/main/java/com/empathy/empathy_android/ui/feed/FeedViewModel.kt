@@ -30,6 +30,10 @@ internal class FeedViewModel @Inject constructor(
 
 ): BaseViewModel(), TMapGpsManager.onLocationChangedCallback  {
 
+    companion object {
+        private const val TRUE = "true"
+    }
+
     private val onCreate = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
@@ -45,13 +49,9 @@ internal class FeedViewModel @Inject constructor(
 
     init {
         compositeDisposable.addAll(
-                onCreate.subscribeBy(
-                        onNext = ::handleOnCreate
-                ),
+                onCreate.subscribeBy(onNext = ::handleOnCreate),
 
-                onRemote.subscribeBy(
-                        onNext = ::handleOnRemote
-                )
+                onRemote.subscribeBy(onNext = ::handleOnRemote)
         )
     }
 
@@ -62,7 +62,7 @@ internal class FeedViewModel @Inject constructor(
         compositeDisposable.add(
                 Observable
                         .fromCallable {
-                            TMapData().convertGpsToAddress(latitude!!, longtitude!!)
+                            TMapData().convertGpsToAddress(latitude ?: 126.981106, longtitude ?: 37.568477)
                         }
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -88,13 +88,13 @@ internal class FeedViewModel @Inject constructor(
                             }
 
                             locationFilter.setLocationAddress(filteredAddress)
-
-                            Log.d("LOCATION_FILTER11", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
                         }
         )
 
         if (hasLocation == false) {
-            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum()!!))
+            locationFilter.getLocationEnum()?.let {
+                appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), it))
+            }
 
             hasLocation = true
             tmapGpsManager.CloseGps()
@@ -110,8 +110,6 @@ internal class FeedViewModel @Inject constructor(
         if(locationAddr == null || locationAddr == "") {
             setGps()
         } else {
-            Log.d("LOCATION_FILTER", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
-
             appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum()!!))
 
             hasLocation = true
@@ -134,7 +132,7 @@ internal class FeedViewModel @Inject constructor(
 
                 val subContent = weekday + "\n" + location + "\n" + subText
 
-                if(isFirst == "true") {
+                if(isFirst == TRUE) {
                     showFeedPlaceholder.postValue(FeedLooknFeel.ShowFeedPlaceHolder(mainText, imageUrl))
                 } else {
                     showMyFeed.postValue(FeedLooknFeel.ShowMyFeed(mainText, imageUrl))
