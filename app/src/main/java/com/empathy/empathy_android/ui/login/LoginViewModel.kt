@@ -97,9 +97,8 @@ internal interface LoginViewModel {
                     val loginType = "facebook"
 
                     user = User(username, loginType, userimage)
-                    user?.let {
-                        appChannel.accept(AppData.RequestTo.Remote.CreateUser(it))
-                    }
+
+                    appChannel.accept(AppData.RequestTo.Remote.CreateUser(user))
                 }
             }
         }

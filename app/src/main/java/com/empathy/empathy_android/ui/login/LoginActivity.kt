@@ -5,9 +5,11 @@ import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.ui.feed.FeedActivity
 import com.facebook.*
 import com.facebook.login.LoginResult
@@ -18,9 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.longToast
-import java.net.URL
 import java.util.*
+import javax.inject.Inject
 
 
 internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsManager.onLocationChangedCallback {
@@ -57,7 +58,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         val latitude   = location?.latitude
         val longtitude = location?.longitude
 
-        viewModel.channel.accept(LoginViewAction.OnLocationChange(latitude!!, longtitude!!))
+        viewModel.channel.accept(LoginViewAction.OnLocationChange(latitude ?: Constants.DEFAULT_LATITUDE, longtitude ?: Constants.DEFAULT_LATITUDE))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -70,7 +71,6 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         super.onDestroy()
 
         compositeDisposable.clear()
-        tmapGpsManager.CloseGps()
     }
 
     private fun subscribeNavigation() {
@@ -104,7 +104,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
 
                             return@subscribe
                         } else {
-                            longToast("위치 정보에 동의를 하셔야만 로그인을 하실 수 있습니다.")
+                            Toast.makeText(this@LoginActivity, "위치 정보에 동의를 하셔야만 로그인을 하실 수 있습니다.", Toast.LENGTH_LONG).show()
 
                             isGranted = false
 

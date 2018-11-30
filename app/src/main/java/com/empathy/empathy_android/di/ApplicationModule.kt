@@ -12,6 +12,8 @@ import com.empathy.empathy_android.repository.EmpathyRepository
 import com.empathy.empathy_android.repository.EmpathyRepositoryApi
 import com.empathy.empathy_android.ui.login.LocationFilter
 import com.empathy.empathy_android.ui.login.LocationFilterApi
+import com.skt.Tmap.TMapGpsManager
+import com.skt.Tmap.TMapView
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -31,6 +33,7 @@ internal interface ApplicationModule {
 
         @Singleton
         @Provides
+        @App
         fun provideContext(): Context = EmpathyApp.instance
     }
 

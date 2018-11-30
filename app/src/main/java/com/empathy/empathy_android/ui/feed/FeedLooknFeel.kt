@@ -22,4 +22,8 @@ internal sealed class FeedLooknFeel {
 
     data class ShowLocation(val location: String): FeedLooknFeel()
 
+    object CloseGps: FeedLooknFeel()
+
+    object SetGps: FeedLooknFeel()
+
 }
