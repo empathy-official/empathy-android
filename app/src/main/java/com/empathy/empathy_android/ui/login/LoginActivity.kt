@@ -9,9 +9,11 @@ import android.widget.Toast
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
-import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.ui.feed.FeedActivity
-import com.facebook.*
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.skt.Tmap.TMapGpsManager
 import com.skt.Tmap.TMapView
@@ -21,7 +23,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
-import javax.inject.Inject
 
 
 internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsManager.onLocationChangedCallback {
@@ -61,6 +62,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         viewModel.channel.accept(LoginViewAction.OnLocationChange(latitude ?: Constants.DEFAULT_LATITUDE, longtitude ?: Constants.DEFAULT_LATITUDE))
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -70,6 +72,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     override fun onDestroy() {
         super.onDestroy()
 
+        tmapGpsManager.CloseGps()
         compositeDisposable.clear()
     }
 
@@ -95,7 +98,8 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     private fun showLocationPermission() {
         compositeDisposable.add(RxPermissions(this).run {
             request(Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe { granted ->
                         if(granted) {
                             isGranted = true

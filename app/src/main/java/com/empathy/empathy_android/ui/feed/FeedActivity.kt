@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
-import com.empathy.empathy_android.di.qualifier.Feed
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.LifecycleState

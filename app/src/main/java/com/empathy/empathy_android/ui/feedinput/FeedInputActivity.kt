@@ -25,6 +25,12 @@ internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
 
     private fun subscribeLooknFeel() {
         observe(viewModel.showFeedInputImage, ::handleShowFeedInputImage)
+        observe(viewModel.showInputInfo, ::handleShowInputInfo)
+    }
+
+    private fun handleShowInputInfo(looknFeel: FeedInputLooknFeel.ShowInputInfo) {
+        address.text = looknFeel.address
+        date.text    = looknFeel.date
     }
 
     private fun handleShowFeedInputImage(looknfeel: FeedInputLooknFeel.ShowFeedInputImage) {
@@ -36,6 +42,10 @@ internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
     private fun initializeListener() {
         save.setOnClickListener {
             viewModel.channel.accept(FeedInputViewAction.SaveFeed(title_input.text.toString(), description_input.text.toString()))
+        }
+
+        cancel.setOnClickListener {
+            finish()
         }
     }
 

@@ -25,8 +25,6 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
         const val REQUEST_CODE_ALBUM = 1000
     }
 
-    private val selectedImageUri: Uri? = null
-
     private val adapter by lazy {
         MyFeedAdapter()
     }

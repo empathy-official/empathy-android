@@ -1,6 +1,8 @@
 package com.empathy.empathy_android.http.appchannel
 
 import com.empathy.empathy_android.repository.model.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 internal sealed class AppData {
@@ -14,6 +16,18 @@ internal sealed class AppData {
             data class FetchMyFeeds(val userId: String) : Remote()
 
             data class CreateUser(val user: User) : Remote()
+
+            data class CreateFeed(val userId: RequestBody, val parameterTitle: RequestBody, val parameterDesc: RequestBody, val address: RequestBody, val userLocationEnum: RequestBody, val multipartBody: MultipartBody.Part) : Remote()
+
+//            data class CreateFeed(
+//                    val userId: Long,
+//                    val title: String,
+//                    val description: String,
+//                    val address: String,
+//                    val userLocationEnum: LocationEnum,
+//                    val multipartBody: MultipartBody.Part
+//
+//            ) : Remote()
         }
     }
 
@@ -26,6 +40,8 @@ internal sealed class AppData {
             data class FeedDetailFetched(val detailFeed: FeedDetail): Remote()
 
             data class MyFeedsFetched(val myFeeds: MutableList<MyFeed>): Remote()
+
+            data class FeedCreated(val it: Any): Remote()
 
         }
     }

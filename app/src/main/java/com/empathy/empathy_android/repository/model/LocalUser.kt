@@ -7,6 +7,7 @@ data class LocalUser(
         val name: String = "",
         val profileUrl: String = "",
         val address: String = "",
-        val userId: Long = 1
+        val userId: Long = 1,
+        var userLocationEnum: LocationEnum = LocationEnum.Seoul
 
 ): Serializable
