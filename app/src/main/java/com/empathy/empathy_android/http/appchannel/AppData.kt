@@ -11,7 +11,7 @@ internal sealed class AppData {
 
             data class FetchDetailFeed(val feedId: Int) : Remote()
 
-            data class FetchMyFeeds(val userId: Int) : Remote()
+            data class FetchMyFeeds(val userId: String) : Remote()
 
             data class CreateUser(val user: User) : Remote()
         }

@@ -34,7 +34,8 @@ internal class FeedViewModel @Inject constructor(
         private const val TRUE = "true"
     }
 
-    private val onCreate = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
+    private val onCreate    = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
+    private val onViewAction = channel.ofViewAction()
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
@@ -51,7 +52,9 @@ internal class FeedViewModel @Inject constructor(
         compositeDisposable.addAll(
                 onCreate.subscribeBy(onNext = ::handleOnCreate),
 
-                onRemote.subscribeBy(onNext = ::handleOnRemote)
+                onRemote.subscribeBy(onNext = ::handleOnRemote),
+
+                onViewAction.subscribeBy(onNext = ::handleOnViewAction)
         )
     }
 
@@ -93,7 +96,7 @@ internal class FeedViewModel @Inject constructor(
 
         if (hasLocation == false) {
             locationFilter.getLocationEnum()?.let {
-                appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), it))
+                appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter("1", it))
             }
 
             hasLocation = true
@@ -110,7 +113,8 @@ internal class FeedViewModel @Inject constructor(
         if(locationAddr == null || locationAddr == "") {
             setGps()
         } else {
-            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum()!!))
+//            user.userId.toString()
+            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter("1", locationFilter.getLocationEnum()!!))
 
             hasLocation = true
         }
@@ -121,14 +125,14 @@ internal class FeedViewModel @Inject constructor(
     private fun handleOnRemote(remote: AppData.RespondTo.Remote) {
         when(remote) {
             is AppData.RespondTo.Remote.FeedsByLocationFilterFetched -> {
-                val feeds = remote.feedMain.otherPeopleList
-                val isFirst = remote.feedMain.isFirst
+                val feeds    = remote.feedMain.otherPeopleList
+                val isFirst  = remote.feedMain.isFirst
                 val mainText = remote.feedMain.mainText
                 val imageUrl = remote.feedMain.imageURL
 
-                val weekday = remote.feedMain.weekday
+                val weekday  = remote.feedMain.weekday
                 val location = remote.feedMain.enumStr
-                val subText = "행복한 날에"
+                val subText  = "행복한 날에"
 
                 val subContent = weekday + "\n" + location + "\n" + subText
 
@@ -140,6 +144,14 @@ internal class FeedViewModel @Inject constructor(
 
                 showSubContent.postValue(FeedLooknFeel.ShowSubContent(subContent))
                 showFeeds.postValue(FeedLooknFeel.ShowFeeds(feeds))
+            }
+        }
+    }
+
+    private fun handleOnViewAction(feedViewAction: FeedViewAction) {
+        when(feedViewAction) {
+            is FeedViewAction.NavigateToMyFeedClicked -> {
+                channel.accept(FeedNavigation.NavigateToFeed(user))
             }
         }
     }

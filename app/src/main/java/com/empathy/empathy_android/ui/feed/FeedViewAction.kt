@@ -1,4 +1,6 @@
 package com.empathy.empathy_android.ui.feed
 
-internal class FeedViewAction {
+internal sealed class FeedViewAction {
+
+    object NavigateToMyFeedClicked: FeedViewAction()
 }

@@ -15,6 +15,8 @@ import com.empathy.empathy_android.ui.mypage.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import com.empathy.empathy_android.utils.OnSwipeTouchListener
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_feed.*
 
 internal class FeedActivity : BaseActivity<FeedViewModel>() {
@@ -30,9 +32,25 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
         viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
 
         subscribeLooknFeel()
+        subscribeNavigation()
 
         initializeView()
         initializeListener()
+    }
+
+    private fun subscribeNavigation() {
+        viewModel.channel
+                .ofNavigation()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    when(it) {
+                        is FeedNavigation.NavigateToFeed -> {
+                            startActivity(Intent(this, MyFeedsActivity::class.java).apply {
+                                putExtra(Constants.EXTRA_KEY_USER, it.user)
+                            })
+                        }
+                    }
+                }
     }
 
     private fun subscribeLooknFeel() {
@@ -80,7 +98,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
         constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
 
         my_feed_container.setOnClickListener {
-            startActivity(Intent(this, MyFeedsActivity::class.java))
+            viewModel.channel.accept(FeedViewAction.NavigateToMyFeedClicked)
         }
 
         info_container.setOnClickListener {

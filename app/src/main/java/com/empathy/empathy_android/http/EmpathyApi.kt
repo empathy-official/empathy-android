@@ -21,7 +21,7 @@ internal interface EmpathyApi {
     fun fetchFeedDetail(@Path("targetId") feedId: Int): Single<FeedDetail>
 
     @GET("/journey/myjourney/{ownerId}")
-    fun fetchMyFeeds(@Path("ownerId") userId: Int): Single<MutableList<MyFeed>>
+    fun fetchMyFeeds(@Path("ownerId") userId: String): Single<MutableList<MyFeed>>
 
     @POST("/user/")
     fun createUser(@Body user: User): Single<Long>

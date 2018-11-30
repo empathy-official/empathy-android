@@ -2,15 +2,19 @@ package com.empathy.empathy_android.ui.mypage
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
+import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.feedinput.FeedInputActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_my_feed.*
 
@@ -18,12 +22,10 @@ import kotlinx.android.synthetic.main.activity_my_feed.*
 internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
 
     companion object {
-        private const val REQUEST_CODE_ALBUM = 1000
-
-        const val EXTRA_KEY_USER_ID = "extra_key_user_id"
-
-        const val EXTRA_KEY_FEED_IMAGE_URI = "extra_key_feed_image_uri"
+        const val REQUEST_CODE_ALBUM = 1000
     }
+
+    private val selectedImageUri: Uri? = null
 
     private val adapter by lazy {
         MyFeedAdapter()
@@ -40,16 +42,29 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
         initializeRecycler()
         initializeListener()
 
+        subscribeNavigation()
         subscribeLooknFeel()
+    }
+
+    private fun subscribeNavigation() {
+        viewModel.channel
+                .ofNavigation()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    when(it) {
+                        is MyFeedNavigation.NavigateToFeedInput -> {
+                            startActivity(Intent(this, FeedInputActivity::class.java).apply {
+                                putExtra(Constants.EXTRA_KEY_FEED_IMAGE_URI, it.imageUri)
+                                putExtra(Constants.EXTRA_KEY_USER, it.user)
+                            })
+                        }
+                    }
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_ALBUM) {
-            data?.data?.let {
-                startActivity(Intent(this, FeedInputActivity::class.java).apply {
-                    putExtra(EXTRA_KEY_FEED_IMAGE_URI, it.toString())
-                })
-            }
+            viewModel.channel.accept(LifecycleState.OnActivityResult(requestCode, resultCode, data))
         }
     }
 

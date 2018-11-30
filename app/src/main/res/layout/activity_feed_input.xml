@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/date"
-            android:text="서울특별시 성북구 석광동"
+            android:text="2018.11.20"
             android:textColor="@color/_ffffff"
             android:textSize="16sp"
             android:layout_centerHorizontal="true"
@@ -54,8 +54,8 @@
         android:background="@color/_2a2c34">
 
         <TextView
-            android:id="@+id/remove"
-            android:text="삭제"
+            android:id="@+id/cancel"
+            android:text="취소"
             android:textColor="@color/_ffffff"
             android:textSize="16sp"
             android:layout_centerVertical="true"
