@@ -4,8 +4,9 @@ import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
 import io.reactivex.Observable
+import javax.inject.Inject
 
-internal class FeedInputChannel: FeedInputChanneApi {
+internal class FeedInputChannel @Inject constructor(): FeedInputChanneApi {
 
     private val lifecycleChannel: Relay<LifecycleState>       = PublishRelay.create()
     private val viewActionChannel: Relay<FeedInputViewAction> = PublishRelay.create()

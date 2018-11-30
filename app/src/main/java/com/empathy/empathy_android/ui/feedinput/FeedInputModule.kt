@@ -28,7 +28,7 @@ internal interface FeedInputModule {
     @Binds
     @IntoMap
     @ActivityScope
-    @ViewModelKey(FeedInputViewModel.ViewModel::class)
-    fun bindsFeedInputViewModel(viewModel: FeedInputViewModel.ViewModel): ViewModel
+    @ViewModelKey(FeedInputViewModel::class)
+    fun bindsFeedInputViewModel(viewModel: FeedInputViewModel): ViewModel
 
 }
