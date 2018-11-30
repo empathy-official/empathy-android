@@ -10,8 +10,12 @@ import retrofit2.http.Path
 
 internal interface EmpathyApi {
 
-    @GET("/journey/location/{locationEnum}")
-    fun fetchFeedsByLocationFilter(@Path("locationEnum") locationEnum: LocationEnum): Single<MutableList<Feed>>
+    @GET("/journey/main/{locationEnum}/{userId}")
+    fun fetchFeedsByLocationFilter(
+            @Path("locationEnum") locationEnum: LocationEnum,
+            @Path("userId") userId: String
+
+    ): Single<FeedMain>
 
     @GET("/journey/{targetId}")
     fun fetchFeedDetail(@Path("targetId") feedId: Int): Single<FeedDetail>

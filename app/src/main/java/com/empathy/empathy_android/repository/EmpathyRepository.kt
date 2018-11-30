@@ -25,7 +25,7 @@ internal class EmpathyRepository @Inject constructor(
                         .flatMap {
                             when(it) {
                                 is AppData.RequestTo.Remote.FetchFeedsByLocationFilter -> {
-                                    empathyApi.fetchFeedsByLocationFilter(it.locationEnum)
+                                    empathyApi.fetchFeedsByLocationFilter(it.locationEnum, it.userId)
                                             .map {
                                                 AppData.RespondTo.Remote.FeedsByLocationFilterFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }

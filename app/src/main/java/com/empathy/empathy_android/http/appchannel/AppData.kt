@@ -7,7 +7,7 @@ internal sealed class AppData {
 
     sealed class RequestTo: AppData() {
         sealed class Remote: RequestTo() {
-            data class FetchFeedsByLocationFilter(val locationEnum: LocationEnum) : Remote()
+            data class FetchFeedsByLocationFilter(val userId: String, val locationEnum: LocationEnum) : Remote()
 
             data class FetchDetailFeed(val feedId: Int) : Remote()
 
@@ -21,7 +21,7 @@ internal sealed class AppData {
         sealed class Remote: RespondTo() {
             data class UserCreated(val userId: Long): Remote()
 
-            data class FeedsByLocationFilterFetched(val feeds: MutableList<Feed>): Remote()
+            data class FeedsByLocationFilterFetched(val feedMain: FeedMain): Remote()
 
             data class FeedDetailFetched(val detailFeed: FeedDetail): Remote()
 

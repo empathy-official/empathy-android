@@ -4,10 +4,13 @@ import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.empathy.empathy_android.BaseViewModel
+import com.empathy.empathy_android.Constants
+import com.empathy.empathy_android.di.qualifier.App
 import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
 import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.repository.model.LocalUser
 import com.empathy.empathy_android.ui.login.LocationFilterApi
 import com.skt.Tmap.TMapData
 import com.skt.Tmap.TMapGpsManager
@@ -32,8 +35,13 @@ internal class FeedViewModel @Inject constructor(
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
     private var hasLocation = false
+    private var user = LocalUser()
 
+    val showLocation = MutableLiveData<FeedLooknFeel.ShowLocation>()
     val showFeeds = MutableLiveData<FeedLooknFeel.ShowFeeds>()
+    val showFeedPlaceholder = MutableLiveData<FeedLooknFeel.ShowFeedPlaceHolder>()
+    val showMyFeed = MutableLiveData<FeedLooknFeel.ShowMyFeed>()
+    val showSubContent = MutableLiveData<FeedLooknFeel.ShowSubContent>()
 
     init {
         compositeDisposable.addAll(
@@ -86,7 +94,7 @@ internal class FeedViewModel @Inject constructor(
         )
 
         if (hasLocation == false) {
-            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(locationFilter.getLocationEnum()!!))
+            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum()!!))
 
             hasLocation = true
             tmapGpsManager.CloseGps()
@@ -94,6 +102,8 @@ internal class FeedViewModel @Inject constructor(
     }
 
     private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
+        user = onCreate.intent.getSerializableExtra(Constants.EXTRA_KEY_USER) as LocalUser
+
         val locationAddr = locationFilter.getLocationEnum()?.location
         val locationCode = locationFilter.getLocationEnum()?.code
 
@@ -102,16 +112,36 @@ internal class FeedViewModel @Inject constructor(
         } else {
             Log.d("LOCATION_FILTER", locationFilter.getLocationEnum()?.location + " , " + locationFilter.getLocationEnum()?.code)
 
-            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(locationFilter.getLocationEnum()!!))
+            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum()!!))
 
             hasLocation = true
         }
+
+        showLocation.postValue(FeedLooknFeel.ShowLocation(user.address))
     }
 
     private fun handleOnRemote(remote: AppData.RespondTo.Remote) {
         when(remote) {
             is AppData.RespondTo.Remote.FeedsByLocationFilterFetched -> {
-                showFeeds.postValue(FeedLooknFeel.ShowFeeds(remote.feeds))
+                val feeds = remote.feedMain.otherPeopleList
+                val isFirst = remote.feedMain.isFirst
+                val mainText = remote.feedMain.mainText
+                val imageUrl = remote.feedMain.imageURL
+
+                val weekday = remote.feedMain.weekday
+                val location = remote.feedMain.enumStr
+                val subText = "행복한 날에"
+
+                val subContent = weekday + "\n" + location + "\n" + subText
+
+                if(isFirst == "true") {
+                    showFeedPlaceholder.postValue(FeedLooknFeel.ShowFeedPlaceHolder(mainText, imageUrl))
+                } else {
+                    showMyFeed.postValue(FeedLooknFeel.ShowMyFeed(mainText, imageUrl))
+                }
+
+                showSubContent.postValue(FeedLooknFeel.ShowSubContent(subContent))
+                showFeeds.postValue(FeedLooknFeel.ShowFeeds(feeds))
             }
         }
     }

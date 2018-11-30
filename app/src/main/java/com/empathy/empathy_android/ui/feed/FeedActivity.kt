@@ -2,10 +2,12 @@ package com.empathy.empathy_android.ui.feed
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.LifecycleState
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
@@ -34,7 +36,33 @@ internal class FeedActivity : BaseActivity<FeedViewModel>() {
     }
 
     private fun subscribeLooknFeel() {
+        observe(viewModel.showLocation, ::handleShowLocation)
         observe(viewModel.showFeeds, ::handleShowFeeds)
+        observe(viewModel.showFeedPlaceholder, ::handleShowFeedPlaceholder)
+        observe(viewModel.showMyFeed, ::handleShowMyFeed)
+        observe(viewModel.showSubContent, ::handleShowSubContent)
+    }
+
+    private fun handleShowLocation(looknFeel: FeedLooknFeel.ShowLocation) {
+        toolbar.text = looknFeel.location
+    }
+
+    private fun handleShowFeedPlaceholder(looknFeel: FeedLooknFeel.ShowFeedPlaceHolder) {
+        default_title.visibility = View.VISIBLE
+        my_feed_container.loadImage(looknFeel.placeholderImage)
+        default_content.text = looknFeel.content
+        default_content.visibility = View.VISIBLE
+    }
+
+    private fun handleShowMyFeed(looknFeel: FeedLooknFeel.ShowMyFeed) {
+        my_feed_title.visibility = View.VISIBLE
+        my_feed_container.loadImage(looknFeel.myFeedImage)
+        my_feed_content.text = looknFeel.content
+        my_feed_content.visibility = View.VISIBLE
+    }
+
+    private fun handleShowSubContent(looknFeel: FeedLooknFeel.ShowSubContent) {
+        sub_content.text = looknFeel.subContent
     }
 
     private fun handleShowFeeds(looknFeel: FeedLooknFeel.ShowFeeds) {
