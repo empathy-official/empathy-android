@@ -6,19 +6,20 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import com.empathy.empathy_android.BaseActivity
+import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.ui.feed.FeedActivity
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
+import com.facebook.*
 import com.facebook.login.LoginResult
 import com.skt.Tmap.TMapGpsManager
 import com.skt.Tmap.TMapView
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.longToast
+import java.net.URL
 import java.util.*
 
 
@@ -44,6 +45,8 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        subscribeNavigation()
+
         showLocationPermission()
 
         initializeFacebookPermission()
@@ -68,6 +71,25 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
 
         compositeDisposable.clear()
         tmapGpsManager.CloseGps()
+    }
+
+    private fun subscribeNavigation() {
+        compositeDisposable.addAll(
+                viewModel.channel
+                        .ofNavigation()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onNext = {
+                                    when(it) {
+                                        is LoginNavigation.LoginSuccess -> {
+                                            startActivity(Intent(this@LoginActivity, FeedActivity::class.java).apply {
+                                                putExtra(Constants.EXTRA_KEY_USER, it.user)
+                                            })
+                                        }
+                                    }
+                                }
+                        )
+        )
     }
 
     private fun showLocationPermission() {
@@ -112,7 +134,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     private fun initializeListener() {
         facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                navigateToFeed()
+                viewModel.channel.accept(LoginViewAction.LoginClick)
             }
 
             override fun onCancel() {
@@ -127,7 +149,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         facebook_login_view.setOnClickListener {
             if (isGranted) {
                 if(AccessToken.getCurrentAccessToken() != null) {
-                    navigateToFeed()
+                    viewModel.channel.accept(LoginViewAction.LoginClick)
 
                     return@setOnClickListener
                 }
@@ -138,12 +160,6 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
             }
 
         }
-    }
-
-    private fun navigateToFeed() {
-        startActivity(Intent(this@LoginActivity, FeedActivity::class.java))
-
-        finish()
     }
 
 }

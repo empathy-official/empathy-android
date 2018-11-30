@@ -42,6 +42,12 @@ internal class EmpathyRepository @Inject constructor(
                                                 AppData.RespondTo.Remote.MyFeedsFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
+                                is AppData.RequestTo.Remote.CreateUser -> {
+                                    empathyApi.createUser(it.user)
+                                            .map {
+                                                AppData.RespondTo.Remote.UserCreated(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
                             }
                         }.subscribe(appChannel::accept)
         )
