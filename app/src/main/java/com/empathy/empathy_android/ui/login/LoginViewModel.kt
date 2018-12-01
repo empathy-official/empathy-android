@@ -1,10 +1,13 @@
 package com.empathy.empathy_android.ui.login
 
+import android.util.Log
 import com.empathy.empathy_android.BaseViewModel
+import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
 import com.empathy.empathy_android.repository.model.LocalUser
+import com.empathy.empathy_android.repository.model.LocationEnum
 import com.empathy.empathy_android.repository.model.User
 import com.facebook.Profile
 import com.skt.Tmap.TMapData
@@ -31,6 +34,9 @@ internal interface LoginViewModel {
         private var user: User = User()
         private var address = ""
 
+        private var latitude   = Constants.DEFAULT_LATITUDE
+        private var longtitude = Constants.DEFAULT_LONGTITUDE
+
         init {
             compositeDisposable.addAll(
                     onViewAction.subscribeBy(onNext = ::handleOnViewAction),
@@ -42,7 +48,7 @@ internal interface LoginViewModel {
         private fun handleOnRemote(remote: AppData.RespondTo.Remote) {
             when(remote) {
                 is AppData.RespondTo.Remote.UserCreated -> {
-                    val user = LocalUser(user.name, user.profileUrl, address, remote.userId)
+                    val user = LocalUser(user.name, user.profileUrl, address, remote.userId, locationFilter.getLocationEnum() ?: LocationEnum.Seoul, latitude, longtitude)
 
                     channel.accept(LoginNavigation.LoginSuccess(user))
                 }
@@ -53,10 +59,13 @@ internal interface LoginViewModel {
             when(loginViewAction) {
                 is LoginViewAction.OnLocationChange -> {
 
+                    latitude   = loginViewAction.latitude
+                    longtitude = loginViewAction.longtitude
+
                     compositeDisposable.add(
                             Observable
                                     .fromCallable {
-                                        TMapData().convertGpsToAddress(loginViewAction.latitude, loginViewAction.longtitude)
+                                        TMapData().convertGpsToAddress(latitude, longtitude)
                                     }
                                     .subscribeOn(Schedulers.newThread())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -91,12 +100,13 @@ internal interface LoginViewModel {
                 is LoginViewAction.LoginClick -> {
                     val profile = Profile.getCurrentProfile()
 
+                    val userToken = loginViewAction.token
                     val userid = profile.id
                     val username = profile.name
                     val userimage = URL("https://graph.facebook.com/$userid/picture?type=large").toString()
                     val loginType = "facebook"
 
-                    user = User(username, loginType, userimage)
+                    user = User(username, loginType, userimage, userToken)
 
                     appChannel.accept(AppData.RequestTo.Remote.CreateUser(user))
                 }

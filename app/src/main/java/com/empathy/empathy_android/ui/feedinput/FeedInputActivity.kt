@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.extensions.observe
 import kotlinx.android.synthetic.main.activity_feed_input.*
 
@@ -20,7 +20,7 @@ internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
 
         initializeListener()
 
-        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+        viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
     }
 
     private fun subscribeLooknFeel() {

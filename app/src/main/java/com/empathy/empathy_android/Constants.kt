@@ -15,6 +15,7 @@ internal class Constants {
 
         const val DEFAULT_LATITUDE   = 126.981106
         const val DEFAULT_LONGTITUDE = 37.568477
+        const val DEFAULT_RANGE = "500"
     }
 
 }

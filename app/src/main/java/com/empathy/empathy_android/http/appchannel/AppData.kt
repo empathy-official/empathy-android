@@ -21,6 +21,16 @@ internal sealed class AppData {
 
             data class DeleteFeed(val targetId: Int, val adapterPosition: Int) : Remote()
 
+            data class FetchTourInfos(
+                    val contentType: Int,
+                    val latitude: Double,
+                    val longtitude: Double,
+                    val range: String,
+                    val perPage: Int
+
+            ) : Remote()
+
+
 //            data class CreateFeed(
 //                    val userId: Long,
 //                    val title: String,
@@ -47,6 +57,7 @@ internal sealed class AppData {
 
             data class FeedDeleted(val it: Any, val position: Int): Remote()
 
+            data class TourInfosFetched(val tourInfos: MutableList<TourInfo>): Remote()
         }
     }
 }

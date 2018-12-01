@@ -8,7 +8,7 @@ import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.EmpathyApp
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.repository.model.LocalUser
 import io.reactivex.rxkotlin.subscribeBy
 import okhttp3.MediaType
@@ -28,7 +28,7 @@ internal class FeedInputViewModel @Inject constructor(
 
 ): BaseViewModel() {
 
-    private val onCreate     = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
+    private val onCreate     = channel.ofLifeCycle().ofType(ActivityLifecycleState.OnCreate::class.java)
     private val onViewAction = channel.ofViewAction()
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
@@ -49,7 +49,7 @@ internal class FeedInputViewModel @Inject constructor(
         )
     }
 
-    private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
+    private fun handleOnCreate(onCreate: ActivityLifecycleState.OnCreate) {
         val uri = onCreate.intent.getStringExtra(Constants.EXTRA_KEY_FEED_IMAGE_URI)
         user    = onCreate.intent.getSerializableExtra(Constants.EXTRA_KEY_USER) as LocalUser
 

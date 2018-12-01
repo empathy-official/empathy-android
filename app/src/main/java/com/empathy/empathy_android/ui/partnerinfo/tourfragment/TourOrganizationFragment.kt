@@ -2,35 +2,37 @@ package com.empathy.empathy_android.ui.partnerinfo.tourfragment
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-
+import com.empathy.empathy_android.BaseFragment
+import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.extensions.observe
+import com.empathy.empathy_android.http.appchannel.FragmentLifeCycle
+import com.empathy.empathy_android.repository.model.LocalUser
 import com.empathy.empathy_android.repository.model.Tour
 import kotlinx.android.synthetic.main.fragment_tour_organization.*
 
-internal class TourOrganizationFragment : Fragment() {
-
+internal class TourOrganizationFragment : BaseFragment() {
 
     companion object {
-        fun newInstance() = TourOrganizationFragment().apply {
+        const val KEY_BUNDLE_USER = "key_bundle_user"
+
+        fun newInstance(user: LocalUser) = TourOrganizationFragment().apply {
             arguments = Bundle().apply {
-//                putInt()
+                putSerializable(KEY_BUNDLE_USER, user)
             }
         }
     }
 
-    private val tourAdapter by lazy {
-        TourAdapter()
+    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
+        createViewModel(TourOrganizationViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        arguments?.getInt("")
+    private val tourAdapter by lazy {
+        TourAdapter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -40,6 +42,24 @@ internal class TourOrganizationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecycler()
+
+        viewModel.channel.accept(FragmentLifeCycle.OnViewCreated(arguments))
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        subscribeLooknFeel()
+
+        viewModel.channel.accept(FragmentLifeCycle.OnActivityCreated(savedInstanceState))
+    }
+
+    private fun subscribeLooknFeel() {
+        observe(viewModel.showTourInfos, ::handleShowTourInfos)
+    }
+
+    private fun handleShowTourInfos(looknFeel: TourOrganizationLooknFeel.ShowTourInfos) {
+        tourAdapter.setTours(looknFeel.tourInfos)
     }
 
     private fun initializeRecycler() {
@@ -48,18 +68,18 @@ internal class TourOrganizationFragment : Fragment() {
             adapter = tourAdapter
         }
 
-        //dummy
-        val tours = mutableListOf<Tour>().apply {
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-
-        }
-
-        tourAdapter.setTours(tours)
+//        //dummy
+//        val tours = mutableListOf<Tour>().apply {
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
+//
+//        }
+//
+//        tourAdapter.setTours(tours)
     }
 }

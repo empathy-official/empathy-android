@@ -138,7 +138,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
     private fun initializeListener() {
         facebook_login.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                viewModel.channel.accept(LoginViewAction.LoginClick)
+                viewModel.channel.accept(LoginViewAction.LoginClick(loginResult.accessToken.token))
             }
 
             override fun onCancel() {
@@ -153,7 +153,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
         facebook_login_view.setOnClickListener {
             if (isGranted) {
                 if(AccessToken.getCurrentAccessToken() != null) {
-                    viewModel.channel.accept(LoginViewAction.LoginClick)
+                    viewModel.channel.accept(LoginViewAction.LoginClick(AccessToken.getCurrentAccessToken().token))
 
                     return@setOnClickListener
                 }

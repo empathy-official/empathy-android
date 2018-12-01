@@ -10,7 +10,7 @@ import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.myfeed.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
@@ -44,7 +44,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+        viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
 
         subscribeLooknFeel()
         subscribeNavigation()

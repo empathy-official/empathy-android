@@ -32,6 +32,16 @@ internal interface EmpathyApi {
     @DELETE("/journey/{targetId}")
     fun deleteFeed(@Path("targetId") targetId: Int): Single<Any>
 
+    @GET("/info/tourAPI/{contentType}/{mapX}/{mapY}/{range}/{pageNumber}")
+    fun fetchTourInfos(
+        @Path("contentType") contentType: Int,
+        @Path("mapX") latitude: Double,
+        @Path("mapY") longtitude: Double,
+        @Path("range") range: String,
+        @Path("pageNumber") perPage: Int
+
+    ): Single<MutableList<TourInfo>>
+
 //    @Multipart
 //    @POST("/journey/")
 //    fun createFeed(

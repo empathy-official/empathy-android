@@ -45,21 +45,22 @@
     app:layout_constraintTop_toTopOf="@id/intro"
     app:layout_constraintBottom_toBottomOf="@+id/intro"/>
 
-  <ImageView
-    android:id="@+id/tour_image"
-    android:layout_width="323dp"
-    android:layout_height="117dp"
-    android:layout_marginTop="42dp"
-    android:scaleType="fitXY"
-    app:layout_constraintTop_toBottomOf="@+id/title"
-    app:layout_constraintRight_toRightOf="parent"/>
+  <!--<ImageView-->
+    <!--android:id="@+id/tour_image"-->
+    <!--android:layout_width="323dp"-->
+    <!--android:layout_height="117dp"-->
+    <!--android:layout_marginTop="42dp"-->
+    <!--android:scaleType="fitXY"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/title"-->
+    <!--app:layout_constraintRight_toRightOf="parent"/>-->
   
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/tour_recycler"
-    android:layout_width="286dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="19dp"
+    android:layout_marginTop="48dp"
+    android:layout_marginLeft="37dp"
     android:background="@color/_2a2c34"
-    app:layout_constraintTop_toBottomOf="@id/tour_image"
-    app:layout_constraintRight_toRightOf="parent"/>
+    app:layout_constraintTop_toBottomOf="@id/title"
+    app:layout_constraintLeft_toLeftOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
