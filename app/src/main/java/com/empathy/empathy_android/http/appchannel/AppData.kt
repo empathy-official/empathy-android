@@ -32,6 +32,8 @@ internal sealed class AppData {
 
             ) : Remote()
 
+            data class FetchPartnerInfoDetail(val partnerId: String) : Remote()
+
 
 //            data class CreateFeed(
 //                    val userId: Long,
@@ -62,6 +64,8 @@ internal sealed class AppData {
             data class TourInfosFetched(val tourInfos: MutableList<TourInfo>): Remote()
 
             data class PartnerInfoFetched(val partner: Partner): Remote()
+
+            data class PartnerInfoDetailFetched(val tourInfoDetail: TourInfoDetail): Remote()
         }
     }
 }

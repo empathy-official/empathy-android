@@ -21,8 +21,8 @@ internal class PartnerInfoActivity: BaseActivity<PartnerInfoViewModel>() {
         super.onCreate(savedInstanceState)
 
         val user = intent.getSerializableExtra(Constants.EXTRA_KEY_USER) as LocalUser
-//        Random().nextInt(2)
-        when(1) {
+
+        when(Random().nextInt(2)) {
             0 -> replaceFragment(TourOrganizationFragment.newInstance(user), "tour", R.id.partner_info_container)
             1 -> replaceFragment(PartnerFragment.newInstance(), "partner", R.id.partner_info_container)
         }

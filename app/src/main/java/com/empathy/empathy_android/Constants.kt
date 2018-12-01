@@ -12,10 +12,12 @@ internal class Constants {
         const val EXTRA_KEY_FEED_ID = "extra_key_feed_id"
         const val EXTRA_KEY_USER = "extra_key_user"
         const val EXTRA_KEY_ADDRESS = "extra_key_address"
+        const val EXTRA_KEY_PARTNER_ID = "extra_key_partner_id"
 
         const val DEFAULT_LATITUDE   = 126.981106
         const val DEFAULT_LONGTITUDE = 37.568477
         const val DEFAULT_RANGE = "500"
+
     }
 
 }

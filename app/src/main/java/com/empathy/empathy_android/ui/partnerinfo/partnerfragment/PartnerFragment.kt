@@ -1,15 +1,19 @@
 package com.empathy.empathy_android.ui.partnerinfo.partnerfragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.empathy.empathy_android.BaseFragment
+import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.FragmentLifeCycle
+import com.empathy.empathy_android.repository.model.Partner
+import com.empathy.empathy_android.ui.partnerinfo_detail.PartnerInfoDetailActivity
 import kotlinx.android.synthetic.main.fragment_partner_type_a.*
 import java.util.*
 
@@ -77,19 +81,22 @@ internal class PartnerFragment: BaseFragment() {
         observe(viewModel.showPartnerInfo, ::handleShowPartnerInfo)
     }
 
+    private var partner: Partner? = null
     private fun handleShowPartnerInfo(looknFeel: PartnerLooknFeel.ShowPartnerInfo) {
-        val partner = looknFeel.partner
+        partner = looknFeel.partner
 
-        partner_image.loadImage(partner.imageURL)
+        partner_image.loadImage(partner?.imageURL ?: "")
 
-        title.text = partner.name
-        category.text = partner.kind
-        address.text = partner.locatiionStr
+        title.text = partner?.name
+        category.text = partner?.kind
+        address.text = partner?.locatiionStr
     }
 
     private fun initializeListener() {
         container_view.setOnClickListener {
-
+            startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
+                putExtra(Constants.EXTRA_KEY_PARTNER_ID, partner?.targetId)
+            })
         }
     }
 

@@ -14,6 +14,8 @@ import com.empathy.empathy_android.ui.login.LoginModule
 import com.empathy.empathy_android.ui.login.MapModule
 import com.empathy.empathy_android.ui.myfeed.MyFeedsActivity
 import com.empathy.empathy_android.ui.myfeed.MyFeedModule
+import com.empathy.empathy_android.ui.partnerinfo_detail.PartnerInfoDetailActivity
+import com.empathy.empathy_android.ui.partnerinfo_detail.PartnerInfoDetailModule
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -49,4 +51,7 @@ internal abstract class ActivityBindingModule {
     @ContributesAndroidInjector(modules = [FeedInputModule::class])
     abstract fun feedInputActivity(): FeedInputActivity
 
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [PartnerInfoDetailModule::class])
+    abstract fun partnerInfoDetailActivity(): PartnerInfoDetailActivity
 }
