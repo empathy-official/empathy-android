@@ -4,6 +4,8 @@ internal sealed class FeedViewAction {
 
     object NavigateToMyFeedClicked: FeedViewAction()
 
+    object NavigateToPartnerInfoClicked: FeedViewAction()
+
     data class OnLocationChange(
             val latitude: Double,
             val longtitude: Double

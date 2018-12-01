@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.empathy.empathy_android.di.key.ViewModelKey
 import com.empathy.empathy_android.di.scope.ActivityScope
 import com.empathy.empathy_android.di.scope.FragmentScope
+import com.empathy.empathy_android.ui.partnerinfo.partnerfragment.PartnerFragment
+import com.empathy.empathy_android.ui.partnerinfo.partnerfragment.PartnerModule
 import com.empathy.empathy_android.ui.partnerinfo.tourfragment.TourOrganizationFragment
 import com.empathy.empathy_android.ui.partnerinfo.tourfragment.TourOrganizationModule
 import dagger.Binds
@@ -19,6 +21,10 @@ internal interface PartnerInfoModule {
     class ProvideModule {
 
     }
+
+    @ContributesAndroidInjector(modules = [PartnerModule::class])
+    @FragmentScope
+    fun providePartnerFragment(): PartnerFragment
 
     @ContributesAndroidInjector(modules = [TourOrganizationModule::class])
     @FragmentScope

@@ -29,7 +29,7 @@ internal class TourOrganizationViewModel @Inject constructor(
     private val onViewCreated     = channel.ofLifeCycle().ofType(FragmentLifeCycle.OnViewCreated::class.java)
     private val onActivityCreated = channel.ofLifeCycle().ofType(FragmentLifeCycle.OnActivityCreated::class.java)
 
-    private val onRemote = channel.ofLifeCycle().ofType(AppData.RespondTo.Remote::class.java)
+    private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
     private var user: LocalUser = LocalUser()
 

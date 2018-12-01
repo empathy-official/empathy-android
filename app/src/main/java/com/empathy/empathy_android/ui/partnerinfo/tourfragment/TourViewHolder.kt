@@ -21,4 +21,6 @@ internal class TourViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
             tour_image.loadImage(tour.imageURL)
         }
     }
+
+
 }

@@ -6,16 +6,22 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.empathy.empathy_android.extensions.showDialogFragment
 import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-internal abstract class BaseActivity<VM>: AppCompatActivity() where VM: BaseViewModel {
+internal abstract class BaseActivity<VM>: HasSupportFragmentInjector, AppCompatActivity() where VM: BaseViewModel {
 
     companion object {
         private const val LOADING_DIALOG = "loading_dialog"
     }
+
+    @Inject lateinit var supportFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -42,6 +48,10 @@ internal abstract class BaseActivity<VM>: AppCompatActivity() where VM: BaseView
         super.onActivityResult(requestCode, resultCode, data)
 
         viewModel.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+        return supportFragmentInjector
     }
 
     protected fun showLoadingDialog() {

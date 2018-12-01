@@ -100,13 +100,13 @@ internal interface LoginViewModel {
                 is LoginViewAction.LoginClick -> {
                     val profile = Profile.getCurrentProfile()
 
-                    val userToken = loginViewAction.token
+                    val appUserId = loginViewAction.userId
                     val userid = profile.id
                     val username = profile.name
                     val userimage = URL("https://graph.facebook.com/$userid/picture?type=large").toString()
                     val loginType = "facebook"
 
-                    user = User(username, loginType, userimage, userToken)
+                    user = User(username, loginType, userimage, appUserId)
 
                     appChannel.accept(AppData.RequestTo.Remote.CreateUser(user))
                 }

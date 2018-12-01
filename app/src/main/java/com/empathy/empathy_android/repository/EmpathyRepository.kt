@@ -78,7 +78,12 @@ internal class EmpathyRepository @Inject constructor(
                                             .map {
                                                 AppData.RespondTo.Remote.TourInfosFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
-
+                                }
+                                is AppData.RequestTo.Remote.FetchPartnerInfo -> {
+                                    empathyApi.fetchPartnerInfo()
+                                            .map {
+                                                AppData.RespondTo.Remote.PartnerInfoFetched(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
                             }
                         }.subscribe(appChannel::accept)

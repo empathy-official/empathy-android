@@ -7,7 +7,6 @@
 
   <ImageView
     android:id="@+id/partner_image"
-    android:src="@drawable/icon"
     android:scaleType="fitXY"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +17,6 @@
 
   <ImageView
     android:id="@+id/partner_deco_image"
-    android:src="@drawable/partner_deco"
     android:scaleType="fitXY"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +27,6 @@
 
   <TextView
     android:id="@+id/title"
-    android:text="La'mie"
     android:textColor="@color/_ffffff"
     android:textSize="22sp"
     android:textStyle="bold"
@@ -42,7 +39,6 @@
 
   <TextView
     android:id="@+id/category"
-    android:text="인디밴드"
     android:textColor="@color/_ffffff"
     android:textSize="14sp"
     android:gravity="center_horizontal"
@@ -55,7 +51,6 @@
 
   <TextView
     android:id="@+id/address"
-    android:text="서울시 성북구 석관동 장미아파"
     android:textColor="@color/_ffffff"
     android:textSize="14sp"
     android:gravity="center_horizontal"

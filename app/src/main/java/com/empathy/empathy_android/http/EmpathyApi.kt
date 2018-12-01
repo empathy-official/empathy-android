@@ -42,6 +42,9 @@ internal interface EmpathyApi {
 
     ): Single<MutableList<TourInfo>>
 
+    @GET("/info/alliance")
+    fun fetchPartnerInfo(): Single<Partner>
+
 //    @Multipart
 //    @POST("/journey/")
 //    fun createFeed(

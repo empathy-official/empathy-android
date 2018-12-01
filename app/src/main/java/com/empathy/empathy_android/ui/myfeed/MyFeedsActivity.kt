@@ -91,10 +91,6 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
             layoutManager = LinearLayoutManager(this@MyFeedsActivity)
             adapter = this@MyFeedsActivity.adapter
         }
-
-        this.adapter.setMyFeeds(mutableListOf<MyFeed>().apply {
-            add(MyFeed("asdfadf", "asdf" ,"adsf" , 1, "asdfasdf", "asdfasdf", "asdf"))
-        })
     }
 
     private fun initializeListener() {

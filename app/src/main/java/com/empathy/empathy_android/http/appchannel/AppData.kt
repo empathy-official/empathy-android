@@ -9,6 +9,8 @@ internal sealed class AppData {
 
     sealed class RequestTo: AppData() {
         sealed class Remote: RequestTo() {
+            object FetchPartnerInfo : Remote()
+
             data class FetchFeedsByLocationFilter(val userId: String, val locationEnum: LocationEnum) : Remote()
 
             data class FetchDetailFeed(val feedId: Int) : Remote()
@@ -58,6 +60,8 @@ internal sealed class AppData {
             data class FeedDeleted(val it: Any, val position: Int): Remote()
 
             data class TourInfosFetched(val tourInfos: MutableList<TourInfo>): Remote()
+
+            data class PartnerInfoFetched(val partner: Partner): Remote()
         }
     }
 }

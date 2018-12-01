@@ -67,19 +67,6 @@ internal class TourOrganizationFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = tourAdapter
         }
-
-//        //dummy
-//        val tours = mutableListOf<Tour>().apply {
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//            add(Tour("경복궁 체험행사", "왕십리 회랑로"))
-//
-//        }
-//
-//        tourAdapter.setTours(tours)
     }
+
 }

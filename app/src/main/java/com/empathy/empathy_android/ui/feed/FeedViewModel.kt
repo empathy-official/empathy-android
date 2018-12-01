@@ -114,6 +114,10 @@ internal class FeedViewModel @Inject constructor(
                 channel.accept(FeedNavigation.NavigateToFeed(user))
             }
 
+            is FeedViewAction.NavigateToPartnerInfoClicked -> {
+                channel.accept(FeedNavigation.NavigateToPartnerInfo(this.user))
+            }
+
             is FeedViewAction.OnLocationChange -> {
                 if(hasLocation) {
                     return

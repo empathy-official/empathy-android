@@ -78,6 +78,12 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
                                         putExtra(Constants.EXTRA_KEY_USER, it.user)
                                     })
                                 }
+
+                                is FeedNavigation.NavigateToPartnerInfo -> {
+                                    startActivity(Intent(this, PartnerInfoActivity::class.java).apply {
+                                        putExtra(Constants.EXTRA_KEY_USER, it.user)
+                                    })
+                                }
                             }
                         }
         )
@@ -152,7 +158,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
         }
 
         info_container.setOnClickListener {
-            startActivity(Intent(this, PartnerInfoActivity::class.java))
+            viewModel.channel.accept(FeedViewAction.NavigateToPartnerInfoClicked)
         }
 
         filter_location.setOnClickListener {

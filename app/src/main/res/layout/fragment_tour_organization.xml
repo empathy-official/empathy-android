@@ -57,10 +57,11 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/tour_recycler"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="0dp"
     android:layout_marginTop="48dp"
     android:layout_marginLeft="37dp"
     android:background="@color/_2a2c34"
     app:layout_constraintTop_toBottomOf="@id/title"
-    app:layout_constraintLeft_toLeftOf="parent"/>
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

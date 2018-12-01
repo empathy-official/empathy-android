@@ -2,7 +2,7 @@ package com.empathy.empathy_android.ui.partnerinfo.tourfragment
 
 import androidx.lifecycle.ViewModel
 import com.empathy.empathy_android.di.key.ViewModelKey
-import com.empathy.empathy_android.di.scope.ActivityScope
+import com.empathy.empathy_android.di.scope.FragmentScope
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,12 +18,12 @@ internal interface TourOrganizationModule {
 
 
     @Binds
-    @ActivityScope
+    @FragmentScope
     fun bindsTourOrganizationChannel(channel: TourOrganizationChannel): TourOrganizationChannelApi
 
     @Binds
-    @ActivityScope
+    @FragmentScope
     @IntoMap
     @ViewModelKey(TourOrganizationViewModel::class)
-    fun bindsInfoViewModel(infoViewModel: TourOrganizationViewModel): ViewModel
+    fun bindsTourOrganizationViewModel(viewModel: TourOrganizationViewModel): ViewModel
 }
