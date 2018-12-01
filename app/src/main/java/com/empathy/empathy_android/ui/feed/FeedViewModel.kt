@@ -73,6 +73,8 @@ internal class FeedViewModel @Inject constructor(
             appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM))
 
             hasLocation = true
+
+            closeGps.postValue(FeedLooknFeel.CloseGps)
         }
 
         showLocation.postValue(FeedLooknFeel.ShowLocation(user.address))

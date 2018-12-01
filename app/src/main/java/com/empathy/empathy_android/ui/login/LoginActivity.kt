@@ -88,6 +88,7 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
                                             startActivity(Intent(this@LoginActivity, FeedActivity::class.java).apply {
                                                 putExtra(Constants.EXTRA_KEY_USER, it.user)
                                             })
+                                            finish()
                                         }
                                     }
                                 }

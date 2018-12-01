@@ -63,6 +63,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     override fun onDestroy() {
         super.onDestroy()
 
+        tmapGpsManager.CloseGps()
         compositeDisposable.clear()
     }
 
