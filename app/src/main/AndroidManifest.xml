@@ -62,7 +62,7 @@
 
         <activity android:name=".ui.tmap.MapActivity" />
 
-        <activity android:name=".ui.mypage.MyFeedsActivity">
+        <activity android:name=".ui.myfeed.MyFeedsActivity">
 
         </activity>
 

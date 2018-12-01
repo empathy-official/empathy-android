@@ -1,4 +1,4 @@
-package com.empathy.empathy_android.ui.mypage
+package com.empathy.empathy_android.ui.myfeed
 
 import android.app.Activity
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +19,7 @@ internal class MyFeedViewModel @Inject constructor(
 
     private val onCreate         = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
     private val onActivityResult = channel.ofLifeCycle().ofType(LifecycleState.OnActivityResult::class.java)
+    private val onViewAction     = channel.ofViewAction()
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
@@ -26,6 +27,7 @@ internal class MyFeedViewModel @Inject constructor(
 
     val showMyFeeds = MutableLiveData<MyFeedLooknFeel.ShowMyFeeds>()
     val showEmptyFeeds = MutableLiveData<MyFeedLooknFeel.ShowEmptyFeeds>()
+    val deleteMyFeed = MutableLiveData<MyFeedLooknFeel.DeleteMyFeed>()
 
     init {
         compositeDisposable.addAll(
@@ -33,8 +35,20 @@ internal class MyFeedViewModel @Inject constructor(
 
                 onActivityResult.subscribeBy(onNext = ::handleOnActivityResult),
 
-                onRemote.subscribeBy(onNext = ::handleOnRemote)
+                onRemote.subscribeBy(onNext = ::handleOnRemote),
+
+                onViewAction.subscribeBy(onNext = ::handleOnViewAction)
         )
+    }
+
+    private fun handleOnViewAction(viewAction: MyFeedViewAction) {
+        when(viewAction) {
+            is MyFeedViewAction.OnFeedDeleteClicked -> {
+                viewAction.targetId?.let {
+                    appChannel.accept(AppData.RequestTo.Remote.DeleteFeed(it, viewAction.adapterPosition))
+                }
+            }
+        }
     }
 
     private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
@@ -65,6 +79,12 @@ internal class MyFeedViewModel @Inject constructor(
                 } else {
                     showMyFeeds.postValue(MyFeedLooknFeel.ShowMyFeeds(remote.myFeeds))
                 }
+            }
+
+            is AppData.RespondTo.Remote.FeedDeleted -> {
+                val deletePosition = remote.position
+
+                deleteMyFeed.postValue(MyFeedLooknFeel.DeleteMyFeed(deletePosition))
             }
         }
     }

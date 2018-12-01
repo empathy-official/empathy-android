@@ -60,6 +60,14 @@ internal class EmpathyRepository @Inject constructor(
                                         AppData.RespondTo.Remote.FeedCreated(it)
                                     }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
+                                is AppData.RequestTo.Remote.DeleteFeed -> {
+                                    val position = it.adapterPosition
+
+                                    empathyApi.deleteFeed(it.targetId)
+                                            .map {
+                                                AppData.RespondTo.Remote.FeedDeleted(it, position)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
                             }
                         }.subscribe(appChannel::accept)
         )

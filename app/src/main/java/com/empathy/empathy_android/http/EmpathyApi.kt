@@ -29,6 +29,9 @@ internal interface EmpathyApi {
     @POST("/journey/")
     fun createFeed(@Part("ownerId") userId: RequestBody, @Part("title") parameterTitle: RequestBody, @Part("contents") parameterDesc: RequestBody, @Part("location") address: RequestBody, @Part("locationEnum") userLocationEnum: RequestBody, @Part multipartBody: MultipartBody.Part): Single<Any>
 
+    @DELETE("/journey/{targetId}")
+    fun deleteFeed(@Path("targetId") targetId: Int): Single<Any>
+
 //    @Multipart
 //    @POST("/journey/")
 //    fun createFeed(

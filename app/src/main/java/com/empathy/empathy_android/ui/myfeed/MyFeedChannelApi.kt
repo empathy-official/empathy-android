@@ -1,4 +1,4 @@
-package com.empathy.empathy_android.ui.mypage
+package com.empathy.empathy_android.ui.myfeed
 
 import com.empathy.empathy_android.http.appchannel.LifecycleState
 import io.reactivex.Observable

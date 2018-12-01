@@ -19,6 +19,8 @@ internal sealed class AppData {
 
             data class CreateFeed(val userId: RequestBody, val parameterTitle: RequestBody, val parameterDesc: RequestBody, val address: RequestBody, val userLocationEnum: RequestBody, val multipartBody: MultipartBody.Part) : Remote()
 
+            data class DeleteFeed(val targetId: Int, val adapterPosition: Int) : Remote()
+
 //            data class CreateFeed(
 //                    val userId: Long,
 //                    val title: String,
@@ -42,6 +44,8 @@ internal sealed class AppData {
             data class MyFeedsFetched(val myFeeds: MutableList<MyFeed>): Remote()
 
             data class FeedCreated(val it: Any): Remote()
+
+            data class FeedDeleted(val it: Any, val position: Int): Remote()
 
         }
     }
