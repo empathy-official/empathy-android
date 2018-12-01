@@ -2,6 +2,8 @@ package com.empathy.empathy_android.ui.partnerinfo_detail
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
@@ -28,6 +30,8 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
         TMapView(this)
     }
 
+    private val requestManager by lazy { Glide.with(this) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,7 +47,9 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
 
                     val tourInfoDetail = it.tourInfoDetail
 
-                    info_detail_image.loadImage(tourInfoDetail.imageURL)
+//                    info_detail_image.loadImage(tourInfoDetail.imageURL)
+                    requestManager.load(tourInfoDetail.imageURL).into(info_detail_image)
+
                     parnter_title.text = tourInfoDetail.title
                     content.text = tourInfoDetail.overview
                     date.text = tourInfoDetail.duration
