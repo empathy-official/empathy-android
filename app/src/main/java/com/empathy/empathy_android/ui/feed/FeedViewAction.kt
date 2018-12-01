@@ -1,4 +1,12 @@
 package com.empathy.empathy_android.ui.feed
 
-internal class FeedViewAction {
+internal sealed class FeedViewAction {
+
+    object NavigateToMyFeedClicked: FeedViewAction()
+
+    data class OnLocationChange(
+            val latitude: Double,
+            val longtitude: Double
+
+    ): FeedViewAction()
 }

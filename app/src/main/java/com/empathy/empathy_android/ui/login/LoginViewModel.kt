@@ -3,11 +3,16 @@ package com.empathy.empathy_android.ui.login
 import com.empathy.empathy_android.BaseViewModel
 import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
+import com.empathy.empathy_android.http.appchannel.AppData
+import com.empathy.empathy_android.repository.model.LocalUser
+import com.empathy.empathy_android.repository.model.User
+import com.facebook.Profile
 import com.skt.Tmap.TMapData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import java.net.URL
 import javax.inject.Inject
 
 internal interface LoginViewModel {
@@ -21,13 +26,27 @@ internal interface LoginViewModel {
 
         private val onViewAction = channel.ofViewAction()
 
+        private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
+
+        private var user: User = User()
+        private var address = ""
+
         init {
             compositeDisposable.addAll(
-                    onViewAction
-                            .subscribeBy(
-                                    onNext = ::handleOnViewAction
-                            )
+                    onViewAction.subscribeBy(onNext = ::handleOnViewAction),
+
+                    onRemote.subscribeBy(onNext = ::handleOnRemote)
             )
+        }
+
+        private fun handleOnRemote(remote: AppData.RespondTo.Remote) {
+            when(remote) {
+                is AppData.RespondTo.Remote.UserCreated -> {
+                    val user = LocalUser(user.name, user.profileUrl, address, remote.userId)
+
+                    channel.accept(LoginNavigation.LoginSuccess(user))
+                }
+            }
         }
 
         private fun handleOnViewAction(loginViewAction: LoginViewAction) {
@@ -59,12 +78,27 @@ internal interface LoginViewModel {
                                             it.contains("전라북도") -> "Jeollabukdo"
                                             it.contains("전라남도") -> "JeollanamDo"
                                             it.contains("제주도")  -> "Jejudo"
-                                            else                        -> ""
+                                            else                 -> ""
                                         }
+
+                                        address = it
 
                                         locationFilter.setLocationAddress(filteredAddress)
                                     }
                     )
+                }
+
+                is LoginViewAction.LoginClick -> {
+                    val profile = Profile.getCurrentProfile()
+
+                    val userid = profile.id
+                    val username = profile.name
+                    val userimage = URL("https://graph.facebook.com/$userid/picture?type=large").toString()
+                    val loginType = "facebook"
+
+                    user = User(username, loginType, userimage)
+
+                    appChannel.accept(AppData.RequestTo.Remote.CreateUser(user))
                 }
             }
         }

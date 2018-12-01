@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/date"
-            android:text="서울특별시 성북구 석광동"
+            android:text="2018.11.20"
             android:textColor="@color/_ffffff"
             android:textSize="16sp"
             android:layout_centerHorizontal="true"
@@ -54,8 +54,8 @@
         android:background="@color/_2a2c34">
 
         <TextView
-            android:id="@+id/remove"
-            android:text="삭제"
+            android:id="@+id/cancel"
+            android:text="취소"
             android:textColor="@color/_ffffff"
             android:textSize="16sp"
             android:layout_centerVertical="true"
@@ -86,9 +86,10 @@
         app:layout_constraintTop_toBottomOf="@+id/image_container">
 
         <EditText
+            android:id="@+id/title_input"
             android:text="제목을 입력해주세요."
             android:textSize="16sp"
-            android:textColor="@color/_2a2c34"
+            android:textColor="@color/_939393"
             android:background="@android:color/transparent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
@@ -113,18 +114,56 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/username_container"
+      android:layout_width="match_parent"
+      android:layout_height="58dp"
+      android:layout_marginTop="16dp"
+      android:background="@color/_ffffff"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/title_container">
+
+        <EditText
+          android:id="@+id/description_input"
+          android:text="설명을 입력해주세요."
+          android:textSize="16sp"
+          android:textColor="@color/_939393"
+          android:background="@android:color/transparent"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="15dp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          app:layout_constraintRight_toLeftOf="@+id/description_max"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+          android:id="@+id/description_max"
+          android:text="0/40"
+          android:textSize="16sp"
+          android:textColor="@color/_2a2c34"
+          android:layout_marginRight="21dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintRight_toRightOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_marginTop="16dp"
         android:background="@color/_ffffff"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_container">
+        app:layout_constraintTop_toBottomOf="@+id/username_container">
 
         <TextView
             android:text="나의 여정 공개"
             android:textSize="16sp"
-            android:textColor="@color/_2a2c34"
+            android:textColor="@color/_939393"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

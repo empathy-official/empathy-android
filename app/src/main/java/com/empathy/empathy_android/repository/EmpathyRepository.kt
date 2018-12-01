@@ -25,7 +25,7 @@ internal class EmpathyRepository @Inject constructor(
                         .flatMap {
                             when(it) {
                                 is AppData.RequestTo.Remote.FetchFeedsByLocationFilter -> {
-                                    empathyApi.fetchFeedsByLocationFilter(it.locationEnum)
+                                    empathyApi.fetchFeedsByLocationFilter(it.locationEnum, it.userId)
                                             .map {
                                                 AppData.RespondTo.Remote.FeedsByLocationFilterFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
@@ -41,6 +41,24 @@ internal class EmpathyRepository @Inject constructor(
                                             .map {
                                                 AppData.RespondTo.Remote.MyFeedsFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
+                                is AppData.RequestTo.Remote.CreateUser -> {
+                                    empathyApi.createUser(it.user)
+                                            .map {
+                                                AppData.RespondTo.Remote.UserCreated(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
+                                is AppData.RequestTo.Remote.CreateFeed -> {
+                                    empathyApi.createFeed(
+                                            it.userId,
+                                            it.parameterTitle,
+                                            it.parameterDesc,
+                                            it.address,
+                                            it.userLocationEnum,
+                                            it.multipartBody
+                                    ).map {
+                                        AppData.RespondTo.Remote.FeedCreated(it)
+                                    }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
                             }
                         }.subscribe(appChannel::accept)

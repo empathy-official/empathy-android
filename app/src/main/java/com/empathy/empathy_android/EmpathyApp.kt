@@ -28,7 +28,7 @@ internal class EmpathyApp: Application(), HasActivityInjector {
         instance = this
 
         initializeDagger()
-        initializeLeakcanary()
+//        initializeLeakcanary()
         initializeStetho()
     }
 

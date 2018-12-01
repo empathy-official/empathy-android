@@ -60,18 +60,60 @@
                 app:layout_constraintTop_toBottomOf="@+id/feed_title"
                 app:layout_constraintLeft_toLeftOf="@+id/filter_location"/>
 
-            <FrameLayout
+            <ImageView
                 android:id="@+id/my_feed_container"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/my_feed_placeholder"
+                android:scaleType="fitXY"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/log_recycler"
                 app:layout_constraintBottom_toTopOf="@+id/info_container" />
 
             <TextView
+                android:id="@+id/my_feed_title"
+                android:text="나의 여정 살펴보기"
+                android:textSize="15sp"
+                android:textColor="@color/_ffffff"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/my_feed_container"/>
+
+            <TextView
+              android:id="@+id/default_content"
+              android:text="하루하루가\n모여 여정이 될\n나의 오늘을\n기록해보세요"
+              android:textSize="18sp"
+              android:textColor="@color/_ffffff"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="34dp"
+              android:layout_marginTop="84dp"
+              android:visibility="invisible"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintTop_toTopOf="@+id/my_feed_container"/>
+
+            <TextView
+              android:id="@+id/my_feed_content"
+              android:text="11.03\n2018\n삶은 여행이다"
+              android:textSize="18sp"
+              android:textColor="@color/_ffffff"
+              android:maxLines="3"
+              android:layout_width="108dp"
+              android:layout_height="90dp"
+              android:gravity="center_horizontal"
+              android:visibility="invisible"
+              android:layout_marginBottom="73dp"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintRight_toRightOf="parent"
+              app:layout_constraintBottom_toTopOf="@+id/info_container"/>
+
+            <TextView
+                android:id="@+id/default_title"
                 android:text="나의 여정 기록하기>"
                 android:textSize="15sp"
                 android:textColor="@color/_ffffff"
@@ -79,6 +121,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/my_feed_container"/>
 
@@ -92,18 +135,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/my_feed_container"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
+            <ImageView
+              android:layout_width="110dp"
+              android:layout_height="2dp"
+              android:background="@color/_ffffff"
+              app:layout_constraintTop_toTopOf="@+id/info_container"
+              app:layout_constraintRight_toLeftOf="@+id/sub_content"
+              app:layout_constraintBottom_toBottomOf="@+id/sub_content"/>
+
+            <ImageView
+              android:layout_width="0dp"
+              android:layout_height="2dp"
+              android:background="@color/_ffffff"
+              app:layout_constraintTop_toTopOf="@+id/sub_content"
+              app:layout_constraintRight_toLeftOf="@+id/sub_content"
+              app:layout_constraintLeft_toLeftOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"/>
+
             <TextView
+                android:id="@+id/sub_content"
                 android:text="왕십리\n화요일의\n한여름 밤엔"
                 android:textSize="15sp"
                 android:textColor="@color/_ffffff"
-                android:layout_width="92dp"
-                android:layout_height="75dp"
-                android:maxLines="3"
-                android:layout_marginTop="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 app:layout_constraintTop_toTopOf="@+id/info_container"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/info_container"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

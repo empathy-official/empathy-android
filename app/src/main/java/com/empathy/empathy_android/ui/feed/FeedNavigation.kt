@@ -1,4 +1,10 @@
 package com.empathy.empathy_android.ui.feed
 
-internal class FeedNavigation {
+import com.empathy.empathy_android.repository.model.LocalUser
+
+internal sealed class FeedNavigation {
+
+    data class NavigateToFeed(val user: LocalUser): FeedNavigation()
+
+
 }

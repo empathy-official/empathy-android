@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.empathy.empathy_android.di.key.ViewModelKey
 import com.empathy.empathy_android.di.qualifier.Login
 import com.empathy.empathy_android.di.scope.ActivityScope
+import com.skt.Tmap.TMapGpsManager
+import com.skt.Tmap.TMapView
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
