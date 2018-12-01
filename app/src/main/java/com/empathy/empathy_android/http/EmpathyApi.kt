@@ -4,7 +4,6 @@ import com.empathy.empathy_android.repository.model.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -56,7 +55,10 @@ internal interface EmpathyApi {
     fun fetchPartnerInfo(): Single<Partner>
 
     @GET("/info/alliance/detail/{targetId}")
-    fun fetchPartnerInfoDetail(@Path("targetId") partnerId: String): Single<TourInfoDetail>
+    fun fetchPartnerInfoDetail(@Path("targetId") partnerId: String): Single<PartnerDetail>
+
+    @GET("/info/tourAPI/detail/{contentType}/{targetId}")
+    fun fetchTourInfoDetail(@Path("contentType") contentType: String, @Path("targetId") targetId: String): Single<TourDetail>
 
 
 }

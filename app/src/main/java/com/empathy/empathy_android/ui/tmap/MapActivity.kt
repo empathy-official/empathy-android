@@ -10,12 +10,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
-import com.empathy.empathy_android.BaseActivity
-import com.empathy.empathy_android.R
-import com.empathy.empathy_android.ReverseInterpolator
-import com.empathy.empathy_android.SimpleAnimatorListener
+import com.empathy.empathy_android.*
 import com.empathy.empathy_android.extensions.toPx
-import com.empathy.empathy_android.ui.login.MapViewModel
 import com.skt.Tmap.TMapCircle
 import com.skt.Tmap.TMapGpsManager
 import com.skt.Tmap.TMapGpsManager.NETWORK_PROVIDER
@@ -85,6 +81,10 @@ internal class MapActivity: BaseActivity<MapViewModel.ViewModel>(), TMapGpsManag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val addresss = intent.getStringExtra(Constants.EXTRA_KEY_ADDRESS)
+
+        current_location_title.text = addresss
 
         initializeView()
         initializeListener()

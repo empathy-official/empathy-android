@@ -9,11 +9,20 @@ import kotlinx.android.synthetic.main.item_tour.view.*
 
 internal class TourViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-    init {
+    interface OnItemClickListener {
+        fun onItemClicked(targetId: String)
+    }
 
+    private var listener: OnItemClickListener? = null
+    private var tour: TourInfo? = null
+
+    init {
+        initializeListener()
     }
 
     fun bind(tour: TourInfo) {
+        this.tour = tour
+
         with(itemView) {
             title.text   = tour.title
             address.text = tour.addr
@@ -22,5 +31,16 @@ internal class TourViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
         }
     }
 
+    fun setOnItemClickListener(listener: OnItemClickListener?) {
+        this.listener = listener
+    }
+
+    private fun initializeListener() {
+        itemView.setOnClickListener {
+            tour?.targetId?.let {
+                listener?.onItemClicked(it)
+            }
+        }
+    }
 
 }

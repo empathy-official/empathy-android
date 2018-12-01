@@ -12,7 +12,7 @@ package com.empathy.empathy_android.repository.model
 //    "priceInfo": "string",
 //    "title": "string"
 //}
-internal data class TourInfoDetail(
+internal data class PartnerDetail(
         val duration: String,
         val imageURL: String,
         val locationStr: String,

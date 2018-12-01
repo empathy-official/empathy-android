@@ -87,7 +87,7 @@
 
         <EditText
             android:id="@+id/title_input"
-            android:text="제목을 입력해주세요."
+            android:hint="제목을 입력해주세요."
             android:textSize="16sp"
             android:textColor="@color/_939393"
             android:background="@android:color/transparent"
@@ -125,7 +125,7 @@
 
         <EditText
           android:id="@+id/description_input"
-          android:text="설명을 입력해주세요."
+          android:hint="설명을 입력해주세요."
           android:textSize="16sp"
           android:textColor="@color/_939393"
           android:background="@android:color/transparent"

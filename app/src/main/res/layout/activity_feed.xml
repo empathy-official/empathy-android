@@ -154,7 +154,6 @@
 
             <TextView
                 android:id="@+id/sub_content"
-                android:text="왕십리\n화요일의\n한여름 밤엔"
                 android:textSize="15sp"
                 android:textColor="@color/_ffffff"
                 android:layout_width="wrap_content"

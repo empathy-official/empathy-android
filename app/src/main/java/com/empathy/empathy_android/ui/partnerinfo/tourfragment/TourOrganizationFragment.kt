@@ -1,6 +1,7 @@
 package com.empathy.empathy_android.ui.partnerinfo.tourfragment
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.FragmentLifeCycle
 import com.empathy.empathy_android.repository.model.LocalUser
-import com.empathy.empathy_android.repository.model.Tour
+import com.empathy.empathy_android.ui.partnerinfo_detail.PartnerInfoDetailActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_tour_organization.*
 
 internal class TourOrganizationFragment : BaseFragment() {
@@ -42,6 +45,7 @@ internal class TourOrganizationFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecycler()
+        initializeListener()
 
         viewModel.channel.accept(FragmentLifeCycle.OnViewCreated(arguments))
     }
@@ -50,8 +54,26 @@ internal class TourOrganizationFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         subscribeLooknFeel()
+        subscribeNavigation()
 
         viewModel.channel.accept(FragmentLifeCycle.OnActivityCreated(savedInstanceState))
+    }
+
+    private fun subscribeNavigation() {
+        viewModel.channel
+                .ofNavigation()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    when(it) {
+                        is TourOrganizationNavigation.NavigateToTourDetail -> {
+                            startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
+                                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
+                                putExtra(Constants.EXTRA_KEY_TARGET_ID, it.targetId)
+                                putExtra(Constants.EXTRA_KEY_CONTENT_TYPE, it.contentType)
+                            })
+                        }
+                    }
+                }
     }
 
     private fun subscribeLooknFeel() {
@@ -67,6 +89,14 @@ internal class TourOrganizationFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = tourAdapter
         }
+    }
+
+    private fun initializeListener() {
+        tourAdapter.setOnItemClickListener(object : TourViewHolder.OnItemClickListener {
+            override fun onItemClicked(targetId: String) {
+                viewModel.channel.accept(TourOrganizationViewAction.NavigateToDetailClicked(targetId))
+            }
+        })
     }
 
 }

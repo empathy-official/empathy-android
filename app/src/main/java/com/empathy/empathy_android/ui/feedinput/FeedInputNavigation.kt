@@ -1,5 +1,7 @@
 package com.empathy.empathy_android.ui.feedinput
 
-internal class FeedInputNavigation {
+internal sealed class FeedInputNavigation {
+
+    object NavigateToMyFeed: FeedInputNavigation()
 
 }

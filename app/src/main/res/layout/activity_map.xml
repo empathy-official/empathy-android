@@ -58,7 +58,6 @@
 
   <TextView
     android:id="@+id/current_location_title"
-    android:text="서울특별시 왕십리로"
     android:textSize="15sp"
     android:textColor="@color/_2a2c34"
     android:background="@drawable/activity_map_cur_location_bg"

@@ -67,7 +67,7 @@ internal class FeedInputViewModel @Inject constructor(
     private fun handleOnRemote(remote: AppData.RespondTo.Remote) {
         when(remote) {
             is AppData.RespondTo.Remote.FeedCreated -> {
-                Log.d("zx1cv", "1")
+                channel.accept(FeedInputNavigation.NavigateToMyFeed)
             }
         }
     }

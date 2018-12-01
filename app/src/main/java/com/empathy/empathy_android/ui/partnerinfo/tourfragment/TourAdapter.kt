@@ -10,10 +10,14 @@ internal class TourAdapter : RecyclerView.Adapter<TourViewHolder>() {
 
     private val tours = mutableListOf<TourInfo>()
 
+    private var listener: TourViewHolder.OnItemClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TourViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_tour, parent, false)
 
-        return TourViewHolder(view)
+        return TourViewHolder(view).apply {
+            setOnItemClickListener(listener)
+        }
     }
 
     override fun getItemCount(): Int = tours.size
@@ -24,6 +28,10 @@ internal class TourAdapter : RecyclerView.Adapter<TourViewHolder>() {
         this.tours.clear()
         this.tours.addAll(tours)
         this.notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener: TourViewHolder.OnItemClickListener) {
+        this.listener = listener
     }
 
 }

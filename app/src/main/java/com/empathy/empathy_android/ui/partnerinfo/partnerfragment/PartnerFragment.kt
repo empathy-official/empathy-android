@@ -30,6 +30,7 @@ internal class PartnerFragment: BaseFragment() {
     private lateinit var backgroundDeco: ImageView
 
     private var isTypeB = false
+    private var partner: Partner? = null
 
     private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
         createViewModel(PartnerViewModel::class.java)
@@ -81,7 +82,6 @@ internal class PartnerFragment: BaseFragment() {
         observe(viewModel.showPartnerInfo, ::handleShowPartnerInfo)
     }
 
-    private var partner: Partner? = null
     private fun handleShowPartnerInfo(looknFeel: PartnerLooknFeel.ShowPartnerInfo) {
         partner = looknFeel.partner
 
@@ -95,6 +95,7 @@ internal class PartnerFragment: BaseFragment() {
     private fun initializeListener() {
         container_view.setOnClickListener {
             startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
+                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
                 putExtra(Constants.EXTRA_KEY_PARTNER_ID, partner?.targetId)
             })
         }

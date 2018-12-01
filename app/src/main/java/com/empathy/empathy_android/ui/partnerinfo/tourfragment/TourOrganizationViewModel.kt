@@ -28,9 +28,11 @@ internal class TourOrganizationViewModel @Inject constructor(
 
     private val onViewCreated     = channel.ofLifeCycle().ofType(FragmentLifeCycle.OnViewCreated::class.java)
     private val onActivityCreated = channel.ofLifeCycle().ofType(FragmentLifeCycle.OnActivityCreated::class.java)
+    private val onViewAction      = channel.ofViewAction()
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
+    private var contentType     = 12
     private var user: LocalUser = LocalUser()
 
     val showTourInfos = MutableLiveData<TourOrganizationLooknFeel.ShowTourInfos>()
@@ -39,8 +41,17 @@ internal class TourOrganizationViewModel @Inject constructor(
         compositeDisposable.addAll(
                 onViewCreated.subscribeBy(onNext = ::handleOnViewCreated),
                 onActivityCreated.subscribeBy(onNext = ::handleOnActivityCreated),
+                onViewAction.subscribeBy(onNext = ::handleOnViewAction),
                 onRemote.subscribeBy(onNext = ::handleOnRemote)
         )
+    }
+
+    private fun handleOnViewAction(tourOrganizationViewAction: TourOrganizationViewAction) {
+        when(tourOrganizationViewAction) {
+            is TourOrganizationViewAction.NavigateToDetailClicked -> {
+                channel.accept(TourOrganizationNavigation.NavigateToTourDetail(contentType, tourOrganizationViewAction.targetId))
+            }
+        }
     }
 
     private fun handleOnRemote(remote: AppData.RespondTo.Remote) {
@@ -63,6 +74,8 @@ internal class TourOrganizationViewModel @Inject constructor(
             3    -> 39
             else -> 12
         }
+
+        this.contentType = contentType
 
         appChannel.accept(AppData.RequestTo.Remote.FetchTourInfos(contentType, user.latitude, user.longtitude, Constants.DEFAULT_RANGE, perPage++))
     }

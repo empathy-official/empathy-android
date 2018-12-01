@@ -85,6 +85,12 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
                                         putExtra(Constants.EXTRA_KEY_USER, it.user)
                                     })
                                 }
+
+                                is FeedNavigation.NavigateToTmap -> {
+                                    startActivity(Intent(this, MapActivity::class.java).apply {
+                                        putExtra(Constants.EXTRA_KEY_ADDRESS, it.address)
+                                    })
+                                }
                             }
                         }
         )
@@ -163,7 +169,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
         }
 
         filter_location.setOnClickListener {
-            startActivity(Intent(this, MapActivity::class.java))
+            viewModel.channel.accept(FeedViewAction.NavigateToTmapClicked)
         }
 
         logAdapter.setOnItemClickListener(object : FeedRecyclerAdapter.ItemClickListener {

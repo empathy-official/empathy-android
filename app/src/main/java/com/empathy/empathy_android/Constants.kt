@@ -13,6 +13,9 @@ internal class Constants {
         const val EXTRA_KEY_USER = "extra_key_user"
         const val EXTRA_KEY_ADDRESS = "extra_key_address"
         const val EXTRA_KEY_PARTNER_ID = "extra_key_partner_id"
+        const val EXTRA_KEY_TARGET_ID = "extra_key_target_id"
+        const val EXTRA_KEY_CONTENT_TYPE = "extra_key_content_type"
+        const val EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE = "extra_key_partner_info_detail_type"
 
         const val DEFAULT_LATITUDE   = 126.981106
         const val DEFAULT_LONGTITUDE = 37.568477

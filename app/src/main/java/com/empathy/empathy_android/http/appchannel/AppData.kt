@@ -34,7 +34,7 @@ internal sealed class AppData {
 
             data class FetchPartnerInfoDetail(val partnerId: String) : Remote()
 
-
+            data class FetchTourInfoDetail(val contentType: String, val targetId: String) : Remote()
 //            data class CreateFeed(
 //                    val userId: Long,
 //                    val title: String,
@@ -65,7 +65,11 @@ internal sealed class AppData {
 
             data class PartnerInfoFetched(val partner: Partner): Remote()
 
-            data class PartnerInfoDetailFetched(val tourInfoDetail: TourInfoDetail): Remote()
+            data class PartnerInfoDetailFetched(val tourInfoDetail: PartnerDetail): Remote()
+
+            data class TourInfoDetailFetched(val tourDetail: TourDetail): Remote()
+
+
         }
     }
 }

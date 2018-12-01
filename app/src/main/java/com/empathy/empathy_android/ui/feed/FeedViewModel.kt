@@ -120,6 +120,10 @@ internal class FeedViewModel @Inject constructor(
                 channel.accept(FeedNavigation.NavigateToPartnerInfo(this.user))
             }
 
+            is FeedViewAction.NavigateToTmapClicked -> {
+                channel.accept(FeedNavigation.NavigateToTmap(user.address))
+            }
+
             is FeedViewAction.OnLocationChange -> {
                 if(hasLocation) {
                     return
