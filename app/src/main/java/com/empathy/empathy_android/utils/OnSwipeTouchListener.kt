@@ -65,7 +65,6 @@ class OnSwipeTouchListener(ctx: Context) : OnTouchListener {
 
     fun onSwipeRight() {
         Log.d(TAG, "onSwipeRight")
-        startActivity(context, Intent(context, CameraActivity::class.java),null)
     }
 
     fun onSwipeLeft() {
@@ -74,6 +73,7 @@ class OnSwipeTouchListener(ctx: Context) : OnTouchListener {
 
     fun onSwipeTop() {
         Log.d(TAG, "onSwipeTop")
+        startActivity(context, Intent(context, CameraActivity::class.java),null)
     }
 
     fun onSwipeBottom() {

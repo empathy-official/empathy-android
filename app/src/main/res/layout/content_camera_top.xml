@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBtnHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDarkOpacity"
+        android:orientation="horizontal"
+        android:padding="@dimen/camera_padding_all_btn_holder"
+        app:layout_constraintBottom_toTopOf="@+id/ratioDrawer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/imgBtnFlash"
+            android:layout_width="@dimen/camera_btn_ic_size"
+            android:layout_height="@dimen/camera_btn_ic_size"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_flash_off"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imgBtnRatioSet"
+            android:layout_width="@dimen/camera_btn_ic_size"
+            android:layout_height="@dimen/camera_btn_ic_size"
+            android:layout_marginStart="@dimen/camera_margin_left_top_btns"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_ratio_set"
+            app:layout_constraintStart_toEndOf="@id/imgBtnFlash" />
+
+        <ImageButton
+            android:id="@+id/imgBtnRotatePreview"
+            android:layout_width="@dimen/camera_btn_ic_size"
+            android:layout_height="@dimen/camera_btn_ic_size"
+            android:layout_marginStart="@dimen/camera_margin_left_top_btns"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_rotate_preview"
+            app:layout_constraintStart_toEndOf="@id/imgBtnRatioSet" />
+
+        <ImageButton
+            android:id="@+id/imgBtnTerminate"
+            android:layout_width="@dimen/camera_btn_ic_size"
+            android:layout_height="@dimen/camera_btn_ic_size"
+            android:background="@android:color/transparent"
+            android:gravity="right"
+            android:src="@drawable/ic_terminate"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ratioDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDarkOpacity"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/topBtnHolder"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ratio1_1"
+            android:src="@drawable/ic_1_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ratio9_16"
+            android:src="@drawable/ic_9_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ratio3_4"
+            android:src="@drawable/ic_3_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ratioFull"
+            android:src="@drawable/ic_full"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ratio3_8"
+            android:src="@drawable/ic_3_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

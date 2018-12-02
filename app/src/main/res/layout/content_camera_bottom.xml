@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/bottomBtnHolder"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/camera_padding_all_btn_holder"
+    android:background="@color/colorPrimaryDarkOpacity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/ivRecentPhoto"
+        android:src="@drawable/icon"
+        app:layout_constraintEnd_toStartOf="@id/imgBtnMoodFilter"
+        android:layout_marginEnd="@dimen/camera_margin_left_bottom_btns"
+        android:layout_width="@dimen/camera_btn_ic_size"
+        android:layout_height="@dimen/camera_btn_ic_size"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/imgBtnMoodFilter"
+        android:src="@drawable/ic_mood_filter"
+        app:layout_constraintEnd_toStartOf="@id/btnCapture"
+        android:layout_marginEnd="@dimen/camera_margin_left_bottom_btns"
+        android:layout_width="@dimen/camera_btn_ic_size"
+        android:layout_height="@dimen/camera_btn_ic_size"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/btnCapture"
+        android:src="@drawable/btn_capture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/camera_margin_bottom_capture_btn"
+        android:layout_width="@dimen/camera_capture_btn_ic_size"
+        android:layout_height="@dimen/camera_capture_btn_ic_size"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/imgBtnObjectFilter"
+        android:src="@drawable/ic_object_filter"
+        app:layout_constraintStart_toEndOf="@id/btnCapture"
+        android:layout_marginStart="@dimen/camera_margin_left_bottom_btns"
+        android:layout_width="@dimen/camera_btn_ic_size"
+        android:layout_height="@dimen/camera_btn_ic_size"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/imgBtnPose"
+        android:src="@drawable/ic_pose"
+        app:layout_constraintStart_toEndOf="@id/imgBtnObjectFilter"
+        android:layout_marginStart="@dimen/camera_margin_left_bottom_btns"
+        android:layout_width="@dimen/camera_btn_ic_size"
+        android:layout_height="@dimen/camera_btn_ic_size"
+        android:background="@android:color/transparent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
