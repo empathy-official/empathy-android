@@ -14,6 +14,7 @@ import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.FragmentLifeCycle
 import com.empathy.empathy_android.repository.model.LocalUser
 import com.empathy.empathy_android.ui.partnerinfo_detail.PartnerInfoDetailActivity
+import com.empathy.empathy_android.utils.OnSwipeTouchListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.fragment_tour_organization.*
@@ -38,8 +39,12 @@ internal class TourOrganizationFragment : BaseFragment() {
         TourAdapter()
     }
 
+    private var listener: OnSwipeTouchListener.OnViewTransitionListener? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = inflater.inflate(R.layout.fragment_tour_organization, container, false)
+            = inflater.inflate(R.layout.fragment_tour_organization, container, false).apply {
+        setOnTouchListener(OnSwipeTouchListener(context, listener))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,6 +62,10 @@ internal class TourOrganizationFragment : BaseFragment() {
         subscribeNavigation()
 
         viewModel.channel.accept(FragmentLifeCycle.OnActivityCreated(savedInstanceState))
+    }
+
+    fun setOnSwipeListener(listener: OnSwipeTouchListener.OnViewTransitionListener) {
+        this.listener = listener
     }
 
     private fun subscribeNavigation() {

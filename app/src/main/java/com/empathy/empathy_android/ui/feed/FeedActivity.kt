@@ -83,6 +83,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
                                 is FeedNavigation.NavigateToPartnerInfo -> {
                                     startActivity(Intent(this, PartnerInfoActivity::class.java).apply {
                                         putExtra(Constants.EXTRA_KEY_USER, it.user)
+                                        addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                                     })
                                 }
 
@@ -158,7 +159,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     }
 
     private fun initializeListener() {
-        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
+//        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity, "camera"))
 
         my_feed_container.setOnClickListener {
             viewModel.channel.accept(FeedViewAction.NavigateToMyFeedClicked)

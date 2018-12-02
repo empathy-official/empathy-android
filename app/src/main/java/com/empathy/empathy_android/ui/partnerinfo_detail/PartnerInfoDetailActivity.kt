@@ -26,16 +26,21 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
         const val TYPE_TOUR    = "tour"
     }
 
-    override fun getLayoutRes(): Int = R.layout.activity_partner_info_detail
-    override fun getViewModel(): Class<PartnerInfoDetailViewModel> = PartnerInfoDetailViewModel::class.java
-
     @Inject lateinit var appChannel: AppChannelApi
 
     private val tMapView by lazy {
         TMapView(this)
     }
 
-    private val requestManager by lazy { Glide.with(this) }
+    private val requestManager by lazy {
+        Glide.with(this)
+    }
+
+//    private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
+    private val disposables = CompositeDisposable()
+
+    override fun getLayoutRes(): Int = R.layout.activity_partner_info_detail
+    override fun getViewModel(): Class<PartnerInfoDetailViewModel> = PartnerInfoDetailViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +71,9 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
         appChannel.accept(AppData.RequestTo.Remote.FetchPartnerInfoDetail(partnerId))
     }
 
-    private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
-    private val disposables = CompositeDisposable()
-
     private fun subscribeRemote() {
+        val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
+
         disposables.add(
                 onRemote.observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy {

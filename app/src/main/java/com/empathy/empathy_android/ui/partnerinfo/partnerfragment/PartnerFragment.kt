@@ -14,6 +14,7 @@ import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.FragmentLifeCycle
 import com.empathy.empathy_android.repository.model.Partner
 import com.empathy.empathy_android.ui.partnerinfo_detail.PartnerInfoDetailActivity
+import com.empathy.empathy_android.utils.OnSwipeTouchListener
 import kotlinx.android.synthetic.main.fragment_partner_type_a.*
 import java.util.*
 
@@ -36,6 +37,8 @@ internal class PartnerFragment: BaseFragment() {
         createViewModel(PartnerViewModel::class.java)
     }
 
+    private var listener: OnSwipeTouchListener.OnViewTransitionListener? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val viewId = when(Random().nextInt(2)) {
             0    -> R.layout.fragment_partner_type_a
@@ -48,6 +51,8 @@ internal class PartnerFragment: BaseFragment() {
         }
 
         return inflater.inflate(viewId, container, false).apply {
+            setOnTouchListener(OnSwipeTouchListener(context, listener))
+
             if(isTypeB) {
                 backgroundDeco = findViewById(R.id.partner_deco_image)
 
@@ -77,6 +82,11 @@ internal class PartnerFragment: BaseFragment() {
 
         viewModel.channel.accept(FragmentLifeCycle.OnActivityCreated())
     }
+
+    fun setOnSwipeListener(listener: OnSwipeTouchListener.OnViewTransitionListener) {
+        this.listener = listener
+    }
+
 
     private fun subscribeLooknFeel() {
         observe(viewModel.showPartnerInfo, ::handleShowPartnerInfo)
