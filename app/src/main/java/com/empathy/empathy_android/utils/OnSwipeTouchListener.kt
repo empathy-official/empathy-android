@@ -1,12 +1,14 @@
 package com.empathy.empathy_android.utils
 
 import android.content.Context
+import android.content.Intent
 import android.view.MotionEvent
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.util.Log
 import android.view.GestureDetector
 import android.view.View
 import android.view.View.OnTouchListener
+import androidx.core.content.ContextCompat.startActivity
 
 
 class OnSwipeTouchListener(ctx: Context, listener: OnViewTransitionListener?) : OnTouchListener {
