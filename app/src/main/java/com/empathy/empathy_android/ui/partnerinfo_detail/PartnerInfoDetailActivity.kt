@@ -85,9 +85,20 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
 
                                     parnter_title.text = tourDetail.title
                                     content.text = tourDetail.overviewText
-                                    date.text = tourDetail.businessHours
-                                    time_or_dayoff.text = tourDetail.dayOff
-                                    price_info.text = "정보 안나와"
+
+                                    if(tourDetail.businessHours == "") {
+                                        date.text = "정보없음"
+                                    } else {
+                                        date.text = tourDetail.businessHours
+                                    }
+
+                                    if(tourDetail.dayOff == "") {
+                                        time_or_dayoff.text = "정보없음"
+                                    } else {
+                                        time_or_dayoff.text = tourDetail.dayOff
+                                    }
+                                    
+                                    price_info.text = "정보없음"
 
                                     credit_container.visibility = View.VISIBLE
                                     creditcard_available.text = tourDetail.creditCard

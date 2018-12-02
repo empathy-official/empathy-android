@@ -1,5 +1,6 @@
 package com.empathy.empathy_android.ui.feeddetail
 
+import android.content.Intent
 import android.os.Bundle
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
@@ -25,6 +26,8 @@ internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
         viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
 
         subscribeLooknFeel()
+
+        initializeListener()
     }
 
     private fun subscribeLooknFeel() {
@@ -46,5 +49,19 @@ internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
 
     private fun handleEditOrShareImage(looknFeel: FeedDetailLooknFeel.ShowEditOrShareImage) {
         edit_or_share.setImageResource(looknFeel.imageResource)
+    }
+
+    private fun initializeListener() {
+        edit_or_share.setOnClickListener {
+            //TODO: share 하는 부분이 여기임
+//            val intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                type = "image/*"
+//
+//                putExtra(Intent.EX, )
+//            }
+//
+//            startActivity(Intent.createChooser(intent, resources.getText(R.string.send_to)))
+        }
     }
 }

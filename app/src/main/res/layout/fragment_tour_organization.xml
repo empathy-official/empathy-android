@@ -32,19 +32,19 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/organization"/>
 
-  <TextView
-    android:id="@+id/title"
-    android:text="볼거리"
-    android:textSize="14sp"
-    android:textColor="@color/_ffffff"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="20dp"
-    android:background="@drawable/fragment_tour_organization_title_bg"
-    android:gravity="center"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="@id/intro"
-    app:layout_constraintBottom_toBottomOf="@+id/intro"/>
+  <!--<TextView-->
+    <!--android:id="@+id/title"-->
+    <!--android:text="볼거리"-->
+    <!--android:textSize="14sp"-->
+    <!--android:textColor="@color/_ffffff"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--android:background="@drawable/fragment_tour_organization_title_bg"-->
+    <!--android:gravity="center"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="@id/intro"-->
+    <!--app:layout_constraintBottom_toBottomOf="@+id/intro"/>-->
 
   <!--<ImageView-->
     <!--android:id="@+id/tour_image"-->
@@ -62,7 +62,7 @@
     android:layout_marginTop="48dp"
     android:layout_marginLeft="37dp"
     android:background="@color/_2a2c34"
-    app:layout_constraintTop_toBottomOf="@id/title"
+    app:layout_constraintTop_toBottomOf="@id/intro"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

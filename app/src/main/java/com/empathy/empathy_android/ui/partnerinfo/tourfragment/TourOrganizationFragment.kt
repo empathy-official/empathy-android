@@ -76,7 +76,7 @@ internal class TourOrganizationFragment : BaseFragment() {
                     when(it) {
                         is TourOrganizationNavigation.NavigateToTourDetail -> {
                             startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
-                                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
+                                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_TOUR)
                                 putExtra(Constants.EXTRA_KEY_TARGET_ID, it.targetId)
                                 putExtra(Constants.EXTRA_KEY_CONTENT_TYPE, it.contentType)
                             })
