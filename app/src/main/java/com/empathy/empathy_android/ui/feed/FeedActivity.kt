@@ -10,9 +10,9 @@ import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
-import com.empathy.empathy_android.ui.mypage.MyFeedsActivity
+import com.empathy.empathy_android.ui.myfeed.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
 import com.empathy.empathy_android.utils.OnSwipeTouchListener
@@ -44,7 +44,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+        viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
 
         subscribeLooknFeel()
         subscribeNavigation()
@@ -75,6 +75,12 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
                             when(it) {
                                 is FeedNavigation.NavigateToFeed -> {
                                     startActivity(Intent(this, MyFeedsActivity::class.java).apply {
+                                        putExtra(Constants.EXTRA_KEY_USER, it.user)
+                                    })
+                                }
+
+                                is FeedNavigation.NavigateToPartnerInfo -> {
+                                    startActivity(Intent(this, PartnerInfoActivity::class.java).apply {
                                         putExtra(Constants.EXTRA_KEY_USER, it.user)
                                     })
                                 }
@@ -152,7 +158,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
         }
 
         info_container.setOnClickListener {
-            startActivity(Intent(this, PartnerInfoActivity::class.java))
+            viewModel.channel.accept(FeedViewAction.NavigateToPartnerInfoClicked)
         }
 
         filter_location.setOnClickListener {

@@ -5,9 +5,8 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import kotlinx.android.synthetic.main.activity_feed_detail.*
-import kotlinx.android.synthetic.main.activity_map.*
 
 
 internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
@@ -23,7 +22,7 @@ internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+        viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
 
         subscribeLooknFeel()
     }

@@ -18,6 +18,7 @@
         android:roundIcon="@drawable/app_icon_teardrop"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
 
         <meta-data
@@ -60,7 +61,7 @@
 
         <activity android:name=".ui.tmap.MapActivity" />
 
-        <activity android:name=".ui.mypage.MyFeedsActivity">
+        <activity android:name=".ui.myfeed.MyFeedsActivity">
 
         </activity>
 

@@ -6,7 +6,7 @@ import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.di.qualifier.LocFilter
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.repository.model.LocalUser
 import com.empathy.empathy_android.repository.model.LocationEnum
 import com.empathy.empathy_android.ui.login.LocationFilterApi
@@ -30,11 +30,13 @@ internal class FeedViewModel @Inject constructor(
         private val DEFAULT_LOCATION_ENUM = LocationEnum.Seoul
     }
 
-    private val onCreate = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
+    private val onCreate = channel.ofLifeCycle().ofType(ActivityLifecycleState.OnCreate::class.java)
     private val onViewAction = channel.ofViewAction()
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
+    private var latitude = Constants.DEFAULT_LATITUDE
+    private var longtitude = Constants.DEFAULT_LONGTITUDE
     private var hasLocation = false
     private var user = LocalUser()
 
@@ -56,8 +58,11 @@ internal class FeedViewModel @Inject constructor(
         )
     }
 
-    private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
+    private fun handleOnCreate(onCreate: ActivityLifecycleState.OnCreate) {
         user = onCreate.intent.getSerializableExtra(Constants.EXTRA_KEY_USER) as LocalUser
+
+        this.latitude = user.latitude
+        this.longtitude = user.longtitude
 
         val locationAddr = locationFilter.getLocationEnum()?.location
         val locationCode = locationFilter.getLocationEnum()?.code
@@ -65,7 +70,7 @@ internal class FeedViewModel @Inject constructor(
         if(locationAddr == null || locationAddr == "") {
             openGps.postValue(FeedLooknFeel.SetGps)
         } else {
-            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter("1", locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM))
+            appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM))
 
             hasLocation = true
         }
@@ -103,14 +108,23 @@ internal class FeedViewModel @Inject constructor(
         when(feedViewAction) {
             is FeedViewAction.NavigateToMyFeedClicked -> {
                 user.userLocationEnum = locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM
+                user.latitude         = latitude
+                user.longtitude       = longtitude
 
                 channel.accept(FeedNavigation.NavigateToFeed(user))
+            }
+
+            is FeedViewAction.NavigateToPartnerInfoClicked -> {
+                channel.accept(FeedNavigation.NavigateToPartnerInfo(this.user))
             }
 
             is FeedViewAction.OnLocationChange -> {
                 if(hasLocation) {
                     return
                 }
+
+                latitude = feedViewAction.latitude
+                longtitude = feedViewAction.longtitude
 
                 compositeDisposable.add(
                         Observable
@@ -144,7 +158,7 @@ internal class FeedViewModel @Inject constructor(
                                 }
                 )
 
-                appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter("1", locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM))
+                appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM))
 
                 hasLocation = true
 

@@ -60,6 +60,37 @@ internal class EmpathyRepository @Inject constructor(
                                         AppData.RespondTo.Remote.FeedCreated(it)
                                     }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
+                                is AppData.RequestTo.Remote.DeleteFeed -> {
+                                    val position = it.adapterPosition
+
+                                    empathyApi.deleteFeed(it.targetId)
+                                            .map {
+                                                AppData.RespondTo.Remote.FeedDeleted(it, position)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
+                                is AppData.RequestTo.Remote.FetchTourInfos -> {
+                                    empathyApi.fetchTourInfos(
+                                            it.contentType,
+                                            it.latitude,
+                                            it.longtitude,
+                                            it.range,
+                                            it.perPage)
+                                            .map {
+                                                AppData.RespondTo.Remote.TourInfosFetched(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
+                                is AppData.RequestTo.Remote.FetchPartnerInfo -> {
+                                    empathyApi.fetchPartnerInfo()
+                                            .map {
+                                                AppData.RespondTo.Remote.PartnerInfoFetched(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
+                                is AppData.RequestTo.Remote.FetchPartnerInfoDetail -> {
+                                    empathyApi.fetchPartnerInfoDetail(it.partnerId)
+                                            .map {
+                                                AppData.RespondTo.Remote.PartnerInfoDetailFetched(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
                             }
                         }.subscribe(appChannel::accept)
         )

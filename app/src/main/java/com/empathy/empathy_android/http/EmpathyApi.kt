@@ -29,6 +29,25 @@ internal interface EmpathyApi {
     @POST("/journey/")
     fun createFeed(@Part("ownerId") userId: RequestBody, @Part("title") parameterTitle: RequestBody, @Part("contents") parameterDesc: RequestBody, @Part("location") address: RequestBody, @Part("locationEnum") userLocationEnum: RequestBody, @Part multipartBody: MultipartBody.Part): Single<Any>
 
+    @DELETE("/journey/{targetId}")
+    fun deleteFeed(@Path("targetId") targetId: Int): Single<Any>
+
+    @GET("/info/tourAPI/{contentType}/{mapX}/{mapY}/{range}/{pageNumber}")
+    fun fetchTourInfos(
+        @Path("contentType") contentType: Int,
+        @Path("mapX") latitude: Double,
+        @Path("mapY") longtitude: Double,
+        @Path("range") range: String,
+        @Path("pageNumber") perPage: Int
+
+    ): Single<MutableList<TourInfo>>
+
+    @GET("/info/alliance")
+    fun fetchPartnerInfo(): Single<Partner>
+
+    @GET("/info/alliance/detail/{targetId}")
+    fun fetchPartnerInfoDetail(@Path("targetId") partnerId: String): Single<TourInfoDetail>
+
 //    @Multipart
 //    @POST("/journey/")
 //    fun createFeed(

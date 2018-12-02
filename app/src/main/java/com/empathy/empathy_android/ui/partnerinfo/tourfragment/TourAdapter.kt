@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.empathy.empathy_android.R
-import com.empathy.empathy_android.repository.model.Tour
+import com.empathy.empathy_android.repository.model.TourInfo
 
 internal class TourAdapter : RecyclerView.Adapter<TourViewHolder>() {
 
-    private val tours = mutableListOf<Tour>()
+    private val tours = mutableListOf<TourInfo>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TourViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_tour, parent, false)
@@ -20,7 +20,7 @@ internal class TourAdapter : RecyclerView.Adapter<TourViewHolder>() {
 
     override fun onBindViewHolder(holder: TourViewHolder, position: Int) = holder.bind(tours[position])
 
-    fun setTours(tours: MutableList<Tour>) {
+    fun setTours(tours: MutableList<TourInfo>) {
         this.tours.clear()
         this.tours.addAll(tours)
         this.notifyDataSetChanged()

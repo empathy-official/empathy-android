@@ -1,8 +1,7 @@
-package com.empathy.empathy_android.ui.mypage
+package com.empathy.empathy_android.ui.myfeed
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,12 +9,13 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.observe
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.extensions.showDialogFragment
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
+import com.empathy.empathy_android.repository.model.MyFeed
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.feedinput.FeedInputActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.activity_my_feed.*
 
 
@@ -23,6 +23,8 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
 
     companion object {
         const val REQUEST_CODE_ALBUM = 1000
+
+        private const val NOTIFICATION_DIALOG = "notification_dialog"
     }
 
     private val adapter by lazy {
@@ -35,7 +37,7 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.channel.accept(LifecycleState.OnCreate(intent, savedInstanceState))
+        viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
 
         initializeRecycler()
         initializeListener()
@@ -62,13 +64,18 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_ALBUM) {
-            viewModel.channel.accept(LifecycleState.OnActivityResult(requestCode, resultCode, data))
+            viewModel.channel.accept(ActivityLifecycleState.OnActivityResult(requestCode, resultCode, data))
         }
     }
 
     private fun subscribeLooknFeel() {
         observe(viewModel.showMyFeeds, ::handleShowMyFeeds)
         observe(viewModel.showEmptyFeeds, ::handleShowEmptyFeeds)
+        observe(viewModel.deleteMyFeed, ::handleDeleteMyFeed)
+    }
+
+    private fun handleDeleteMyFeed(looknFeel: MyFeedLooknFeel.DeleteMyFeed) {
+        adapter.deleteMyFeed(looknFeel.deletePosition)
     }
 
     private fun handleShowMyFeeds(looknFeel: MyFeedLooknFeel.ShowMyFeeds) {
@@ -87,10 +94,6 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
     }
 
     private fun initializeListener() {
-        change_view_way.setOnClickListener {
-
-        }
-
         add_feed.setOnClickListener {
             startActivityForResult(Intent(
                     Intent.ACTION_PICK,
@@ -103,6 +106,18 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
                 startActivity(Intent(this@MyFeedsActivity, FeedDetailActivity::class.java).apply {
                     putExtra("position", position)
                 })
+            }
+        })
+
+        adapter.setOnItemLongClickListener(object : MyFeedViewHolder.OnItemLongClickListener {
+            override fun onItemLongClicked(targetId: Int?, adapterPosition: Int) {
+                showDialogFragment(NotificationFragment().apply {
+                    setOnDeleteListener(object : NotificationFragment.OnItemDeleteListener {
+                        override fun onDeleteClicked() {
+                            viewModel.channel.accept(MyFeedViewAction.OnFeedDeleteClicked(targetId, adapterPosition))
+                        }
+                    })
+                }, NOTIFICATION_DIALOG)
             }
         })
     }

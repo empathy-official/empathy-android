@@ -6,7 +6,7 @@ import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
-import com.empathy.empathy_android.http.appchannel.LifecycleState
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ internal class FeedDetailViewModel @Inject constructor(
 
 ): BaseViewModel() {
 
-    private val onCreate = channel.ofLifeCycle().ofType(LifecycleState.OnCreate::class.java)
+    private val onCreate = channel.ofLifeCycle().ofType(ActivityLifecycleState.OnCreate::class.java)
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
@@ -32,7 +32,7 @@ internal class FeedDetailViewModel @Inject constructor(
 
     }
 
-    private fun handleOnCreate(onCreate: LifecycleState.OnCreate) {
+    private fun handleOnCreate(onCreate: ActivityLifecycleState.OnCreate) {
         val feedDetailType = onCreate.intent.getStringExtra(Constants.EXTRA_KEY_FEED_DETAIL_TYPE)
         val feedId         = onCreate.intent.getIntExtra(Constants.EXTRA_KEY_FEED_ID, -1)
 

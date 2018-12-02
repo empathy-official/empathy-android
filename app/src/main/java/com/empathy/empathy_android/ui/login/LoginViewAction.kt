@@ -11,5 +11,5 @@ internal sealed class LoginViewAction {
 
     ): LoginViewAction()
 
-    object LoginClick: LoginViewAction()
+    data class LoginClick(val userId: String): LoginViewAction()
 }
