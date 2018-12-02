@@ -1,6 +1,5 @@
 package com.empathy.empathy_android.ui.login
 
-import android.util.Log
 import com.empathy.empathy_android.BaseViewModel
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.di.qualifier.LocFilter
@@ -65,11 +64,12 @@ internal interface LoginViewModel {
                     compositeDisposable.add(
                             Observable
                                     .fromCallable {
-                                        TMapData().convertGpsToAddress(latitude, longtitude)
+                                        TMapData().convertGpsToAddress(latitude, longtitude) ?: ""
                                     }
                                     .subscribeOn(Schedulers.newThread())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribeBy {
+
                                         val filteredAddress = when {
                                             it.contains("서울")    -> "Seoul"
                                             it.contains("경기도")   -> "GyeonggiDo"
