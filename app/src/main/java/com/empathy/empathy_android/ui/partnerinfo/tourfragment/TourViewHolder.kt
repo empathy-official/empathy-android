@@ -7,7 +7,7 @@ import com.empathy.empathy_android.repository.model.Tour
 import com.empathy.empathy_android.repository.model.TourInfo
 import kotlinx.android.synthetic.main.item_tour.view.*
 
-internal class TourViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+internal class TourViewHolder(itemView: View): AbstractTourViewHolder(itemView) {
 
     interface OnItemClickListener {
         fun onItemClicked(targetId: String)
@@ -20,7 +20,7 @@ internal class TourViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
         initializeListener()
     }
 
-    fun bind(tour: TourInfo) {
+    override fun bind(tour: TourInfo) {
         this.tour = tour
 
         with(itemView) {
