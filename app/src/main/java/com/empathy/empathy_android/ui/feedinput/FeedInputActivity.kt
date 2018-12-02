@@ -7,10 +7,13 @@ import com.empathy.empathy_android.R
 import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.extensions.observe
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_feed_input.*
 
 internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun getLayoutRes(): Int = R.layout.activity_feed_input
     override fun getViewModel(): Class<FeedInputViewModel> = FeedInputViewModel::class.java
@@ -26,12 +29,25 @@ internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
         viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        compositeDisposable.clear()
+    }
+
     private fun subscribeNavigation() {
-        viewModel.channel.ofLifeCycle()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy {
-                    finish()
-                }
+        compositeDisposable.add(
+                viewModel.channel.ofNavigation()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy {
+                            when(it) {
+                                is FeedInputNavigation.NavigateToMyFeed -> {
+                                    finish()
+                                }
+                            }
+                        }
+        )
+
     }
 
     private fun subscribeLooknFeel() {

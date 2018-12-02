@@ -60,7 +60,7 @@ internal class FeedInputViewModel @Inject constructor(
 
         imageUri = Uri.parse(uri)
         imageUri?.let {
-            showFeedInputImage.value = FeedInputLooknFeel.ShowFeedInputImage(it)
+            showFeedInputImage.postValue(FeedInputLooknFeel.ShowFeedInputImage(it))
         }
     }
 
@@ -104,7 +104,7 @@ internal class FeedInputViewModel @Inject constructor(
         }
     }
 
-    fun getPath(uri: Uri): String {
+    private fun getPath(uri: Uri): String {
         val data = arrayOf(MediaStore.Images.Media.DATA)
         val loader = CursorLoader(EmpathyApp.instance, uri, data, null, null, null)
         val cursor = loader.loadInBackground()
