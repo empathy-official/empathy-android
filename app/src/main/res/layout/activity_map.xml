@@ -161,13 +161,14 @@
 
   <Button
     android:id="@+id/save"
+    android:text="@string/btn_save"
     android:textColor="@color/_ffffff"
     android:textSize="16sp"
     android:layout_width="match_parent"
     android:layout_height="61dp"
     android:layout_marginLeft="11dp"
     android:layout_marginRight="11dp"
-    android:background="@drawable/btn_save"
+    android:background="@color/_FF5656"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"/>
