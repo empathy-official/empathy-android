@@ -65,7 +65,6 @@
       android:layout_marginTop="13dp"/>
 
     <com.empathy.empathy_android.view.RoundImageView
-      android:background="@color/_2a2c34"
       android:layout_width="46dp"
       android:layout_height="46dp"
       android:layout_gravity="right|bottom"

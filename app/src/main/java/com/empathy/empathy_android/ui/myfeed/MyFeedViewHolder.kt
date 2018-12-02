@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_my_feed.view.*
 internal class MyFeedViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     interface OnItemClickListener {
-        fun onItemClicked(position: Int)
+        fun onItemClicked(targetId: Int?, position: Int)
     }
 
     interface OnItemLongClickListener {
@@ -46,7 +46,7 @@ internal class MyFeedViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
 
     private fun initializeListener() {
         itemView.setOnClickListener {
-            listener?.onItemClicked(adapterPosition)
+            listener?.onItemClicked(myFeed?.journeyId, adapterPosition)
         }
 
         itemView.setOnLongClickListener {

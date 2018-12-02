@@ -11,6 +11,7 @@ import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
+import com.empathy.empathy_android.ui.camera.CameraActivity
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.myfeed.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
@@ -63,6 +64,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     override fun onDestroy() {
         super.onDestroy()
 
+        tmapGpsManager.CloseGps()
         compositeDisposable.clear()
     }
 
@@ -82,6 +84,13 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
                                 is FeedNavigation.NavigateToPartnerInfo -> {
                                     startActivity(Intent(this, PartnerInfoActivity::class.java).apply {
                                         putExtra(Constants.EXTRA_KEY_USER, it.user)
+                                        addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                                    })
+                                }
+
+                                is FeedNavigation.NavigateToTmap -> {
+                                    startActivity(Intent(this, MapActivity::class.java).apply {
+                                        putExtra(Constants.EXTRA_KEY_ADDRESS, it.address)
                                     })
                                 }
                             }
@@ -151,7 +160,9 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     }
 
     private fun initializeListener() {
-        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
+        floatingBtnCamera.setOnClickListener {
+            startActivity(Intent(this@FeedActivity, CameraActivity::class.java))
+        }
 
         my_feed_container.setOnClickListener {
             viewModel.channel.accept(FeedViewAction.NavigateToMyFeedClicked)
@@ -162,7 +173,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
         }
 
         filter_location.setOnClickListener {
-            startActivity(Intent(this, MapActivity::class.java))
+            viewModel.channel.accept(FeedViewAction.NavigateToTmapClicked)
         }
 
         logAdapter.setOnItemClickListener(object : FeedRecyclerAdapter.ItemClickListener {

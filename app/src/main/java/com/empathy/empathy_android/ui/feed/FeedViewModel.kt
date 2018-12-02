@@ -73,6 +73,8 @@ internal class FeedViewModel @Inject constructor(
             appChannel.accept(AppData.RequestTo.Remote.FetchFeedsByLocationFilter(user.userId.toString(), locationFilter.getLocationEnum() ?: DEFAULT_LOCATION_ENUM))
 
             hasLocation = true
+
+            closeGps.postValue(FeedLooknFeel.CloseGps)
         }
 
         showLocation.postValue(FeedLooknFeel.ShowLocation(user.address))
@@ -116,6 +118,10 @@ internal class FeedViewModel @Inject constructor(
 
             is FeedViewAction.NavigateToPartnerInfoClicked -> {
                 channel.accept(FeedNavigation.NavigateToPartnerInfo(this.user))
+            }
+
+            is FeedViewAction.NavigateToTmapClicked -> {
+                channel.accept(FeedNavigation.NavigateToTmap(user.address))
             }
 
             is FeedViewAction.OnLocationChange -> {

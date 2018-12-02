@@ -6,6 +6,8 @@ import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.extensions.observe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_feed_input.*
 
 internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
@@ -17,10 +19,19 @@ internal class FeedInputActivity: BaseActivity<FeedInputViewModel>() {
         super.onCreate(savedInstanceState)
 
         subscribeLooknFeel()
+        subscribeNavigation()
 
         initializeListener()
 
         viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
+    }
+
+    private fun subscribeNavigation() {
+        viewModel.channel.ofLifeCycle()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy {
+                    finish()
+                }
     }
 
     private fun subscribeLooknFeel() {

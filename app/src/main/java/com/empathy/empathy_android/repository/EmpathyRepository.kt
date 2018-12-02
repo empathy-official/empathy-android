@@ -91,6 +91,12 @@ internal class EmpathyRepository @Inject constructor(
                                                 AppData.RespondTo.Remote.PartnerInfoDetailFetched(it)
                                             }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
                                 }
+                                is AppData.RequestTo.Remote.FetchTourInfoDetail -> {
+                                    empathyApi.fetchTourInfoDetail(it.contentType, it.targetId)
+                                            .map {
+                                                AppData.RespondTo.Remote.TourInfoDetailFetched(it)
+                                            }.toErrorSwallowingObservable { throwable -> Log.d(EmpathyRepository::class.simpleName, throwable.toString()) }
+                                }
                             }
                         }.subscribe(appChannel::accept)
         )

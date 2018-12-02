@@ -8,5 +8,7 @@ internal sealed class FeedNavigation {
 
     data class NavigateToPartnerInfo(val user: LocalUser): FeedNavigation()
 
+    data class NavigateToTmap(val address: String): FeedNavigation()
+
 
 }

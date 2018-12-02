@@ -4,22 +4,28 @@ import android.content.Context
 import android.content.Intent
 import android.view.MotionEvent
 import android.view.GestureDetector.SimpleOnGestureListener
-import android.text.method.Touch.onTouchEvent
 import android.util.Log
 import android.view.GestureDetector
 import android.view.View
 import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat.startActivity
-import com.empathy.empathy_android.ui.camera.CameraActivity
 
 
-class OnSwipeTouchListener(ctx: Context) : OnTouchListener {
+class OnSwipeTouchListener(ctx: Context, listener: OnViewTransitionListener?) : OnTouchListener {
+
+    interface OnViewTransitionListener {
+        fun viewTransitioned()
+    }
 
     private var gestureDetector: GestureDetector
     private val context : Context = ctx
 
+    private var listener: OnViewTransitionListener? = null
+
     init {
         gestureDetector = GestureDetector(ctx, GestureListener())
+
+        this.listener = listener
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -65,6 +71,7 @@ class OnSwipeTouchListener(ctx: Context) : OnTouchListener {
 
     fun onSwipeRight() {
         Log.d(TAG, "onSwipeRight")
+        listener?.viewTransitioned()
     }
 
     fun onSwipeLeft() {
@@ -73,7 +80,6 @@ class OnSwipeTouchListener(ctx: Context) : OnTouchListener {
 
     fun onSwipeTop() {
         Log.d(TAG, "onSwipeTop")
-        startActivity(context, Intent(context, CameraActivity::class.java),null)
     }
 
     fun onSwipeBottom() {

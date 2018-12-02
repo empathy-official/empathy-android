@@ -4,6 +4,7 @@ import com.empathy.empathy_android.repository.model.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 
@@ -27,10 +28,18 @@ internal interface EmpathyApi {
 
     @Multipart
     @POST("/journey/")
-    fun createFeed(@Part("ownerId") userId: RequestBody, @Part("title") parameterTitle: RequestBody, @Part("contents") parameterDesc: RequestBody, @Part("location") address: RequestBody, @Part("locationEnum") userLocationEnum: RequestBody, @Part multipartBody: MultipartBody.Part): Single<Any>
+    fun createFeed(
+            @Part("ownerId") userId: RequestBody,
+            @Part("title") parameterTitle: RequestBody,
+            @Part("contents") parameterDesc: RequestBody,
+            @Part("location") address: RequestBody,
+            @Part("locationEnum") userLocationEnum: RequestBody,
+            @Part multipartBody: MultipartBody.Part
+
+    ): Single<ResponseBody>
 
     @DELETE("/journey/{targetId}")
-    fun deleteFeed(@Path("targetId") targetId: Int): Single<Any>
+    fun deleteFeed(@Path("targetId") targetId: Int): Single<ResponseBody>
 
     @GET("/info/tourAPI/{contentType}/{mapX}/{mapY}/{range}/{pageNumber}")
     fun fetchTourInfos(
@@ -46,18 +55,10 @@ internal interface EmpathyApi {
     fun fetchPartnerInfo(): Single<Partner>
 
     @GET("/info/alliance/detail/{targetId}")
-    fun fetchPartnerInfoDetail(@Path("targetId") partnerId: String): Single<TourInfoDetail>
+    fun fetchPartnerInfoDetail(@Path("targetId") partnerId: String): Single<PartnerDetail>
 
-//    @Multipart
-//    @POST("/journey/")
-//    fun createFeed(
-//            @Path("ownerId") userId: String,
-//            @Path("title") title: String,
-//            @Path("contents") description: String,
-//            @Path("location") address: String,
-//            @Path("locationEnum") userLocationEnum: LocationEnum,
-//            @Part multipartBody: MultipartBody.Part
-//
-//    ): Single<Nothing>
+    @GET("/info/tourAPI/detail/{contentType}/{targetId}")
+    fun fetchTourInfoDetail(@Path("contentType") contentType: String, @Path("targetId") targetId: String): Single<TourDetail>
+
 
 }

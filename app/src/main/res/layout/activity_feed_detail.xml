@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/date"
-            android:text="11.03 2018"
+
             android:textColor="@color/_2a2c34"
             android:textSize="18sp"
             android:layout_width="45dp"
@@ -58,7 +58,6 @@
 
         <TextView
             android:id="@+id/feed_title"
-            android:text="강남의 정관장 카페 그리고 홍삼음료"
             android:textColor="@color/_2a2c34"
             android:textSize="15sp"
             android:layout_width="120dp"
@@ -81,7 +80,6 @@
 
         <TextView
             android:id="@+id/content"
-            android:text="생각보다 맛있음"
             android:textSize="16sp"
             android:textColor="@color/_000000"
             android:textStyle="bold"
@@ -94,7 +92,6 @@
 
         <TextView
             android:id="@+id/address"
-            android:text="서울특별시 성북구 성관동"
             android:textSize="13sp"
             android:textColor="@color/_2a2c34"
             android:layout_width="wrap_content"

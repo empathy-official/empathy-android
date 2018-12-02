@@ -17,14 +17,14 @@ internal class MyFeedAdapter: RecyclerView.Adapter<MyFeedViewHolder>() {
             = MyFeedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_my_feed, parent, false))
             .apply {
                 setOnItemClickListener(object : MyFeedViewHolder.OnItemClickListener {
-                    override fun onItemClicked(position: Int) {
-                        listener?.onItemClicked(position)
+                    override fun onItemClicked(targetId: Int?, position: Int) {
+                        listener?.onItemClicked(targetId, position)
                     }
                 })
 
                 setOnItemLongClickListener(object : MyFeedViewHolder.OnItemLongClickListener {
                     override fun onItemLongClicked(targetId: Int?, position: Int) {
-                        longListener?.onItemLongClicked(position, adapterPosition)
+                        longListener?.onItemLongClicked(targetId, position)
                     }
                 })
             }

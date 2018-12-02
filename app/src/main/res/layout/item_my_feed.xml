@@ -42,7 +42,7 @@
     android:id="@+id/my_log_image"
     android:layout_width="234dp"
     android:layout_height="58dp"
-    android:src="@drawable/icon"
+    android:scaleType="centerCrop"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
 

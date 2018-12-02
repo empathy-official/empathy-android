@@ -102,9 +102,10 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
         }
 
         adapter.setOnItemClickListener(object : MyFeedViewHolder.OnItemClickListener {
-            override fun onItemClicked(position: Int) {
+            override fun onItemClicked(targetId: Int?, position: Int) {
                 startActivity(Intent(this@MyFeedsActivity, FeedDetailActivity::class.java).apply {
-                    putExtra("position", position)
+                    putExtra(Constants.EXTRA_KEY_FEED_DETAIL_TYPE, FeedDetailActivity.TYPE_MY_FEED)
+                    putExtra(Constants.EXTRA_KEY_FEED_ID, targetId)
                 })
             }
         })
@@ -115,6 +116,8 @@ internal class MyFeedsActivity: BaseActivity<MyFeedViewModel>() {
                     setOnDeleteListener(object : NotificationFragment.OnItemDeleteListener {
                         override fun onDeleteClicked() {
                             viewModel.channel.accept(MyFeedViewAction.OnFeedDeleteClicked(targetId, adapterPosition))
+
+                            dismiss()
                         }
                     })
                 }, NOTIFICATION_DIALOG)
