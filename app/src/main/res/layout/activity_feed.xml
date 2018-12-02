@@ -164,7 +164,16 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/info_container"/>
-
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingBtnCamera"
+                android:src="@drawable/btn_floating_camera"
+                android:scaleType="center"
+                android:backgroundTint="@color/_ffffff"
+                android:layout_margin="@dimen/feed_margin_const_floating_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="@dimen/feed_radius_floating_btn"
+                android:layout_height="@dimen/feed_radius_floating_btn" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

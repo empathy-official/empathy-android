@@ -11,6 +11,7 @@ import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
 import com.empathy.empathy_android.extensions.observe
 import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
+import com.empathy.empathy_android.ui.camera.CameraActivity
 import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.myfeed.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
@@ -151,7 +152,9 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
     }
 
     private fun initializeListener() {
-        constLayout.setOnTouchListener (OnSwipeTouchListener(this@FeedActivity))
+        floatingBtnCamera.setOnClickListener {
+            startActivity(Intent(this@FeedActivity, CameraActivity::class.java))
+        }
 
         my_feed_container.setOnClickListener {
             viewModel.channel.accept(FeedViewAction.NavigateToMyFeedClicked)
