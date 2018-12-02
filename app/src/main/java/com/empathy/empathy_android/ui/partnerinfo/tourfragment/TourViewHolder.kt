@@ -1,16 +1,14 @@
 package com.empathy.empathy_android.ui.partnerinfo.tourfragment
 
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import com.empathy.empathy_android.extensions.loadImage
-import com.empathy.empathy_android.repository.model.Tour
 import com.empathy.empathy_android.repository.model.TourInfo
 import kotlinx.android.synthetic.main.item_tour.view.*
 
 internal class TourViewHolder(itemView: View): AbstractTourViewHolder(itemView) {
 
     interface OnItemClickListener {
-        fun onItemClicked(targetId: String)
+        fun onItemClicked(targetId: String, contentType: String)
     }
 
     private var listener: OnItemClickListener? = null
@@ -38,7 +36,7 @@ internal class TourViewHolder(itemView: View): AbstractTourViewHolder(itemView) 
     private fun initializeListener() {
         itemView.setOnClickListener {
             tour?.targetId?.let {
-                listener?.onItemClicked(it)
+                listener?.onItemClicked(it, tour?.contentType!!)
             }
         }
     }

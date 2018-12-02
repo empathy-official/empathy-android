@@ -1,6 +1,8 @@
 package com.empathy.empathy_android.ui.partnerinfo
 
+import android.app.PendingIntent.getActivity
 import android.os.Bundle
+import androidx.fragment.app.FragmentManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
@@ -55,6 +57,11 @@ internal class PartnerInfoActivity: BaseActivity<PartnerInfoViewModel>() {
     }
 
     private fun startPartnerFragment(num: Int) {
+        val fm = supportFragmentManager
+        for(i in 0 until fm.backStackEntryCount) {
+            fm.popBackStack()
+        }
+
         when(num) {
             0 -> replaceFragment(TourOrganizationFragment.newInstance(user!!).apply {
                 setOnSwipeListener(object : OnSwipeTouchListener.OnViewTransitionListener {

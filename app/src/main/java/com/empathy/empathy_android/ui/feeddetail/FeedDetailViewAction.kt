@@ -1,5 +1,7 @@
 package com.empathy.empathy_android.ui.feeddetail
 
-internal class FeedDetailViewAction {
+internal sealed class FeedDetailViewAction {
+
+    object EditOrShareClicked: FeedDetailViewAction()
 
 }

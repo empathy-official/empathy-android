@@ -2,6 +2,7 @@ package com.empathy.empathy_android.ui.partnerinfo.partnerfragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,8 @@ internal class PartnerFragment: BaseFragment() {
 
     private var listener: OnSwipeTouchListener.OnViewTransitionListener? = null
 
+    private var swipeTouchListener: OnSwipeTouchListener? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val viewId = when(Random().nextInt(2)) {
             0    -> R.layout.fragment_partner_type_a
@@ -50,7 +53,7 @@ internal class PartnerFragment: BaseFragment() {
             else -> R.layout.fragment_partner_type_a
         }
 
-        return inflater.inflate(viewId, container, false).apply {
+        val view = inflater.inflate(viewId, container, false).apply {
             setOnTouchListener(OnSwipeTouchListener(context, listener))
 
             if(isTypeB) {
@@ -67,6 +70,23 @@ internal class PartnerFragment: BaseFragment() {
                 backgroundDeco.setImageResource(decoResource)
             }
         }
+
+        swipeTouchListener = OnSwipeTouchListener(view.context, listener)
+
+        view.setOnTouchListener(swipeTouchListener)
+        view.setOnClickListener {
+            if (swipeTouchListener!!.swipeDetected()){
+                listener?.viewTransitioned()
+            } else {
+                startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
+                    putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
+                    putExtra(Constants.EXTRA_KEY_PARTNER_ID, partner?.targetId)
+                })
+            }
+
+        }
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -103,12 +123,17 @@ internal class PartnerFragment: BaseFragment() {
     }
 
     private fun initializeListener() {
-        container_view.setOnClickListener {
-            startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
-                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
-                putExtra(Constants.EXTRA_KEY_PARTNER_ID, partner?.targetId)
-            })
-        }
+//        container_view.setOnTouchListener { view, motionEvent ->
+//
+//            return@setOnTouchListener false
+//        }
+//
+//        container_view.setOnClickListener {
+//            startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
+//                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
+//                putExtra(Constants.EXTRA_KEY_PARTNER_ID, partner?.targetId)
+//            })
+//        }
     }
 
 }

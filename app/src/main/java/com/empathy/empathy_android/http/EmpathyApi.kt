@@ -41,7 +41,7 @@ internal interface EmpathyApi {
     @DELETE("/journey/{targetId}")
     fun deleteFeed(@Path("targetId") targetId: Int): Single<ResponseBody>
 
-    @GET("/info/tourAPI/{contentType}/{mapX}/{mapY}/{range}/{pageNumber}")
+    @GET("/info/tourAPI2/{contentType}/{mapX}/{mapY}/{range}/{pageNumber}")
     fun fetchTourInfos(
         @Path("contentType") contentType: Int,
         @Path("mapX") latitude: Double,

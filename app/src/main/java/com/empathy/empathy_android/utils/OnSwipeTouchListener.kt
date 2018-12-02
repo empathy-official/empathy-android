@@ -22,6 +22,33 @@ class OnSwipeTouchListener(ctx: Context, listener: OnViewTransitionListener?) : 
 
     private var listener: OnViewTransitionListener? = null
 
+    val HORIZONTAL_MIN_DISTANCE = 40
+    val VERTICAL_MIN_DISTANCE = 80
+
+    enum class Action {
+        LR, // Left to Right
+        RL, // Right to Left
+        TB, // Top to bottom
+        BT, // Bottom to Top
+        None // when no action was detected
+    }
+
+    private val logTag = "SwipeDetector"
+    private val MIN_DISTANCE = 100
+    private var downX: Float = 0.toFloat()
+    var downY: Float = 0.toFloat()
+    var upX: Float = 0.toFloat()
+    var upY: Float = 0.toFloat()
+    private var mSwipeDetected = Action.None
+
+    fun swipeDetected(): Boolean {
+        return mSwipeDetected != Action.None
+    }
+
+    fun getAction(): Action {
+        return mSwipeDetected
+    }
+
     init {
         gestureDetector = GestureDetector(ctx, GestureListener())
 
@@ -29,7 +56,60 @@ class OnSwipeTouchListener(ctx: Context, listener: OnViewTransitionListener?) : 
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-        return gestureDetector.onTouchEvent(event)
+        when(event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                downX = event.x
+                downY = event.y
+                mSwipeDetected = Action.None
+//                listener?.viewTransitioned()
+                return false // allow other events like Click to be processed
+            }
+            MotionEvent.ACTION_MOVE -> {
+                upX = event.x
+                upY = event.y
+
+                val deltaX = downX - upX
+                val deltaY = downY - upY
+
+                // horizontal swipe detection
+                if(Math.abs(deltaX) > HORIZONTAL_MIN_DISTANCE) {
+                    // left or right
+                    if(deltaX < 0) {
+                        Log.i(logTag, "Swipe Left to Right")
+                        mSwipeDetected = Action.LR
+                        return true
+                    }
+                    if(deltaX > 0) {
+                        Log.i(logTag, "Swipe Right to Left")
+                        mSwipeDetected = Action.RL
+                        return true
+                    }
+                } else
+
+                // vertical swipe detection
+                    if(Math.abs(deltaY) > VERTICAL_MIN_DISTANCE) {
+                        // top or down
+                        if(deltaY < 0) {
+                            Log.i(logTag, "Swipe Top to Bottom")
+                            mSwipeDetected = Action.TB
+                            return false
+                        }
+                        if(deltaY > 0) {
+                            Log.i(logTag, "Swipe Bottom to Top")
+                            mSwipeDetected = Action.BT
+                            return false
+                        }
+                    }
+                return true
+            }
+        }
+        return false
+
+//        when(event.action) {
+//            MotionEvent.ACTION_DOWN -> {}
+//        }
+//
+//        return gestureDetector.onTouchEvent(event)
     }
 
     private inner class GestureListener : SimpleOnGestureListener() {

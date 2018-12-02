@@ -1,7 +1,10 @@
 package com.empathy.empathy_android.ui.feeddetail
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.R
 import com.empathy.empathy_android.extensions.loadImage
@@ -27,12 +30,21 @@ internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
 
         subscribeLooknFeel()
 
+        initializeView()
         initializeListener()
     }
+
+    private fun initializeView() {}
 
     private fun subscribeLooknFeel() {
         observe(viewModel.showFeedDetail, ::handleFeedDetail)
         observe(viewModel.showEditOrShare, ::handleEditOrShareImage)
+//        observe(viewModel.showEditableMode, ::handleEditableMode)
+    }
+
+    private fun handleEditableMode(showEditableMode: FeedDetailLooknFeel.ShowEditableMode?) {
+        feed_title.isEnabled = true
+        content.isEnabled = true
     }
 
     private fun handleFeedDetail(looknFeel: FeedDetailLooknFeel.ShowFeedDetail) {
@@ -42,9 +54,10 @@ internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
         profile_image.loadImage(feedDetail.ownerProfileUrl)
 
         date.text       = feedDetail.creationTime
-        feed_title.text = feedDetail.title
-        content.text    = feedDetail.contents
         address.text    = feedDetail.location
+
+        feed_title.setText(feedDetail.title)
+        content.setText(feedDetail.contents)
     }
 
     private fun handleEditOrShareImage(looknFeel: FeedDetailLooknFeel.ShowEditOrShareImage) {
@@ -53,6 +66,8 @@ internal class FeedDetailActivity: BaseActivity<FeedDetailViewModel>() {
 
     private fun initializeListener() {
         edit_or_share.setOnClickListener {
+            viewModel.channel.accept(FeedDetailViewAction.EditOrShareClicked)
+
             //TODO: share 하는 부분이 여기임
 //            val intent = Intent().apply {
 //                action = Intent.ACTION_SEND

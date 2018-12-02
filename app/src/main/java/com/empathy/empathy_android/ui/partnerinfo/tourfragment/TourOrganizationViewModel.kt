@@ -49,7 +49,10 @@ internal class TourOrganizationViewModel @Inject constructor(
     private fun handleOnViewAction(tourOrganizationViewAction: TourOrganizationViewAction) {
         when(tourOrganizationViewAction) {
             is TourOrganizationViewAction.NavigateToDetailClicked -> {
-                channel.accept(TourOrganizationNavigation.NavigateToTourDetail(contentType, tourOrganizationViewAction.targetId))
+                channel.accept(TourOrganizationNavigation.NavigateToTourDetail(
+                        tourOrganizationViewAction.contentType,
+                        tourOrganizationViewAction.targetId)
+                )
             }
         }
     }

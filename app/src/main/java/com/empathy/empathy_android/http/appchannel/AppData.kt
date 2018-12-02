@@ -65,7 +65,7 @@ internal sealed class AppData {
 
             data class PartnerInfoFetched(val partner: Partner): Remote()
 
-            data class PartnerInfoDetailFetched(val tourInfoDetail: PartnerDetail): Remote()
+            data class PartnerInfoDetailFetched(val partnerDetail: PartnerDetail): Remote()
 
             data class TourInfoDetailFetched(val tourDetail: TourDetail): Remote()
 

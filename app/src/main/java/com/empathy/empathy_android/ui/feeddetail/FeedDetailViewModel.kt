@@ -7,6 +7,7 @@ import com.empathy.empathy_android.R
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
 import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
+import com.empathy.empathy_android.ui.feed.FeedViewAction
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
@@ -17,24 +18,43 @@ internal class FeedDetailViewModel @Inject constructor(
 ): BaseViewModel() {
 
     private val onCreate = channel.ofLifeCycle().ofType(ActivityLifecycleState.OnCreate::class.java)
+    private val onViewAction = channel.ofViewAction()
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
+    private var feedDetailType = ""
+
     val showFeedDetail   = MutableLiveData<FeedDetailLooknFeel.ShowFeedDetail>()
     val showEditOrShare = MutableLiveData<FeedDetailLooknFeel.ShowEditOrShareImage>()
+    val showEditableMode = MutableLiveData<FeedDetailLooknFeel.ShowEditableMode>()
 
     init {
         compositeDisposable.addAll(
                 onCreate.subscribeBy(onNext = ::handleOnCreate),
+
+                onViewAction.subscribeBy(onNext = ::handleOnViewAction),
 
                 onRemote.subscribeBy(onNext = ::handleOnRemote)
         )
 
     }
 
+    private fun handleOnViewAction(feedDetailViewAction: FeedDetailViewAction) {
+        when(feedDetailViewAction) {
+            is FeedDetailViewAction.EditOrShareClicked -> {
+                if(feedDetailType == FeedDetailActivity.TYPE_MY_FEED) {
+                    showEditableMode.postValue(FeedDetailLooknFeel.ShowEditableMode)
+                } else {
+
+                }
+            }
+        }
+    }
+
     private fun handleOnCreate(onCreate: ActivityLifecycleState.OnCreate) {
-        val feedDetailType = onCreate.intent.getStringExtra(Constants.EXTRA_KEY_FEED_DETAIL_TYPE)
-        val feedId         = onCreate.intent.getIntExtra(Constants.EXTRA_KEY_FEED_ID, -1)
+        feedDetailType = onCreate.intent.getStringExtra(Constants.EXTRA_KEY_FEED_DETAIL_TYPE)
+
+        val feedId = onCreate.intent.getIntExtra(Constants.EXTRA_KEY_FEED_ID, -1)
 
         if(feedId != -1) {
             appChannel.accept(AppData.RequestTo.Remote.FetchDetailFeed(feedId))
