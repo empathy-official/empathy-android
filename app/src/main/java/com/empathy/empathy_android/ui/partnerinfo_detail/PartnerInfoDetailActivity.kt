@@ -2,11 +2,14 @@ package com.empathy.empathy_android.ui.partnerinfo_detail
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
 import com.empathy.empathy_android.BaseActivity
 import com.empathy.empathy_android.Constants
 import com.empathy.empathy_android.R
+import com.empathy.empathy_android.extensions.observe
+import com.empathy.empathy_android.http.appchannel.ActivityLifecycleState
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
 import com.skt.Tmap.TMapMarkerItem
@@ -26,7 +29,7 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
         const val TYPE_TOUR    = "tour"
     }
 
-    @Inject lateinit var appChannel: AppChannelApi
+//    @Inject lateinit var appChannel: AppChannelApi
 
     private val tMapView by lazy {
         TMapView(this)
@@ -47,95 +50,185 @@ internal class PartnerInfoDetailActivity: BaseActivity<PartnerInfoDetailViewMode
 
         setTmap()
 
-        intent.getStringExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE).let {
-            if(it == TYPE_PARTNER) {
-                val partnerId = intent.getStringExtra(Constants.EXTRA_KEY_PARTNER_ID) ?: ""
+        subscribe()
 
-                fetchPartnerDetailInfo(partnerId)
-            } else if(it == TYPE_TOUR) {
-                val targetId = intent.getStringExtra(Constants.EXTRA_KEY_TARGET_ID) ?: ""
-                val contentType = intent.getStringExtra(Constants.EXTRA_KEY_CONTENT_TYPE) ?: ""
+        viewModel.channel.accept(ActivityLifecycleState.OnCreate(intent, savedInstanceState))
+//        intent.getStringExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE).let {
+//            if(it == TYPE_PARTNER) {
+//                val partnerId = intent.getStringExtra(Constants.EXTRA_KEY_PARTNER_ID) ?: ""
+//
+//                fetchPartnerDetailInfo(partnerId)
+//            } else if(it == TYPE_TOUR) {
+//                val targetId = intent.getStringExtra(Constants.EXTRA_KEY_TARGET_ID) ?: ""
+//                val contentType = intent.getStringExtra(Constants.EXTRA_KEY_CONTENT_TYPE) ?: ""
+//
+//                fetchTourDetailInfo(contentType, targetId)
+//            }
+//        }
 
-                fetchTourDetailInfo(contentType, targetId)
-            }
+//        subscribeRemote()
+    }
+
+    private fun subscribe() {
+        observe(viewModel.showTourDetail, ::handleTourDetail)
+        observe(viewModel.showPartnerDetail, ::handlePartnerDetail)
+
+    }
+
+    private fun handleTourDetail(showTourDetail: PartnerDetailLooknFeel.ShowTourDetail) {
+        val tourDetail = showTourDetail.tourDetail
+
+        requestManager.load(tourDetail.imageURL).into(info_detail_image)
+
+        parnter_title.text = tourDetail.title
+        content.text = tourDetail.overviewText
+
+        if(tourDetail.businessHours == "") {
+            date.text = "정보없음"
+        } else {
+            date.text = tourDetail.businessHours
         }
 
-        subscribeRemote()
+        if(tourDetail.dayOff == "") {
+            time_or_dayoff.text = "정보없음"
+        } else {
+            time_or_dayoff.text = tourDetail.dayOff
+        }
+
+        price_info.text = "정보없음"
+
+        credit_container.visibility = View.VISIBLE
+        creditcard_available.text = tourDetail.creditCard
+
+        pet_container.visibility = View.VISIBLE
+        pet_available.text = tourDetail.withPet
+
+        address.text = tourDetail.locationStr
+
+        val latitude: String? = tourDetail.mapx
+        val longtitude: String? = tourDetail.mapy
+        val pinBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_pin)
+
+        Log.d("Z123", latitude.toString())
+
+        val marker = TMapMarkerItem().apply {
+            tMapPoint = TMapPoint(latitude?.toDouble() ?: Constants.DEFAULT_LATITUDE, longtitude?.toDouble() ?: Constants.DEFAULT_LONGTITUDE)
+            icon = pinBitmap
+        }
+
+        tMapView.addMarkerItem("location", marker)
     }
 
-    private fun fetchTourDetailInfo(contentType: String, targetId: String) {
-        appChannel.accept(AppData.RequestTo.Remote.FetchTourInfoDetail(contentType, targetId))
+    private fun handlePartnerDetail(showPartnerDetail: PartnerDetailLooknFeel.ShowPartnerDetail) {
+        val partnerDetail = showPartnerDetail.partnerDetail
+
+        requestManager.load(partnerDetail.imageURL).into(info_detail_image)
+
+        parnter_title.text = partnerDetail.title
+        content.text = partnerDetail.overview
+        date.text = partnerDetail.duration
+        time_or_dayoff.text = partnerDetail.playTime
+        price_info.text = partnerDetail.priceInfo
+        address.text = partnerDetail.locationStr
+
+        val latitude = partnerDetail.mapx
+        val longtitude = partnerDetail.mapy
+        val pinBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_pin)
+
+        val marker = TMapMarkerItem().apply {
+            tMapPoint = TMapPoint(latitude.toDouble(), longtitude.toDouble())
+            icon = pinBitmap
+        }
+
+        tMapView.addMarkerItem("location", marker)
     }
 
-    private fun fetchPartnerDetailInfo(partnerId: String) {
-        appChannel.accept(AppData.RequestTo.Remote.FetchPartnerInfoDetail(partnerId))
-    }
-
-    private fun subscribeRemote() {
-        val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
-
-        disposables.add(
-                onRemote.observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy {
-                            when(it) {
-                                is AppData.RespondTo.Remote.TourInfoDetailFetched -> {
-                                    val tourDetail = it.tourDetail
-
-                                    requestManager.load(tourDetail.imageURL).into(info_detail_image)
-
-                                    parnter_title.text = tourDetail.title
-                                    content.text = tourDetail.overviewText
-                                    date.text = tourDetail.businessHours
-                                    time_or_dayoff.text = tourDetail.dayOff
-                                    price_info.text = "정보 안나와"
-
-                                    credit_container.visibility = View.VISIBLE
-                                    creditcard_available.text = tourDetail.creditCard
-
-                                    pet_container.visibility = View.VISIBLE
-                                    pet_available.text = tourDetail.withPet
-
-                                    address.text = tourDetail.locationStr
-
-                                    val latitude = tourDetail.mapx
-                                    val longtitude = tourDetail.mapy
-                                    val pinBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_pin)
-
-                                    val marker = TMapMarkerItem().apply {
-                                        tMapPoint = TMapPoint(latitude.toDouble(), longtitude.toDouble())
-                                        icon = pinBitmap
-                                    }
-
-                                    tMapView.addMarkerItem("location", marker)
-                                }
-
-                                is AppData.RespondTo.Remote.PartnerInfoDetailFetched -> {
-                                    val partnerDetail = it.tourInfoDetail
-
-                                    requestManager.load(partnerDetail.imageURL).into(info_detail_image)
-
-                                    parnter_title.text = partnerDetail.title
-                                    content.text = partnerDetail.overview
-                                    date.text = partnerDetail.duration
-                                    time_or_dayoff.text = partnerDetail.playTime
-                                    price_info.text = partnerDetail.priceInfo
-                                    address.text = partnerDetail.locationStr
-
-                                    val latitude = partnerDetail.mapx
-                                    val longtitude = partnerDetail.mapy
-                                    val pinBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_pin)
-
-                                    val marker = TMapMarkerItem().apply {
-                                        tMapPoint = TMapPoint(latitude.toDouble(), longtitude.toDouble())
-                                        icon = pinBitmap
-                                    }
-
-                                    tMapView.addMarkerItem("location", marker)
-                                }
-                            }
-                        }
-        )
-    }
+//    private fun fetchTourDetailInfo(contentType: String, targetId: String) {
+//        appChannel.accept(AppData.RequestTo.Remote.FetchTourInfoDetail(contentType, targetId))
+//    }
+//
+//    private fun fetchPartnerDetailInfo(partnerId: String) {
+//        appChannel.accept(AppData.RequestTo.Remote.FetchPartnerInfoDetail(partnerId))
+//    }
+//
+//    private fun subscribeRemote() {
+//        val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
+//
+//        disposables.add(
+//                onRemote.observeOn(AndroidSchedulers.mainThread())
+//                        .subscribeBy {
+//                            when(it) {
+//                                is AppData.RespondTo.Remote.TourInfoDetailFetched -> {
+//                                    val tourDetail = it.tourDetail
+//
+//                                    requestManager.load(tourDetail.imageURL).into(info_detail_image)
+//
+//                                    parnter_title.text = tourDetail.title
+//                                    content.text = tourDetail.overviewText
+//
+//                                    if(tourDetail.businessHours == "") {
+//                                        date.text = "정보없음"
+//                                    } else {
+//                                        date.text = tourDetail.businessHours
+//                                    }
+//
+//                                    if(tourDetail.dayOff == "") {
+//                                        time_or_dayoff.text = "정보없음"
+//                                    } else {
+//                                        time_or_dayoff.text = tourDetail.dayOff
+//                                    }
+//
+//                                    price_info.text = "정보없음"
+//
+//                                    credit_container.visibility = View.VISIBLE
+//                                    creditcard_available.text = tourDetail.creditCard
+//
+//                                    pet_container.visibility = View.VISIBLE
+//                                    pet_available.text = tourDetail.withPet
+//
+//                                    address.text = tourDetail.locationStr
+//
+//                                    val latitude: String? = tourDetail.mapx
+//                                    val longtitude: String? = tourDetail.mapy
+//                                    val pinBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_pin)
+//
+//                                    Log.d("Z123", latitude.toString())
+//
+//                                    val marker = TMapMarkerItem().apply {
+//                                        tMapPoint = TMapPoint(latitude?.toDouble() ?: Constants.DEFAULT_LATITUDE, longtitude?.toDouble() ?: Constants.DEFAULT_LONGTITUDE)
+//                                        icon = pinBitmap
+//                                    }
+//
+//                                    tMapView.addMarkerItem("location", marker)
+//                                }
+//
+//                                is AppData.RespondTo.Remote.PartnerInfoDetailFetched -> {
+//                                    val partnerDetail = it.partnerDetail
+//
+//                                    requestManager.load(partnerDetail.imageURL).into(info_detail_image)
+//
+//                                    parnter_title.text = partnerDetail.title
+//                                    content.text = partnerDetail.overview
+//                                    date.text = partnerDetail.duration
+//                                    time_or_dayoff.text = partnerDetail.playTime
+//                                    price_info.text = partnerDetail.priceInfo
+//                                    address.text = partnerDetail.locationStr
+//
+//                                    val latitude = partnerDetail.mapx
+//                                    val longtitude = partnerDetail.mapy
+//                                    val pinBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_pin)
+//
+//                                    val marker = TMapMarkerItem().apply {
+//                                        tMapPoint = TMapPoint(latitude.toDouble(), longtitude.toDouble())
+//                                        icon = pinBitmap
+//                                    }
+//
+//                                    tMapView.addMarkerItem("location", marker)
+//                                }
+//                            }
+//                        }
+//        )
+//    }
 
     private fun setTmap() {
         with(t_map_container) {

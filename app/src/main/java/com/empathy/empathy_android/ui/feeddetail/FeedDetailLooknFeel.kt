@@ -8,4 +8,6 @@ internal sealed class FeedDetailLooknFeel {
     data class ShowFeedDetail(val feedDetail: FeedDetail): FeedDetailLooknFeel()
 
     data class ShowEditOrShareImage(val imageResource: Int): FeedDetailLooknFeel()
+
+    object ShowEditableMode: FeedDetailLooknFeel()
 }

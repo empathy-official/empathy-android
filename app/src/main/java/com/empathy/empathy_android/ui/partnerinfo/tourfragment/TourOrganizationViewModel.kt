@@ -32,7 +32,7 @@ internal class TourOrganizationViewModel @Inject constructor(
 
     private val onRemote = appChannel.ofData().ofType(AppData.RespondTo.Remote::class.java)
 
-    private var contentType     = 12
+    private var contentType     = "12"
     private var user: LocalUser = LocalUser()
 
     val showTourInfos = MutableLiveData<TourOrganizationLooknFeel.ShowTourInfos>()
@@ -49,7 +49,10 @@ internal class TourOrganizationViewModel @Inject constructor(
     private fun handleOnViewAction(tourOrganizationViewAction: TourOrganizationViewAction) {
         when(tourOrganizationViewAction) {
             is TourOrganizationViewAction.NavigateToDetailClicked -> {
-                channel.accept(TourOrganizationNavigation.NavigateToTourDetail(contentType, tourOrganizationViewAction.targetId))
+                channel.accept(TourOrganizationNavigation.NavigateToTourDetail(
+                        tourOrganizationViewAction.contentType,
+                        tourOrganizationViewAction.targetId)
+                )
             }
         }
     }
@@ -75,7 +78,7 @@ internal class TourOrganizationViewModel @Inject constructor(
             else -> 12
         }
 
-        this.contentType = contentType
+        this.contentType = contentType.toString()
 
         appChannel.accept(AppData.RequestTo.Remote.FetchTourInfos(contentType, user.latitude, user.longtitude, Constants.DEFAULT_RANGE, perPage++))
     }

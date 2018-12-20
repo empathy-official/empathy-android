@@ -9,6 +9,7 @@ package com.empathy.empathy_android.repository.model
 //}
 internal data class TourInfo(
         val addr: String,
+        val contentType: String,
         val imageURL: String,
         val targetId: String,
         val title: String

@@ -9,11 +9,7 @@ import android.content.Context
 import android.content.Context.WINDOW_SERVICE
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.ImageFormat
-import android.graphics.Matrix
-import android.graphics.Point
-import android.graphics.RectF
-import android.graphics.SurfaceTexture
+import android.graphics.*
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
@@ -39,8 +35,8 @@ import com.bumptech.glide.Glide
 import com.empathy.empathy_android.R
 import com.facebook.FacebookSdk.getApplicationContext
 import kotlinx.android.synthetic.main.content_camera_bottom.*
-import kotlinx.android.synthetic.main.content_camera_top.*
 import kotlinx.android.synthetic.main.fragment_camera_basic.*
+import org.jetbrains.anko.runOnUiThread
 import java.io.IOException
 import java.util.ArrayList
 import java.util.Arrays
@@ -71,7 +67,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
                 width: Int,
                 height: Int
         ) {
-            openCamera(width, height, isFacingFront)
+            openCamera(width, height)
         }
 
         override fun onSurfaceTextureSizeChanged(
@@ -283,7 +279,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
          * (또는 표면이 SurfaceTextureListener에서 준비될 때까지 기다림)
          */
         if (textureView!!.isAvailable) {
-            openCamera(textureView!!.width, textureView!!.height,isFacingFront)
+            openCamera(textureView!!.width, textureView!!.height)
         } else {
             textureView!!.surfaceTextureListener = surfaceTextureListener
         }
@@ -307,11 +303,13 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
             ratioDrawer.visibility = View.VISIBLE
         }
         imgBtnRotatePreview.setOnClickListener {
-            closeCamera()
             isFacingFront = !isFacingFront
-            openCamera(previewSize!!.width, previewSize!!.height, isFacingFront)
+            closeCamera()
+            openCamera(previewSize!!.width, previewSize!!.height)
         }
         imgBtnTerminate.setOnClickListener {
+            closeCamera()
+            activity.finish()
 
         }
     }
@@ -335,29 +333,24 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
 
     private fun setOnClickForRatioBtns(){
         ratio1_1.setOnClickListener {
-            previewSize = Size(MAX_PREVIEW_HEIGHT,MAX_PREVIEW_HEIGHT)
-            layoutFrame!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
-            textureView!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
+            layoutFrame!!.setAspectRatio(1, 1)
+            textureView!!.setAspectRatio(1, 1)
         }
         ratio3_4.setOnClickListener {
-            previewSize = Size(MAX_PREVIEW_HEIGHT*(4/3),MAX_PREVIEW_HEIGHT)
-            layoutFrame!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
-            textureView!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
+            layoutFrame!!.setAspectRatio(3, 4)
+            textureView!!.setAspectRatio(3, 4)
         }
         ratio3_8.setOnClickListener {
-            previewSize = Size(MAX_PREVIEW_HEIGHT*(8/3),MAX_PREVIEW_HEIGHT)
-            layoutFrame!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
-            textureView!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
+            layoutFrame!!.setAspectRatio(8, 3)
+            textureView!!.setAspectRatio(8, 3)
         }
         ratio9_16.setOnClickListener {
-            previewSize = Size(MAX_PREVIEW_HEIGHT*(16/9),MAX_PREVIEW_HEIGHT)
-            layoutFrame!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
-            textureView!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
+            layoutFrame!!.setAspectRatio(9, 16)
+            textureView!!.setAspectRatio(9, 16)
         }
         ratioFull.setOnClickListener {
-            previewSize = Size(MAX_PREVIEW_WIDTH, MAX_PREVIEW_WIDTH)
-            layoutFrame!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
-            textureView!!.setAspectRatio(previewSize!!.width, previewSize!!.height)
+            layoutFrame!!.setAspectRatio(MAX_PREVIEW_HEIGHT, MAX_PREVIEW_WIDTH)
+            textureView!!.setAspectRatio(MAX_PREVIEW_HEIGHT, MAX_PREVIEW_WIDTH)
 
         }
     }
@@ -370,8 +363,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
     @SuppressLint("MissingPermission")
     private fun openCamera(
             width: Int,
-            height: Int,
-            isFacingFront: Boolean
+            height: Int
     ) {
         if (!checkedPermissions && !allPermissionsGranted()) {
             FragmentCompat.requestPermissions(this, requiredPermissions, PERMISSIONS_REQUEST_CODE)
@@ -379,7 +371,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
         } else {
             checkedPermissions = true
         }
-        setUpCameraOutputs(width, height, isFacingFront)
+        setUpCameraOutputs(width, height)
         configureTransform(width, height)
         val activity = activity
         val manager = activity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
@@ -403,8 +395,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
      */
     private fun setUpCameraOutputs(
             width: Int,
-            height: Int,
-            isFacingFront : Boolean
+            height: Int
     ) {
         val activity = activity
         val manager = activity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
@@ -412,14 +403,15 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
             for (cameraId in manager.cameraIdList) {
                 val characteristics = manager.getCameraCharacteristics(cameraId)
 
-                val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
-                if (facing != null) {
-                    if(!isFacingFront && facing == CameraCharacteristics.LENS_FACING_FRONT){
+                if(isFacingFront){
+                    if(characteristics.get(CameraCharacteristics.LENS_FACING)==CameraCharacteristics.LENS_FACING_BACK){
+                        continue
+                    }
+                }else{
+                    if(characteristics.get(CameraCharacteristics.LENS_FACING)==CameraCharacteristics.LENS_FACING_FRONT){
                         continue
                     }
                 }
-
-
                 val map =
                         characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP) ?: continue
 
@@ -470,16 +462,14 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
                     maxPreviewHeight = MAX_PREVIEW_HEIGHT
                 }
 
-//                previewSize = chooseOptimalSize(
-//                        map.getOutputSizes(SurfaceTexture::class.java),
-//                        rotatedPreviewWidth,
-//                        rotatedPreviewHeight,
-//                        maxPreviewWidth,
-//                        maxPreviewHeight,
-//                        largest
-//                )
-
-                previewSize = Size(MAX_PREVIEW_WIDTH, MAX_PREVIEW_HEIGHT)
+                previewSize = chooseOptimalSize(
+                        map.getOutputSizes(SurfaceTexture::class.java),
+                        rotatedPreviewWidth,
+                        rotatedPreviewHeight,
+                        maxPreviewWidth,
+                        maxPreviewHeight,
+                        largest
+                )
 
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 val orientation = resources.configuration.orientation
@@ -721,6 +711,7 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
         }
     }
 
+
     companion object {
 
         /**
@@ -737,12 +728,12 @@ class CameraBasicFragment : Fragment(),FragmentCompat.OnRequestPermissionsResult
         /**
          * Camera2 API에서 지원하는 최대 프리뷰 넓이
          */
-        private const val MAX_PREVIEW_WIDTH = 1920
+        private const val MAX_PREVIEW_WIDTH = 2560
 
         /**
          * Camera2 API에서 지원하는 최대 프리뷰 높이
          */
-        private const val MAX_PREVIEW_HEIGHT = 1080
+        private const val MAX_PREVIEW_HEIGHT = 1440
 
         /**
          *

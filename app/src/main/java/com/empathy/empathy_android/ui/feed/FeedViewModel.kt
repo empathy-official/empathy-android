@@ -135,7 +135,7 @@ internal class FeedViewModel @Inject constructor(
                 compositeDisposable.add(
                         Observable
                                 .fromCallable {
-                                    TMapData().convertGpsToAddress(feedViewAction.latitude, feedViewAction.longtitude)
+                                    TMapData().convertGpsToAddress(feedViewAction.latitude, feedViewAction.longtitude) ?: ""
                                 }
                                 .subscribeOn(Schedulers.newThread())
                                 .observeOn(AndroidSchedulers.mainThread())

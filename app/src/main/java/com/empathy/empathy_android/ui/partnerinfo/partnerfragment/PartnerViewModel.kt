@@ -2,7 +2,6 @@ package com.empathy.empathy_android.ui.partnerinfo.partnerfragment
 
 import androidx.lifecycle.MutableLiveData
 import com.empathy.empathy_android.BaseViewModel
-import com.empathy.empathy_android.http.appchannel.AppChannel
 import com.empathy.empathy_android.http.appchannel.AppChannelApi
 import com.empathy.empathy_android.http.appchannel.AppData
 import com.empathy.empathy_android.http.appchannel.FragmentLifeCycle

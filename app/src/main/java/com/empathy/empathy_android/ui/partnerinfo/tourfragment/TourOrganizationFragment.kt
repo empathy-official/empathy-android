@@ -41,10 +41,28 @@ internal class TourOrganizationFragment : BaseFragment() {
 
     private var listener: OnSwipeTouchListener.OnViewTransitionListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = inflater.inflate(R.layout.fragment_tour_organization, container, false).apply {
-        setOnTouchListener(OnSwipeTouchListener(context, listener))
+    private var swipeTouchListener: OnSwipeTouchListener? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_tour_organization, container, false).apply {
+            setOnTouchListener(OnSwipeTouchListener(context, listener))
+        }
+
+        swipeTouchListener = OnSwipeTouchListener(view.context, listener)
+
+        view.setOnTouchListener(swipeTouchListener)
+        view.setOnClickListener {
+            if (swipeTouchListener!!.swipeDetected()){
+                listener?.viewTransitioned()
+            } else {
+
+            }
+
+        }
+
+        return view
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,7 +94,7 @@ internal class TourOrganizationFragment : BaseFragment() {
                     when(it) {
                         is TourOrganizationNavigation.NavigateToTourDetail -> {
                             startActivity(Intent(context, PartnerInfoDetailActivity::class.java).apply {
-                                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_PARTNER)
+                                putExtra(Constants.EXTRA_KEY_PARTNER_INFO_DETAIL_TYPE, PartnerInfoDetailActivity.TYPE_TOUR)
                                 putExtra(Constants.EXTRA_KEY_TARGET_ID, it.targetId)
                                 putExtra(Constants.EXTRA_KEY_CONTENT_TYPE, it.contentType)
                             })
@@ -102,8 +120,8 @@ internal class TourOrganizationFragment : BaseFragment() {
 
     private fun initializeListener() {
         tourAdapter.setOnItemClickListener(object : TourViewHolder.OnItemClickListener {
-            override fun onItemClicked(targetId: String) {
-                viewModel.channel.accept(TourOrganizationViewAction.NavigateToDetailClicked(targetId))
+            override fun onItemClicked(targetId: String, contentType: String) {
+                viewModel.channel.accept(TourOrganizationViewAction.NavigateToDetailClicked(targetId, contentType))
             }
         })
     }

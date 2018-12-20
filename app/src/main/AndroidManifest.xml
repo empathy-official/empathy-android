@@ -49,9 +49,9 @@
         <activity android:name=".ui.login.LoginActivity">
         </activity>
 
-        <activity android:name=".ui.feeddetail.FeedDetailActivity" >
+        <activity android:name=".ui.feeddetail.FeedDetailActivity"
+          android:windowSoftInputMode="stateAlwaysHidden"/>
 
-        </activity>
 
         <activity android:name=".ui.feed.FeedActivity">
         </activity>
