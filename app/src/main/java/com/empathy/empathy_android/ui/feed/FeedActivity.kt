@@ -3,7 +3,6 @@ package com.empathy.empathy_android.ui.feed
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empathy.empathy_android.BaseActivity
@@ -17,7 +16,6 @@ import com.empathy.empathy_android.ui.feeddetail.FeedDetailActivity
 import com.empathy.empathy_android.ui.myfeed.MyFeedsActivity
 import com.empathy.empathy_android.ui.partnerinfo.PartnerInfoActivity
 import com.empathy.empathy_android.ui.tmap.MapActivity
-import com.empathy.empathy_android.utils.OnSwipeTouchListener
 import com.skt.Tmap.TMapGpsManager
 import com.skt.Tmap.TMapView
 import io.reactivex.android.schedulers.AndroidSchedulers
