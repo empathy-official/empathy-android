@@ -115,7 +115,7 @@ internal class FeedActivity : BaseActivity<FeedViewModel>(), TMapGpsManager.onLo
 
     private fun handleSetGps(openGps: FeedLooknFeel.SetGps) {
         tmapView.apply {
-            setSKTMapApiKey("b5be9a2e-d454-4177-8912-1d2c1cbee391")
+            setSKTMapApiKey(Constants.T_MAP_KEY)
             setTrackingMode(true)
             setSightVisible(true)
         }

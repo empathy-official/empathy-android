@@ -20,6 +20,7 @@ internal class Constants {
         const val DEFAULT_LATITUDE   = 126.981106
         const val DEFAULT_LONGTITUDE = 37.568477
         const val DEFAULT_RANGE = "500"
+        const val T_MAP_KEY: String = "b5be9a2e-d454-4177-8912-1d2c1cbee391"
 
     }
 
