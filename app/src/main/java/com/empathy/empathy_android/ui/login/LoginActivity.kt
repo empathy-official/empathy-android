@@ -142,13 +142,9 @@ internal class LoginActivity: BaseActivity<LoginViewModel.ViewModel>(), TMapGpsM
                 viewModel.channel.accept(LoginViewAction.LoginClick(loginResult.accessToken.userId))
             }
 
-            override fun onCancel() {
-                Log.d("result", "onCancel")
-            }
+            override fun onCancel() { }
 
-            override fun onError(error: FacebookException) {
-                Log.e("LoginErr", error.toString())
-            }
+            override fun onError(error: FacebookException) { }
         })
 
         facebook_login_view.setOnClickListener {
